@@ -53,4 +53,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Abrir Navegador
+
+<pre>
+<a href="http://localhost:3000">http://localhost:3000</a>
+</pre>
+
 <small><i>Documento en constante actualización.</i></small>
