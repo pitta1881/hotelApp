@@ -33,3 +33,13 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+
+# dbb data docker
+
+postgres_data
+mysql_data

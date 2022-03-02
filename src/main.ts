@@ -1,20 +1,19 @@
-import { HttpExceptionFilter } from './http-exception.filter';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
 import { AppModule } from './app.module';
-import * as hbs from 'hbs';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const configService = app.get(ConfigService);
 
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  app.setViewEngine('hbs');
-  hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
+  app.use(helmet());
 
-  app.useGlobalFilters(new HttpExceptionFilter());
-
-  await app.listen(3000);
+  await app.listen(configService.get('NESTJS_PORT'));
+  console.log(`Hotel App is running on: ${await app.getUrl()}`);
+  console.log(
+    `Hotel App is connected to DB at port: ${configService.get('DB_PORT')}`,
+  );
 }
 bootstrap();

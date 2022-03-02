@@ -4,6 +4,19 @@
 
   {{#*inline "main-content-block"}}
     {{message}}
+    Mensajes: 
+    {{#each data as | mensaje |}}
+    <ul>
+      <li>Nombre: {{nombre}}</li>
+      <li>Apellido: {{apellido}}</li>
+      <li>Email: {{email}}</li>
+      <li>Fecha: {{creationDate}}</li>
+      <li>Adultos: {{adultos}}</li>
+      <li>Menores: {{menores}}</li>
+    </ul>
+    {{else}}
+      <p>No content</p>
+    {{/each}}
   {{/inline}}
 
 {{/layouts/baseBackend}}
