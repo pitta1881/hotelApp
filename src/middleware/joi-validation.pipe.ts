@@ -1,3 +1,4 @@
+import { StatusTypes } from './../helpers/generic.response';
 import {
   PipeTransform,
   Injectable,
@@ -15,8 +16,8 @@ export class JoiValidationPipe implements PipeTransform {
     if (error) {
       const errores = error.details.map((detalle) => detalle.message);
       throw new BadRequestException({
-        status: 'Validation Failed',
-        errors: errores,
+        status: StatusTypes.error,
+        error: errores,
       });
     }
     return value;

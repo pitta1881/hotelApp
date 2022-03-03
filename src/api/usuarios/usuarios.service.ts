@@ -1,8 +1,3 @@
-import {
-  IGenericResponse,
-  StatusTypes,
-} from './../../helpers/generic.response';
-import { IUsuario } from './usuario.interface';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -12,17 +7,27 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
+import {
+  IGenericResponse,
+  StatusTypes,
+} from './../../helpers/generic.response';
+import { IUsuario } from './usuario.interface';
 import { Usuario } from './../../db/entities/usuario.entity';
+import { Hotel } from 'src/db/entities/hotel.entity';
 
 @Injectable()
 export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
     private usuarioModel: Repository<Usuario>,
+    @InjectRepository(Hotel)
+    private hotelModel: Repository<Hotel>,
   ) {}
 
   async findAll(): Promise<IGenericResponse> {
-    const usuarios: Usuario[] = await this.usuarioModel.find();
+    const usuarios: Usuario[] = await this.usuarioModel.find({
+      relations: ['hotel'],
+    });
     return {
       status: StatusTypes.success,
       data: usuarios,
@@ -34,6 +39,7 @@ export class UsuariosService {
       where: {
         id,
       },
+      relations: ['hotel'],
     });
     if (!usuario) {
       throw new NotFoundException({
@@ -53,18 +59,23 @@ export class UsuariosService {
   async create(data: IUsuario): Promise<IGenericResponse> {
     const hash = await bcrypt.hash(data.password, 10);
     let newUser: Usuario;
-    try {
-      newUser = await this.usuarioModel.save({
-        ...data,
-        password: hash,
-      });
-    } catch (error) {
-      throw new ConflictException({
-        status: StatusTypes.error,
-        error: error.detail,
-      });
+    const hotel: Hotel = await this.hotelModel.findOne({
+      where: { id: data.hotelId },
+    });
+    if (hotel) {
+      try {
+        newUser = await this.usuarioModel.save({
+          ...data,
+          password: hash,
+        });
+      } catch (error) {
+        throw new ConflictException({
+          status: StatusTypes.error,
+          error: error.detail,
+        });
+      }
+      delete newUser.password;
     }
-    delete newUser.password;
     return {
       status: StatusTypes.success,
       data: [newUser],
@@ -77,7 +88,6 @@ export class UsuariosService {
     if (usuario.status === 'SUCCESS') {
       await this.usuarioModel.update(id, newData);
     } else {
-      console.error('El usuario no existe');
       throw new NotFoundException({
         status: StatusTypes.error,
         error: 'El usuario no existe',

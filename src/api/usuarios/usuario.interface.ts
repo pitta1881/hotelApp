@@ -4,4 +4,5 @@ export interface IUsuario {
   nick: string;
   email: string;
   password: string;
+  hotelId: number;
 }

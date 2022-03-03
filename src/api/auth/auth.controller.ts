@@ -1,10 +1,10 @@
-import { Usuario } from './../../db/entities/usuario.entity';
 import { StatusTypes } from './../../helpers/generic.response';
 import { Controller, UseGuards, Post, Request, HttpCode } from '@nestjs/common';
 
-import { LocalAuthGuard } from './local-auth.guard';
+import { LocalAuthGuard } from '../../guards/local-auth.guard';
 import { AuthService } from './auth.service';
-import { Public } from './public.decorator';
+import { Usuario } from './../../db/entities/usuario.entity';
+import { Public } from './../../decorators/public.decorator';
 
 interface RequestWithUser extends Request {
   user: {

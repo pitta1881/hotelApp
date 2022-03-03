@@ -1,9 +1,11 @@
+import { Hotel } from 'src/db/entities/hotel.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -53,4 +55,9 @@ export class Mensaje {
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   public updated_at: Date;
+
+  @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.id, {
+    nullable: false,
+  })
+  public hotel: Hotel;
 }

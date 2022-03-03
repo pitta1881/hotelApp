@@ -18,7 +18,7 @@ import { ServiciosModule } from './api/servicios/servicios.module';
 import { UsuariosModule } from './api/usuarios/usuarios.module';
 import { AuthModule } from './api/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './api/auth/jwt-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Module({
   imports: [

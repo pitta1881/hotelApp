@@ -4,11 +4,9 @@ import {
   Get,
   Post,
   Body,
-  UsePipes,
   Param,
   Patch,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 
 import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
@@ -30,14 +28,16 @@ export class UsuariosController {
   }
 
   @Get('/usuarios/:id')
-  @UsePipes(new JoiValidationPipe(getUsuarioSchema))
-  async findOne(@Param() { id }: { id: number }) {
+  async findOne(
+    @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
+  ) {
     return await this.usuarioService.findOne(id);
   }
 
   @Post('/usuarios')
-  @UsePipes(new JoiValidationPipe(createUsuarioSchema))
-  async create(@Body() data: IUsuario) {
+  async create(
+    @Body(new JoiValidationPipe(createUsuarioSchema)) data: IUsuario,
+  ) {
     return await this.usuarioService.create(data);
   }
 
