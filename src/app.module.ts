@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfigService } from './db/typeorm-config.service';
 import { Connection } from 'typeorm';
+import { APP_GUARD } from '@nestjs/core';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { TypeOrmConfigService } from './db/typeorm-config.service';
 import { FotosModule } from './api/fotos/fotos.module';
 import { HabitacionesModule } from './api/habitaciones/habitaciones.module';
 import { HotelesModule } from './api/hoteles/hoteles.module';
@@ -17,7 +18,6 @@ import { ReservasModule } from './api/reservas/reservas.module';
 import { ServiciosModule } from './api/servicios/servicios.module';
 import { UsuariosModule } from './api/usuarios/usuarios.module';
 import { AuthModule } from './api/auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Module({

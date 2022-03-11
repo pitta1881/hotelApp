@@ -7,6 +7,7 @@ module.exports = {
     database: process.env.DB_NAME,
     migrations: ['src/db/seeds/*{.ts,.js}'],
     migrationsTableName: 'migrations_history',
+    entities: ['src/db/entities/*.ts'],
     migrationsRun: true,
     synchronize: true,
 };

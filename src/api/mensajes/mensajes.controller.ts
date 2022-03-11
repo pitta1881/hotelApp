@@ -1,37 +1,51 @@
-import { IMensaje } from './mensaje.interface';
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Public } from './../../decorators/public.decorator';
+import { IMensaje } from './mensajes.interface';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  ParseBoolPipe,
+} from '@nestjs/common';
 
 import { MensajesService } from './mensajes.service';
 import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
-import { getMensajeSchema, createMensajeSchema } from './mensaje.schemas';
+import { getMensajeSchema, createMensajeSchema } from './mensajes.schemas';
+import { IUsuario } from '../usuarios/usuario.interface';
+import { UserJWT } from './../../decorators/userJWT.decorator';
 
-@Controller('api')
+@Controller('api/mensajes')
 export class MensajesController {
   constructor(private readonly mensajeService: MensajesService) {}
 
-  @Get('/mensajes')
-  async findAll() {
-    return await this.mensajeService.findAll();
+  @Get()
+  async findAll(@UserJWT() user: IUsuario) {
+    return await this.mensajeService.findAll(user.hotelId);
   }
 
-  @Get('/mensajes/:id')
+  @Get(':id')
   async findOne(
     @Param(new JoiValidationPipe(getMensajeSchema)) { id }: { id: number },
   ) {
     return await this.mensajeService.findOne(id);
   }
 
-  @Post('/mensajes')
+  @Public()
+  @Post()
   async create(
     @Body(new JoiValidationPipe(createMensajeSchema)) data: IMensaje,
   ) {
     return await this.mensajeService.create(data);
   }
 
-  @Patch('/mensajes/visto/:id')
-  update(
+  @Patch('visto/:id')
+  async updateEstado(
     @Param(new JoiValidationPipe(getMensajeSchema)) { id }: { id: number },
+    @Body('leido', ParseBoolPipe)
+    leido: boolean,
   ) {
-    return this.mensajeService.setLeido(id);
+    return await this.mensajeService.setEstado(id, leido);
   }
 }

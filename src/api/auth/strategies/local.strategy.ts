@@ -1,9 +1,10 @@
+import { IUsuario } from './../../usuarios/usuario.interface';
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './../auth.service';
 
-import { IGenericResponse } from './../../../helpers/generic.response';
+import { StatusTypes } from './../../../helpers/generic.response';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -13,11 +14,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(nick: string, password: string): Promise<IGenericResponse> {
+  async validate(nick: string, password: string): Promise<IUsuario> {
     const usuario = await this.authService.validateUser(nick, password);
     if (!usuario) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException({
+        status: StatusTypes.error,
+        error: 'Usuario y/o contraseña incorrectas.',
+      });
     }
-    return usuario;
+    return { ...usuario, hotelId: usuario.hotel.id };
   }
 }

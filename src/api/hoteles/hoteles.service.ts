@@ -1,4 +1,3 @@
-import { IHotel } from './hotel.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ConflictException,
@@ -12,6 +11,7 @@ import {
   IGenericResponse,
   StatusTypes,
 } from './../../helpers/generic.response';
+import { IHotel } from './hoteles.interface';
 
 @Injectable()
 export class HotelesService {
@@ -39,18 +39,17 @@ export class HotelesService {
   }
 
   async create(data: IHotel): Promise<IGenericResponse> {
-    let newHotel: Hotel;
     try {
-      newHotel = await this.hotelModel.save(data);
+      const newHotel = await this.hotelModel.save(data);
+      return {
+        status: StatusTypes.success,
+        data: [newHotel],
+      };
     } catch (error) {
       throw new ConflictException({
         status: StatusTypes.error,
         error: error.detail,
       });
     }
-    return {
-      status: StatusTypes.success,
-      data: [newHotel],
-    };
   }
 }

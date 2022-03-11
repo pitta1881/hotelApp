@@ -1,5 +1,3 @@
-import { Usuario } from './usuario.entity';
-import { Mensaje } from './mensaje.entity';
 import {
   Entity,
   Column,
@@ -8,6 +6,11 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+
+import { Paypertop } from './paypertop.entity';
+import { Usuario } from './usuario.entity';
+import { Mensaje } from './mensaje.entity';
+import { Servicio } from './servicio.entity';
 
 @Entity()
 export class Hotel {
@@ -36,24 +39,30 @@ export class Hotel {
   direccion: string;
 
   @Column({ nullable: false, array: true, type: 'float' })
-  latLng: number[];
+  lat_lng: number[];
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  public created_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  public updated_at: Date;
+  updated_at: Date;
 
   @OneToMany(() => Mensaje, (mensaje: Mensaje) => mensaje.id)
-  public mensajes: Mensaje[];
+  mensajes: Mensaje[];
 
   @OneToMany(() => Usuario, (usuario: Usuario) => usuario.id)
-  public usuarios: Usuario[];
+  usuarios: Usuario[];
+
+  @OneToMany(() => Paypertop, (paypertop: Paypertop) => paypertop.id)
+  paypertops: Paypertop[];
+
+  @OneToMany(() => Servicio, (servicio: Servicio) => servicio.id)
+  servicios: Servicio[];
 }

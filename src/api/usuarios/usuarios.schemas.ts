@@ -19,7 +19,7 @@ export const createUsuarioSchema = Joi.object({
   password: password.required(),
 });
 
-export const patchUsuarioSchema = Joi.object({
+export const updateUsuarioSchema = Joi.object({
   nombre,
   apellido,
   email,

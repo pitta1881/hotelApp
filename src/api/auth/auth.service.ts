@@ -1,13 +1,10 @@
-import { Usuario } from './../../db/entities/usuario.entity';
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { UsuariosService } from '../usuarios/usuarios.service';
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-
-import {
-  StatusTypes,
-  IGenericResponse,
-} from './../../helpers/generic.response';
 import { JwtService } from '@nestjs/jwt';
+
+import { UsuariosService } from '../usuarios/usuarios.service';
+import { IUsuario } from './../usuarios/usuario.interface';
+import { Usuario } from './../../db/entities/usuario.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,44 +13,23 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(
-    nick: string,
-    password: string,
-  ): Promise<IGenericResponse> {
-    try {
-      const usuario = await this.usuariosService.findByNick(nick);
-      await this.verifyPassword(password, usuario.data[0].password);
-      delete usuario.data[0].password;
-      return {
-        status: StatusTypes.success,
-        data: [usuario.data[0]],
-      };
-    } catch (error) {
-      throw new BadRequestException({
-        status: StatusTypes.error,
-        error: 'Usuario y/o contraseña incorrectas.',
-      });
+  async validateUser(nick: string, password: string): Promise<Usuario> {
+    const usuario: Usuario = await this.usuariosService.findByNick(nick);
+    if (usuario) {
+      const passVerified = await bcrypt.compare(password, usuario.password);
+      if (passVerified) {
+        delete usuario.password;
+        return usuario;
+      }
     }
   }
 
-  private async verifyPassword(
-    plainTextPassword: string,
-    hashedPassword: string,
-  ) {
-    const isPasswordMatching = await bcrypt.compare(
-      plainTextPassword,
-      hashedPassword,
-    );
-    if (!isPasswordMatching) {
-      throw new BadRequestException({
-        status: StatusTypes.error,
-        error: 'Usuario y/o contraseña incorrectas.',
-      });
-    }
-  }
-
-  async login(user: Usuario) {
-    const payload = { username: user.nick, sub: user.id };
+  async login(user: IUsuario) {
+    const payload = {
+      id: user.id,
+      nick: user.nick,
+      hotelId: user.hotelId,
+    };
     return {
       access_token: this.jwtService.sign(payload),
     };

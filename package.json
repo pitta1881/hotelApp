@@ -15,7 +15,8 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "typeorm:run": "node --require ts-node/register ./node_modules/typeorm/cli.js migration:run",
-    "typeorm:create": "npx typeorm migration:create -d ./src/db/seeds/ -n"
+    "typeorm:create": "npx typeorm migration:create -d ./src/db/seeds/ -n",
+    "typeorm:revert": "node --require ts-node/register ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
     "@joi/date": "^2.1.0",

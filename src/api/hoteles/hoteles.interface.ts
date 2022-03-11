@@ -1,5 +1,5 @@
 export interface IHotel {
-  id: number;
+  id?: number;
   nombre: string;
   descripcion_home: string;
   descripcion_ubi: string;
@@ -7,5 +7,5 @@ export interface IHotel {
   telefono_2?: string;
   email: string;
   direccion: string;
-  latLng: [number, number];
+  lat_lng: [number, number];
 }

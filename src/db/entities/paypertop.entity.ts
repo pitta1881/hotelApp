@@ -2,47 +2,42 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
 } from 'typeorm';
 
 import { Hotel } from './hotel.entity';
+import { TipoPPT } from './tipoPPT.entity';
 
 @Entity()
-export class Mensaje {
+export class Paypertop {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: false })
-  nombre: string;
+  titular: string;
 
   @Column({ nullable: false })
-  apellido: string;
+  razon_social: string;
 
   @Column({ nullable: false })
   email: string;
 
-  @Column({ nullable: false })
-  checkin: Date;
-
-  @Column({ nullable: false })
-  checkout: Date;
-
-  @Column({ nullable: false })
-  pais: string;
-
-  @Column({ nullable: false })
-  adultos: number;
-
-  @Column({ nullable: false, default: 0 })
-  menores: number;
+  @Column({ nullable: false, type: 'text' })
+  descripcion: string;
 
   @Column({ nullable: false, type: 'text' })
-  mensaje: string;
+  url: string;
+
+  @Column({ nullable: false, type: 'float' })
+  abono_mensual: number;
+
+  @Column({ nullable: false, array: true, type: 'float' })
+  lat_lng: number[];
 
   @Column({ nullable: false, default: false })
-  leido: boolean;
+  activo: boolean;
 
   @CreateDateColumn({
     type: 'timestamp',
@@ -61,4 +56,9 @@ export class Mensaje {
     nullable: false,
   })
   hotel: Hotel;
+
+  @ManyToOne(() => TipoPPT, (tipoPPT: TipoPPT) => tipoPPT.id, {
+    nullable: false,
+  })
+  tipoPPT: TipoPPT;
 }

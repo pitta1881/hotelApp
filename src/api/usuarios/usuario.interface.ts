@@ -1,8 +1,9 @@
 export interface IUsuario {
-  nombre: string;
-  apellido: string;
+  id?: number;
+  nombre?: string;
+  apellido?: string;
   nick: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   hotelId: number;
 }

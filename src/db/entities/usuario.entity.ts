@@ -1,4 +1,3 @@
-import { Hotel } from 'src/db/entities/hotel.entity';
 import {
   Entity,
   Column,
@@ -7,6 +6,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
+
+import { Hotel } from './hotel.entity';
 
 @Entity()
 export class Usuario {
@@ -32,17 +33,17 @@ export class Usuario {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  public created_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  public updated_at: Date;
+  updated_at: Date;
 
   @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.id, {
     nullable: false,
   })
-  public hotel: Hotel;
+  hotel: Hotel;
 }

@@ -9,5 +9,6 @@ export interface IMensaje {
   adultos: number;
   menores?: number;
   mensaje: string;
+  leido?: boolean;
   hotelId: number;
 }

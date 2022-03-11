@@ -13,20 +13,20 @@ import {
 } from './../../helpers/generic.response';
 import { IUsuario } from './usuario.interface';
 import { Usuario } from './../../db/entities/usuario.entity';
-import { Hotel } from 'src/db/entities/hotel.entity';
+import { Hotel } from './../../db/entities/hotel.entity';
+import { HotelesService } from '../hoteles/hoteles.service';
 
 @Injectable()
 export class UsuariosService {
   constructor(
+    private hotelService: HotelesService,
     @InjectRepository(Usuario)
     private usuarioModel: Repository<Usuario>,
-    @InjectRepository(Hotel)
-    private hotelModel: Repository<Hotel>,
   ) {}
 
-  async findAll(): Promise<IGenericResponse> {
+  async findAll(hotelId: number): Promise<IGenericResponse> {
     const usuarios: Usuario[] = await this.usuarioModel.find({
-      relations: ['hotel'],
+      where: { hotel: hotelId },
     });
     return {
       status: StatusTypes.success,
@@ -39,7 +39,6 @@ export class UsuariosService {
       where: {
         id,
       },
-      relations: ['hotel'],
     });
     if (!usuario) {
       throw new NotFoundException({
@@ -56,82 +55,67 @@ export class UsuariosService {
     };
   }
 
-  async create(data: IUsuario): Promise<IGenericResponse> {
+  async create(data: IUsuario, hotelId: number): Promise<IGenericResponse> {
     const hash = await bcrypt.hash(data.password, 10);
     let newUser: Usuario;
-    const hotel: Hotel = await this.hotelModel.findOne({
-      where: { id: data.hotelId },
-    });
-    if (hotel) {
-      try {
-        newUser = await this.usuarioModel.save({
-          ...data,
-          password: hash,
-        });
-      } catch (error) {
-        throw new ConflictException({
-          status: StatusTypes.error,
-          error: error.detail,
-        });
-      }
+    const hotelResp: IGenericResponse = await this.hotelService.findOne(
+      hotelId,
+    );
+    const hotel: Hotel = hotelResp.data[0];
+    try {
+      newUser = await this.usuarioModel.save({
+        ...data,
+        password: hash,
+        hotel,
+      });
       delete newUser.password;
+      return {
+        status: StatusTypes.success,
+        data: [newUser],
+      };
+    } catch (error) {
+      throw new ConflictException({
+        status: StatusTypes.error,
+        error: error.detail,
+      });
     }
-    return {
-      status: StatusTypes.success,
-      data: [newUser],
-    };
   }
 
   async update(id: number, newData: IUsuario): Promise<IGenericResponse> {
-    const usuario: IGenericResponse = await this.findOne(id);
-    const userModel: Usuario = usuario.data[0];
-    if (usuario.status === 'SUCCESS') {
-      await this.usuarioModel.update(id, newData);
-    } else {
-      throw new NotFoundException({
-        status: StatusTypes.error,
-        error: 'El usuario no existe',
-      });
-    }
-    delete userModel.password;
-    delete userModel.created_at;
-    delete userModel.updated_at;
+    const usuarioResp: IGenericResponse = await this.findOne(id);
+    let user: Usuario = usuarioResp.data[0];
+    user = await this.usuarioModel.save({ ...user, ...newData });
+    delete user.password;
+    delete user.created_at;
+    delete user.updated_at;
     return {
       status: StatusTypes.success,
-      data: [{ ...userModel, ...newData }],
+      data: [user],
     };
   }
 
   async delete(id: number): Promise<IGenericResponse> {
-    const usuario: IGenericResponse = await this.findOne(id);
-    if (usuario.status === 'SUCCESS') {
+    await this.findOne(id); //si no lo encuentra salta una exception
+    try {
       await this.usuarioModel.delete(id);
-    } else {
-      throw new NotFoundException({
+      return {
+        status: StatusTypes.success,
+      };
+    } catch (error) {
+      throw new ConflictException({
         status: StatusTypes.error,
-        error: 'El usuario no existe',
+        error: error.detail,
       });
     }
-    return {
-      status: StatusTypes.success,
-    };
   }
 
-  async findByNick(nick: string): Promise<IGenericResponse> {
-    const usuario: Usuario = await this.usuarioModel.findOne({
+  //funcion solo para el auth
+  async findByNick(nick: string): Promise<Usuario> {
+    return await this.usuarioModel.findOne({
+      relations: ['hotel'],
       where: {
         nick,
       },
     });
-    if (!usuario) {
-      throw new NotFoundException({
-        status: StatusTypes.error,
-        error: 'El usuario no existe',
-      });
-    }
-    return {
-      status: StatusTypes.success,
-      data: [usuario],
-    };
   }
 }

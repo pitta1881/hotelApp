@@ -12,21 +12,23 @@ import {
 } from './../../helpers/generic.response';
 
 import { Mensaje } from '../../db/entities/mensaje.entity';
-import { IMensaje } from './mensaje.interface';
-import { Hotel } from 'src/db/entities/hotel.entity';
+import { IMensaje } from './mensajes.interface';
+import { Hotel } from './../../db/entities/hotel.entity';
+import { HotelesService } from '../hoteles/hoteles.service';
 
 @Injectable()
 export class MensajesService {
   constructor(
+    private hotelesService: HotelesService,
     @InjectRepository(Mensaje)
     private mensajeModel: Repository<Mensaje>,
-    @InjectRepository(Hotel)
-    private hotelModel: Repository<Hotel>,
   ) {}
 
-  async findAll(): Promise<IGenericResponse> {
+  async findAll(hotelId: number): Promise<IGenericResponse> {
     const mensajes: Mensaje[] = await this.mensajeModel.find({
-      relations: ['hotel'],
+      where: {
+        hotel: hotelId,
+      },
     });
     return {
       status: StatusTypes.success,
@@ -39,7 +41,6 @@ export class MensajesService {
       where: {
         id,
       },
-      relations: ['hotel'],
     });
     if (!mensaje) {
       throw new NotFoundException({
@@ -54,47 +55,37 @@ export class MensajesService {
   }
 
   async create(data: IMensaje): Promise<IGenericResponse> {
-    let newMensaje: Mensaje;
-    const hotel: Hotel = await this.hotelModel.findOne({
-      where: { id: data.hotelId },
-    });
-    if (hotel) {
-      try {
-        newMensaje = await this.mensajeModel.save({ ...data, hotel });
-      } catch (error) {
-        throw new ConflictException({
-          status: StatusTypes.error,
-          error: error.detail,
-        });
-      }
-    } else {
-      throw new NotFoundException({
+    const hotelResp: IGenericResponse = await this.hotelesService.findOne(
+      data.hotelId,
+    );
+    const hotel: Hotel = hotelResp.data[0];
+    try {
+      const newMensaje = await this.mensajeModel.save({
+        ...data,
+        hotel,
+      });
+      return {
+        status: StatusTypes.success,
+        data: [newMensaje],
+      };
+    } catch (error) {
+      throw new ConflictException({
         status: StatusTypes.error,
-        error: 'El Hotel no existe',
+        error: error.detail,
       });
     }
-    return {
-      status: StatusTypes.success,
-      data: [newMensaje],
-    };
   }
 
-  async setLeido(id: number): Promise<IGenericResponse> {
-    const mensaje: IGenericResponse = await this.findOne(id);
-    const mensajeModel: Mensaje = mensaje.data[0];
-    if (mensaje.status === 'SUCCESS') {
-      this.mensajeModel.update(id, {
-        leido: true,
-      });
-    } else {
-      throw new NotFoundException({
-        status: StatusTypes.error,
-        error: 'El mensaje no existe',
-      });
-    }
+  async setEstado(id: number, newEstado: boolean): Promise<IGenericResponse> {
+    const mensajeResp: IGenericResponse = await this.findOne(id);
+    let mensaje: Mensaje = mensajeResp.data[0];
+    mensaje = await this.mensajeModel.save({
+      ...mensaje,
+      leido: newEstado,
+    });
     return {
       status: StatusTypes.success,
-      data: [{ ...mensajeModel, leido: true }],
+      data: [mensaje],
     };
   }
 }

@@ -1,7 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { Hotel } from 'src/db/entities/hotel.entity';
+import { Hotel } from './../../db/entities/hotel.entity';
 import { HotelesController } from './hoteles.controller';
 import { HotelesService } from './hoteles.service';
 
@@ -9,5 +9,6 @@ import { HotelesService } from './hoteles.service';
   imports: [TypeOrmModule.forFeature([Hotel])],
   controllers: [HotelesController],
   providers: [HotelesService],
+  exports: [HotelesService],
 })
 export class HotelesModule {}

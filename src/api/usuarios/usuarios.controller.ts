@@ -1,4 +1,3 @@
-import { IUsuario } from './usuario.interface';
 import {
   Controller,
   Get,
@@ -13,43 +12,46 @@ import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
 import {
   getUsuarioSchema,
   createUsuarioSchema,
-  patchUsuarioSchema,
+  updateUsuarioSchema,
 } from './usuarios.schemas';
 
 import { UsuariosService } from './usuarios.service';
+import { UserJWT } from './../../decorators/userJWT.decorator';
+import { IUsuario } from './usuario.interface';
 
-@Controller('api')
+@Controller('api/usuarios')
 export class UsuariosController {
   constructor(private readonly usuarioService: UsuariosService) {}
 
-  @Get('/usuarios')
-  async findAll() {
-    return await this.usuarioService.findAll();
+  @Get()
+  async findAll(@UserJWT() user: IUsuario) {
+    return await this.usuarioService.findAll(user.hotelId);
   }
 
-  @Get('/usuarios/:id')
+  @Get(':id')
   async findOne(
     @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
   ) {
     return await this.usuarioService.findOne(id);
   }
 
-  @Post('/usuarios')
+  @Post()
   async create(
+    @UserJWT() user: IUsuario,
     @Body(new JoiValidationPipe(createUsuarioSchema)) data: IUsuario,
   ) {
-    return await this.usuarioService.create(data);
+    return await this.usuarioService.create(data, user.hotelId);
   }
 
-  @Patch('/usuarios/:id')
+  @Patch(':id')
   update(
     @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
-    @Body(new JoiValidationPipe(patchUsuarioSchema)) data: IUsuario,
+    @Body(new JoiValidationPipe(updateUsuarioSchema)) data: IUsuario,
   ) {
     return this.usuarioService.update(id, data);
   }
 
-  @Delete('/usuarios/:id')
+  @Delete(':id')
   remove(
     @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
   ) {

@@ -8,7 +8,7 @@ const telefono_1 = Joi.string().trim().max(20);
 const telefono_2 = Joi.string().trim().max(20);
 const email = Joi.string().trim().email();
 const direccion = Joi.string().trim().max(100);
-const latLng = Joi.array()
+const lat_lng = Joi.array()
   .items(Joi.number().min(-90).max(90), Joi.number().min(-180).max(180))
   .min(2)
   .max(2);
@@ -25,7 +25,7 @@ export const createHotelSchema = Joi.object({
   telefono_2,
   email: email.required(),
   direccion: direccion.required(),
-  latLng: latLng.required(),
+  lat_lng: lat_lng.required(),
 });
 
 export const updateHotelSchema = Joi.object({
@@ -36,5 +36,5 @@ export const updateHotelSchema = Joi.object({
   telefono_2,
   email,
   direccion,
-  latLng,
+  lat_lng,
 });
