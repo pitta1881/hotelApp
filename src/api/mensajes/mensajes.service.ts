@@ -12,9 +12,9 @@ import {
 } from './../../helpers/generic.response';
 
 import { Mensaje } from '../../db/entities/mensaje.entity';
-import { IMensaje } from './mensajes.interface';
 import { Hotel } from './../../db/entities/hotel.entity';
 import { HotelesService } from '../hoteles/hoteles.service';
+import { CreateMensajeDto } from './dtos/create-mensaje.dto';
 
 @Injectable()
 export class MensajesService {
@@ -54,14 +54,14 @@ export class MensajesService {
     };
   }
 
-  async create(data: IMensaje): Promise<IGenericResponse> {
+  async create(newData: CreateMensajeDto): Promise<IGenericResponse> {
     const hotelResp: IGenericResponse = await this.hotelesService.findOne(
-      data.hotelId,
+      newData.hotelId,
     );
     const hotel: Hotel = hotelResp.data[0];
     try {
       const newMensaje = await this.mensajeModel.save({
-        ...data,
+        ...newData,
         hotel,
       });
       return {

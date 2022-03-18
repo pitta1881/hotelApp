@@ -4,67 +4,67 @@ import {
   Delete,
   Get,
   Param,
-  ParseBoolPipe,
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { UserJWT } from './../../decorators/userJWT.decorator';
-import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
-import { IUsuario } from '../usuarios/usuario.interface';
-import { IHabitacion } from './habitaciones.interface';
-import {
-  createHabitacionSchema,
-  getHabitacionSchema,
-  updateHabitacionSchema,
-} from './habitaciones.schemas';
-
+import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { HabitacionesService } from './habitaciones.service';
+import { GetHabitacionDto } from './dtos/get-habitacion.dto';
+import { CreateHabitacionDto } from './dtos/create-habitacion.dto';
+import { UpdateHabitacionDto } from './dtos/update-habitacion.dto';
+import { UpdateEstadoHabitacionDto } from './dtos/update-estado-habitacion.dto';
 
+@ApiTags('Habitaciones')
+@ApiBearerAuth()
 @Controller('api/habitaciones')
 export class HabitacionesController {
   constructor(private readonly habitacionesService: HabitacionesService) {}
 
+  @ApiOperation({ summary: 'FindAll Habitaciones (HotelId en JWT)' })
   @Get()
-  async findAll(@UserJWT() user: IUsuario) {
-    return await this.habitacionesService.findAll(user.hotelId);
+  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
+    return await this.habitacionesService.findAll(hotelId);
   }
 
+  @ApiOperation({ summary: 'FindOne Habitacion' })
   @Get(':id')
-  async findOne(
-    @Param(new JoiValidationPipe(getHabitacionSchema)) { id }: { id: number },
-  ) {
+  async findOne(@Param() { id }: GetHabitacionDto) {
     return await this.habitacionesService.findOne(id);
   }
 
+  @ApiOperation({ summary: 'Create Habitacion (HotelId en JWT)' })
   @Post()
   async create(
-    @UserJWT() user: IUsuario,
-    @Body(new JoiValidationPipe(createHabitacionSchema)) data: IHabitacion,
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Body() createHabitacionDto: CreateHabitacionDto,
   ) {
-    return await this.habitacionesService.create(data, user.hotelId);
+    return await this.habitacionesService.create(createHabitacionDto, hotelId);
   }
 
+  @ApiOperation({ summary: 'Update Habitacion' })
   @Patch(':id')
   async update(
-    @Param(new JoiValidationPipe(getHabitacionSchema)) { id }: { id: number },
-    @Body(new JoiValidationPipe(updateHabitacionSchema)) data: IHabitacion,
+    @Param() { id }: GetHabitacionDto,
+    @Body() updateHabitacionDto: UpdateHabitacionDto,
   ) {
-    return await this.habitacionesService.update(id, data);
+    return await this.habitacionesService.update(id, updateHabitacionDto);
   }
 
+  @ApiOperation({ summary: 'Update Estado Habitacion' })
   @Patch('ocupado/:id')
   async updateEstado(
-    @Param(new JoiValidationPipe(getHabitacionSchema)) { id }: { id: number },
-    @Body('ocupado', ParseBoolPipe)
-    ocupado: boolean,
+    @Param() { id }: GetHabitacionDto,
+    @Body() { ocupado }: UpdateEstadoHabitacionDto,
   ) {
     return await this.habitacionesService.setEstado(id, ocupado);
   }
 
+  @ApiOperation({ summary: 'Delete Habitacion' })
   @Delete(':id')
-  async remove(
-    @Param(new JoiValidationPipe(getHabitacionSchema)) { id }: { id: number },
-  ) {
+  async remove(@Param() { id }: GetHabitacionDto) {
     return await this.habitacionesService.delete(id);
   }
 }

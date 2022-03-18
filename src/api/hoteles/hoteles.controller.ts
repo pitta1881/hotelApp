@@ -1,25 +1,27 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { Public } from './../../decorators/public.decorator';
-import { IHotel } from './hoteles.interface';
-import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
-import { getHotelSchema, createHotelSchema } from './hoteles.schemas';
+import { CreateHotelesDto } from './dtos/create-hoteles.dto';
+import { GetHotelesDto } from './dtos/get-hoteles.dto';
 import { HotelesService } from './hoteles.service';
 
+@ApiTags('Hoteles')
+@ApiBearerAuth()
 @Controller('api/hoteles')
 export class HotelesController {
   constructor(private readonly hotelesService: HotelesService) {}
 
+  @ApiOperation({ summary: 'FindOne Hotel - PÚBLICO' })
   @Public()
   @Get(':id')
-  async findOne(
-    @Param(new JoiValidationPipe(getHotelSchema)) { id }: { id: number },
-  ) {
+  async findOne(@Param() { id }: GetHotelesDto) {
     return await this.hotelesService.findOne(id);
   }
 
+  @ApiOperation({ summary: 'Create Hotel' })
   @Post()
-  async create(@Body(new JoiValidationPipe(createHotelSchema)) data: IHotel) {
+  async create(@Body() data: CreateHotelesDto) {
     return await this.hotelesService.create(data);
   }
 }

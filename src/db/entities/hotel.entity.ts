@@ -11,6 +11,7 @@ import { Paypertop } from './paypertop.entity';
 import { Usuario } from './usuario.entity';
 import { Mensaje } from './mensaje.entity';
 import { Servicio } from './servicio.entity';
+import { FotoHotel } from './fotoHotel.entity';
 
 @Entity()
 export class Hotel {
@@ -65,4 +66,7 @@ export class Hotel {
 
   @OneToMany(() => Servicio, (servicio: Servicio) => servicio.id)
   servicios: Servicio[];
+
+  @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.id)
+  fotos: FotoHotel[];
 }

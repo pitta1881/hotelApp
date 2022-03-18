@@ -7,54 +7,54 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-
-import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
-import {
-  getUsuarioSchema,
-  createUsuarioSchema,
-  updateUsuarioSchema,
-} from './usuarios.schemas';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { UsuariosService } from './usuarios.service';
 import { UserJWT } from './../../decorators/userJWT.decorator';
-import { IUsuario } from './usuario.interface';
+import { IJwtPayload } from '../auth/jwtPayload.interface';
+import { GetUsuarioDto } from './dtos/get-usuario.dto';
+import { CreateUsuarioDto } from './dtos/create-usuario.dto';
+import { UpdateUsuarioDto } from './dtos/update-usuario.dto';
 
+@ApiTags('Usuarios')
+@ApiBearerAuth()
 @Controller('api/usuarios')
 export class UsuariosController {
   constructor(private readonly usuarioService: UsuariosService) {}
 
+  @ApiOperation({ summary: 'FindAll Usuarios (HotelId en JWT)' })
   @Get()
-  async findAll(@UserJWT() user: IUsuario) {
-    return await this.usuarioService.findAll(user.hotelId);
+  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
+    return await this.usuarioService.findAll(hotelId);
   }
 
+  @ApiOperation({ summary: 'FindOne Usuario' })
   @Get(':id')
-  async findOne(
-    @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
-  ) {
+  async findOne(@Param() { id }: GetUsuarioDto) {
     return await this.usuarioService.findOne(id);
   }
 
+  @ApiOperation({ summary: 'Create Usuario (HotelId en JWT de User Admin)' })
   @Post()
   async create(
-    @UserJWT() user: IUsuario,
-    @Body(new JoiValidationPipe(createUsuarioSchema)) data: IUsuario,
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Body() createUsuarioDto: CreateUsuarioDto,
   ) {
-    return await this.usuarioService.create(data, user.hotelId);
+    return await this.usuarioService.create(createUsuarioDto, hotelId);
   }
 
+  @ApiOperation({ summary: 'Update Usuario' })
   @Patch(':id')
   update(
-    @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
-    @Body(new JoiValidationPipe(updateUsuarioSchema)) data: IUsuario,
+    @Param() { id }: GetUsuarioDto,
+    @Body() updateUsuarioDto: UpdateUsuarioDto,
   ) {
-    return this.usuarioService.update(id, data);
+    return this.usuarioService.update(id, updateUsuarioDto);
   }
 
+  @ApiOperation({ summary: 'Delete Usuario' })
   @Delete(':id')
-  remove(
-    @Param(new JoiValidationPipe(getUsuarioSchema)) { id }: { id: number },
-  ) {
+  remove(@Param() { id }: GetUsuarioDto) {
     return this.usuarioService.delete(id);
   }
 }

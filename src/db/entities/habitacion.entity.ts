@@ -10,6 +10,7 @@ import {
 import { Hotel } from './hotel.entity';
 import { Servicio } from './servicio.entity';
 import { TipoHabitacion } from './tipoHabitacion.entity';
+import { FotoHabitacion } from './fotoHabitacion.entity';
 
 @Entity()
 export class Habitacion {
@@ -50,4 +51,10 @@ export class Habitacion {
 
   @ManyToMany(() => Servicio, (servicio: Servicio) => servicio.habitaciones)
   servicios: Servicio[];
+
+  @OneToMany(
+    () => FotoHabitacion,
+    (fotoHabitacion: FotoHabitacion) => fotoHabitacion.id,
+  )
+  fotos: FotoHabitacion[];
 }

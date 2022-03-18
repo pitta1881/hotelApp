@@ -11,7 +11,7 @@ import {
   IGenericResponse,
   StatusTypes,
 } from './../../helpers/generic.response';
-import { IHotel } from './hoteles.interface';
+import { CreateHotelesDto } from './dtos/create-hoteles.dto';
 
 @Injectable()
 export class HotelesService {
@@ -38,9 +38,12 @@ export class HotelesService {
     };
   }
 
-  async create(data: IHotel): Promise<IGenericResponse> {
+  async create(newData: CreateHotelesDto): Promise<IGenericResponse> {
     try {
-      const newHotel = await this.hotelModel.save(data);
+      const newHotel = await this.hotelModel.save({
+        ...newData,
+        lat_lng: [newData.latitude, newData.longitude],
+      });
       return {
         status: StatusTypes.success,
         data: [newHotel],

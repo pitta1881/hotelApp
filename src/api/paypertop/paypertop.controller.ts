@@ -6,65 +6,64 @@ import {
   Patch,
   Body,
   Delete,
-  ParseBoolPipe,
 } from '@nestjs/common';
-
-import { IPaypertop } from './paypertop.interface';
-import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
-import {
-  getPaypertopSchema,
-  createPaypertopSchema,
-  updatePaypertopSchema,
-} from './paypertop.schemas';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PaypertopService } from './paypertop.service';
-import { IUsuario } from '../usuarios/usuario.interface';
+import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from './../../decorators/userJWT.decorator';
+import { GetPaypertopDto } from './dtos/get-paypertop.dto';
+import { CreatePaypertopDto } from './dtos/create-paypertop.dto';
+import { UpdatePaypertopDto } from './dtos/update-paypertop.dto';
+import { UpdateEstadoPaypertopDto } from './dtos/update-estado-paypertop.dto';
 
+@ApiTags('PayPerTop')
+@ApiBearerAuth()
 @Controller('api/paypertop')
 export class PaypertopController {
   constructor(private readonly paypertopService: PaypertopService) {}
 
+  @ApiOperation({ summary: 'FindAll PayPerTops (HotelId en JWT)' })
   @Get()
-  async findAll(@UserJWT() user: IUsuario) {
-    return await this.paypertopService.findAll(user.hotelId);
+  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
+    return await this.paypertopService.findAll(hotelId);
   }
 
+  @ApiOperation({ summary: 'FindOne PayPerTop' })
   @Get(':id')
-  async findOne(
-    @Param(new JoiValidationPipe(getPaypertopSchema)) { id }: { id: number },
-  ) {
+  async findOne(@Param() { id }: GetPaypertopDto) {
     return await this.paypertopService.findOne(id);
   }
 
+  @ApiOperation({ summary: 'Create PayPerTop (HotelId en JWT)' })
   @Post()
   async create(
-    @UserJWT() user: IUsuario,
-    @Body(new JoiValidationPipe(createPaypertopSchema)) data: IPaypertop,
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Body() createPaypertopDto: CreatePaypertopDto,
   ) {
-    return await this.paypertopService.create(data, user.hotelId);
+    return await this.paypertopService.create(createPaypertopDto, hotelId);
   }
 
+  @ApiOperation({ summary: 'Update PayPerTop' })
   @Patch(':id')
   async update(
-    @Param(new JoiValidationPipe(getPaypertopSchema)) { id }: { id: number },
-    @Body(new JoiValidationPipe(updatePaypertopSchema)) data: IPaypertop,
+    @Param() { id }: GetPaypertopDto,
+    @Body() updatePaypertopDto: UpdatePaypertopDto,
   ) {
-    return await this.paypertopService.update(id, data);
+    return await this.paypertopService.update(id, updatePaypertopDto);
   }
 
+  @ApiOperation({ summary: 'Update Estado PayPerTop' })
   @Patch('activo/:id')
   async updateEstado(
-    @Param(new JoiValidationPipe(getPaypertopSchema)) { id }: { id: number },
-    @Body('activo', ParseBoolPipe)
-    activo: boolean,
+    @Param() { id }: GetPaypertopDto,
+    @Body() { activo }: UpdateEstadoPaypertopDto,
   ) {
     return await this.paypertopService.setEstado(id, activo);
   }
 
+  @ApiOperation({ summary: 'Delete PayPerTop' })
   @Delete(':id')
-  async remove(
-    @Param(new JoiValidationPipe(getPaypertopSchema)) { id }: { id: number },
-  ) {
+  async remove(@Param() { id }: GetPaypertopDto) {
     return await this.paypertopService.delete(id);
   }
 }

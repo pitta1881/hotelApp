@@ -1,9 +1,9 @@
-import { IUsuario } from './../../usuarios/usuario.interface';
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './../auth.service';
 
+import { AuthService } from './../auth.service';
+import { IJwtPayload } from '../jwtPayload.interface';
 import { StatusTypes } from './../../../helpers/generic.response';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(nick: string, password: string): Promise<IUsuario> {
+  async validate(nick: string, password: string): Promise<IJwtPayload> {
     const usuario = await this.authService.validateUser(nick, password);
     if (!usuario) {
       throw new UnauthorizedException({

@@ -11,10 +11,11 @@ import {
   IGenericResponse,
   StatusTypes,
 } from './../../helpers/generic.response';
-import { IUsuario } from './usuario.interface';
 import { Usuario } from './../../db/entities/usuario.entity';
 import { Hotel } from './../../db/entities/hotel.entity';
 import { HotelesService } from '../hoteles/hoteles.service';
+import { CreateUsuarioDto } from './dtos/create-usuario.dto';
+import { UpdateUsuarioDto } from './dtos/update-usuario.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -55,8 +56,11 @@ export class UsuariosService {
     };
   }
 
-  async create(data: IUsuario, hotelId: number): Promise<IGenericResponse> {
-    const hash = await bcrypt.hash(data.password, 10);
+  async create(
+    newData: CreateUsuarioDto,
+    hotelId: number,
+  ): Promise<IGenericResponse> {
+    const hash = await bcrypt.hash(newData.password, 10);
     let newUser: Usuario;
     const hotelResp: IGenericResponse = await this.hotelService.findOne(
       hotelId,
@@ -64,7 +68,7 @@ export class UsuariosService {
     const hotel: Hotel = hotelResp.data[0];
     try {
       newUser = await this.usuarioModel.save({
-        ...data,
+        ...newData,
         password: hash,
         hotel,
       });
@@ -81,7 +85,10 @@ export class UsuariosService {
     }
   }
 
-  async update(id: number, newData: IUsuario): Promise<IGenericResponse> {
+  async update(
+    id: number,
+    newData: UpdateUsuarioDto,
+  ): Promise<IGenericResponse> {
     const usuarioResp: IGenericResponse = await this.findOne(id);
     let user: Usuario = usuarioResp.data[0];
     user = await this.usuarioModel.save({ ...user, ...newData });

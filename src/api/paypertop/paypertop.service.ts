@@ -6,7 +6,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { IPaypertop } from './paypertop.interface';
 import { Hotel } from './../../db/entities/hotel.entity';
 import { TipoPPT } from './../../db/entities/tipoPPT.entity';
 import {
@@ -15,6 +14,8 @@ import {
 } from './../../helpers/generic.response';
 import { Paypertop } from './../../db/entities/paypertop.entity';
 import { HotelesService } from '../hoteles/hoteles.service';
+import { CreatePaypertopDto } from './dtos/create-paypertop.dto';
+import { UpdatePaypertopDto } from './dtos/update-paypertop.dto';
 @Injectable()
 export class PaypertopService {
   constructor(
@@ -55,13 +56,16 @@ export class PaypertopService {
     };
   }
 
-  async create(data: IPaypertop, hotelId: number): Promise<IGenericResponse> {
+  async create(
+    newData: CreatePaypertopDto,
+    hotelId: number,
+  ): Promise<IGenericResponse> {
     const hotelResp: IGenericResponse = await this.hotelesService.findOne(
       hotelId,
     );
     const hotel: Hotel = hotelResp.data[0];
     const tipoPPT: TipoPPT = await this.tipoPPTModel.findOne({
-      where: { id: data.tipoPPTId },
+      where: { id: newData.tipoPPTId },
     });
     if (!hotel || !tipoPPT) {
       throw new NotFoundException({
@@ -70,8 +74,10 @@ export class PaypertopService {
       });
     } else {
       try {
+        const lat_lng = [newData.latitude, newData.longitude];
         const newPaypertop = await this.paypertopModel.save({
-          ...data,
+          ...newData,
+          lat_lng,
           hotel,
           tipoPPT,
         });
@@ -88,12 +94,19 @@ export class PaypertopService {
     }
   }
 
-  async update(id: number, newData: IPaypertop): Promise<IGenericResponse> {
+  async update(
+    id: number,
+    newData: UpdatePaypertopDto,
+  ): Promise<IGenericResponse> {
     const paypertopResp: IGenericResponse = await this.findOne(id);
     let paypertop: Paypertop = paypertopResp.data[0];
     paypertop = await this.paypertopModel.save({
       ...paypertop,
-      newData,
+      ...newData,
+      lat_lng:
+        newData.latitude && newData.longitude
+          ? [newData.latitude, newData.longitude]
+          : [paypertop.lat_lng[0], paypertop.lat_lng[1]],
     });
     return {
       status: StatusTypes.success,

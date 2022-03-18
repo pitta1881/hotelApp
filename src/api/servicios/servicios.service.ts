@@ -11,11 +11,13 @@ import {
   IGenericResponse,
 } from './../../helpers/generic.response';
 import { Servicio } from './../../db/entities/servicio.entity';
-import { IServicio } from './servicios.interface';
 import { Hotel } from './../../db/entities/hotel.entity';
 import { Habitacion } from './../../db/entities/habitacion.entity';
 import { HotelesService } from '../hoteles/hoteles.service';
 import { HabitacionesService } from '../habitaciones/habitaciones.service';
+import { CreateServicioDto } from './dtos/create-servicio.dto';
+import { AssociateServicioDto } from './dtos/associate-servicio.dto';
+import { UpdateServicioDto } from './dtos/update-servicio.dto';
 
 @Injectable()
 export class ServiciosService {
@@ -39,10 +41,10 @@ export class ServiciosService {
   }
 
   async findAllHabitacion(
-    habitacionId: number,
+    id: number,
     hotelId: number,
   ): Promise<IGenericResponse> {
-    await this.habitacionService.findOne(habitacionId); //verifico que exista la habitacion
+    await this.habitacionService.findOne(id); //verifico que exista la habitacion
     let servicios: Servicio[] = await this.servicioModel.find({
       relations: ['habitaciones'],
       where: {
@@ -51,9 +53,7 @@ export class ServiciosService {
     });
     servicios = servicios
       .filter((servicio) =>
-        servicio.habitaciones.some(
-          (habitacion) => habitacion.id === habitacionId,
-        ),
+        servicio.habitaciones.some((habitacion) => habitacion.id === id),
       )
       .map((servicio) => {
         delete servicio.habitaciones;
@@ -84,7 +84,7 @@ export class ServiciosService {
   }
 
   async createServiceHotel(
-    data: IServicio,
+    newData: CreateServicioDto,
     hotelId: number,
   ): Promise<IGenericResponse> {
     const hotelResp: IGenericResponse = await this.hotelesService.findOne(
@@ -93,7 +93,7 @@ export class ServiciosService {
     const hotel: Hotel = hotelResp.data[0];
     try {
       const newServicio = await this.servicioModel.save({
-        ...data,
+        ...newData,
         hotel: hotel,
       });
       return {
@@ -109,11 +109,7 @@ export class ServiciosService {
   }
 
   async manageServicioHabitacion(
-    {
-      habitacionId,
-      servicioId,
-      operacion,
-    }: { habitacionId: number; servicioId: number; operacion: boolean },
+    { servicioId, habitacionId, operacion }: AssociateServicioDto,
     hotelId: number,
   ): Promise<IGenericResponse> {
     const servicio: Servicio = await this.servicioModel.findOne({
@@ -167,12 +163,15 @@ export class ServiciosService {
     }
   }
 
-  async update(id: number, newData: IServicio): Promise<IGenericResponse> {
+  async update(
+    id: number,
+    newData: UpdateServicioDto,
+  ): Promise<IGenericResponse> {
     const servicioResp: IGenericResponse = await this.findOne(id);
     let servicio: Servicio = servicioResp.data[0];
     servicio = await this.servicioModel.save({
       ...servicio,
-      newData,
+      ...newData,
     });
     return {
       status: StatusTypes.success,

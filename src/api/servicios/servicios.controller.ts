@@ -6,91 +6,82 @@ import {
   Patch,
   Body,
   Delete,
-  ParseBoolPipe,
-  ParseIntPipe,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { IServicio } from './servicios.interface';
-import {
-  getServiciosSchema,
-  createServiciosSchema,
-  updateServiciosSchema,
-  associateServiceToHabitacionSchema,
-} from './servicios.schemas';
-import { JoiValidationPipe } from './../../middleware/joi-validation.pipe';
-import { IUsuario } from './../usuarios/usuario.interface';
+import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from './../../decorators/userJWT.decorator';
 import { ServiciosService } from './servicios.service';
+import { GetServicioDto } from './dtos/get-servicio.dto';
+import { CreateServicioDto } from './dtos/create-servicio.dto';
+import { AssociateServicioDto } from './dtos/associate-servicio.dto';
+import { UpdateServicioDto } from './dtos/update-servicio.dto';
 
+@ApiTags('Servicios')
+@ApiBearerAuth()
 @Controller('api/servicios')
 export class ServiciosController {
   constructor(private readonly serviciosService: ServiciosService) {}
 
+  @ApiOperation({ summary: 'FindAll Servicios (HotelId en JWT)' })
   @Get('hotel')
-  async findAllHotel(@UserJWT() user: IUsuario) {
-    return await this.serviciosService.findAllHotel(user.hotelId);
+  async findAllHotel(@UserJWT() { hotelId }: IJwtPayload) {
+    return await this.serviciosService.findAllHotel(hotelId);
   }
 
+  @ApiOperation({
+    summary: 'FindAll Servicios de habitacion especifica (HotelId en JWT)',
+  })
   @Get('habitacion/:id')
   async findAllHabitacion(
-    @UserJWT() user: IUsuario,
-    @Param('id', ParseIntPipe)
-    @Param(new JoiValidationPipe(getServiciosSchema))
-    id: number,
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Param() { id }: GetServicioDto,
   ) {
-    return await this.serviciosService.findAllHabitacion(id, user.hotelId);
+    return await this.serviciosService.findAllHabitacion(id, hotelId);
   }
 
+  @ApiOperation({ summary: 'FindOne Servicio' })
   @Get(':id')
-  async findOne(
-    @Param(new JoiValidationPipe(getServiciosSchema)) { id }: { id: number },
-  ) {
+  async findOne(@Param() { id }: GetServicioDto) {
     return await this.serviciosService.findOne(id);
   }
 
+  @ApiOperation({ summary: 'Create Servicio para Hotel (HotelId en JWT)' })
   @Post('hotel')
   async createServiceHotel(
-    @UserJWT() user: IUsuario,
-    @Body('servInstal', ParseBoolPipe)
-    servInstal: boolean,
-    @Body(new JoiValidationPipe(createServiciosSchema)) data: IServicio,
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Body() createServicioDto: CreateServicioDto,
   ) {
     return await this.serviciosService.createServiceHotel(
-      { ...data, servInstal },
-      user.hotelId,
+      createServicioDto,
+      hotelId,
     );
   }
 
+  @ApiOperation({ summary: 'Asociar Servicio a Habitacion (HotelId en JWT)' })
   @Post('habitacion')
   async manageServicioHabitacion(
-    @UserJWT() user: IUsuario,
-    @Body('operacion', ParseBoolPipe)
-    operacion: boolean,
-    @Body('habitacionId', ParseIntPipe)
-    habitacionId: number,
-    @Body('servicioId', ParseIntPipe)
-    servicioId: number,
-    @Body(new JoiValidationPipe(associateServiceToHabitacionSchema))
-    data,
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Body() associateServicioDto: AssociateServicioDto,
   ) {
     return await this.serviciosService.manageServicioHabitacion(
-      { ...data, operacion, habitacionId, servicioId },
-      user.hotelId,
+      associateServicioDto,
+      hotelId,
     );
   }
 
+  @ApiOperation({ summary: 'Update Servicio' })
   @Patch(':id')
   async update(
-    @Param(new JoiValidationPipe(getServiciosSchema)) { id }: { id: number },
-    @Body(new JoiValidationPipe(updateServiciosSchema)) data: IServicio,
+    @Param() { id }: GetServicioDto,
+    @Body() updateServicioDto: UpdateServicioDto,
   ) {
-    return await this.serviciosService.update(id, data);
+    return await this.serviciosService.update(id, updateServicioDto);
   }
 
+  @ApiOperation({ summary: 'Delete Servicio' })
   @Delete(':id')
-  async remove(
-    @Param(new JoiValidationPipe(getServiciosSchema)) { id }: { id: number },
-  ) {
+  async remove(@Param() { id }: GetServicioDto) {
     return await this.serviciosService.delete(id);
   }
 }
