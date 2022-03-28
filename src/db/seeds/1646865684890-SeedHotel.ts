@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 import { Hotel } from './../entities/hotel.entity';
-import { CreateHotelesDto } from 'src/api/hoteles/dtos/create-hoteles.dto';
+import { CreateHotelDto } from '../../api/hoteles/dtos/hotel.dto';
 
 export class SeedHotel1646865684890 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const hotel: CreateHotelesDto = {
+    const hotel: CreateHotelDto = {
       nombre: 'Hotel Pato',
+      nombre_uri: 'hotelpato',
       descripcion_home: 'Esta es la descripcion del home',
       descripcion_ubi: 'Esta es la descripcion de la ubicacion',
       telefono_1: '0112134564',

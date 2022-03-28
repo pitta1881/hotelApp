@@ -1,17 +1,18 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  PrimaryColumn,
 } from 'typeorm';
 
 import { Hotel } from './hotel.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class Mensaje {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'int' })
   id: number;
 
   @Column({ nullable: false })
@@ -45,20 +46,22 @@ export class Mensaje {
   leido: boolean;
 
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
 
-  @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.id, {
+  @ManyToOne(() => Hotel, {
     nullable: false,
+    primary: true,
   })
   hotel: Hotel;
 }

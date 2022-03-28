@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 import { FotoHotel } from './fotoHotel.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class TipoCarousel {
   @PrimaryGeneratedColumn()
   id: number;

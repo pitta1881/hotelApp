@@ -1,9 +1,9 @@
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -19,13 +19,16 @@ async function bootstrap() {
       },
     }),
   );
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   const configService = app.get(ConfigService);
 
   app.use(helmet());
 
   const config = new DocumentBuilder()
     .setTitle('HOTEL APP')
-    .setDescription('Proyecto Final PAW UNLu - Pittavino Patricio')
+    .setDescription(
+      '<p>Proyecto Final PAW UNLu - Pittavino Patricio</p><p>Si no es Public, el HotelId está en JWT</p>',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();

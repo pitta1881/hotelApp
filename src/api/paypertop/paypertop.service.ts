@@ -8,25 +8,21 @@ import {
 
 import { Hotel } from './../../db/entities/hotel.entity';
 import { TipoPPT } from './../../db/entities/tipoPPT.entity';
-import {
-  IGenericResponse,
-  StatusTypes,
-} from './../../helpers/generic.response';
+import { IGenResp, StatusTypes } from './../../helpers/generic.response';
 import { Paypertop } from './../../db/entities/paypertop.entity';
-import { HotelesService } from '../hoteles/hoteles.service';
-import { CreatePaypertopDto } from './dtos/create-paypertop.dto';
-import { UpdatePaypertopDto } from './dtos/update-paypertop.dto';
+import { HotelService } from '../hoteles/hotel.service';
+import { CreatePaypertopDto, UpdatePaypertopDto } from './dtos/paypertop.dto';
 @Injectable()
 export class PaypertopService {
   constructor(
-    private hotelesService: HotelesService,
+    private hotelService: HotelService,
     @InjectRepository(Paypertop)
     private paypertopModel: Repository<Paypertop>,
     @InjectRepository(TipoPPT)
     private tipoPPTModel: Repository<TipoPPT>,
   ) {}
 
-  async findAll(hotelId: number): Promise<IGenericResponse> {
+  async findAll(hotelId: number): Promise<IGenResp> {
     const paypertops: Paypertop[] = await this.paypertopModel.find({
       where: {
         hotel: hotelId,
@@ -38,9 +34,11 @@ export class PaypertopService {
     };
   }
 
-  async findOne(id: number): Promise<IGenericResponse> {
+  async findOne(hotelId: number, id: number): Promise<IGenResp> {
     const paypertop: Paypertop = await this.paypertopModel.findOne({
+      relations: ['hotel'],
       where: {
+        hotel: hotelId,
         id,
       },
     });
@@ -57,12 +55,10 @@ export class PaypertopService {
   }
 
   async create(
-    newData: CreatePaypertopDto,
     hotelId: number,
-  ): Promise<IGenericResponse> {
-    const hotelResp: IGenericResponse = await this.hotelesService.findOne(
-      hotelId,
-    );
+    newData: CreatePaypertopDto,
+  ): Promise<IGenResp> {
+    const hotelResp: IGenResp = await this.hotelService.findOne(hotelId);
     const hotel: Hotel = hotelResp.data[0];
     const tipoPPT: TipoPPT = await this.tipoPPTModel.findOne({
       where: { id: newData.tipoPPTId },
@@ -75,11 +71,13 @@ export class PaypertopService {
     } else {
       try {
         const lat_lng = [newData.latitude, newData.longitude];
+        const nextId = await this.findNextId(hotelId);
         const newPaypertop = await this.paypertopModel.save({
-          ...newData,
           lat_lng,
           hotel,
           tipoPPT,
+          ...newData,
+          id: nextId,
         });
         return {
           status: StatusTypes.success,
@@ -95,27 +93,42 @@ export class PaypertopService {
   }
 
   async update(
+    hotelId: number,
     id: number,
     newData: UpdatePaypertopDto,
-  ): Promise<IGenericResponse> {
-    const paypertopResp: IGenericResponse = await this.findOne(id);
+  ): Promise<IGenResp> {
+    const paypertopResp: IGenResp = await this.findOne(hotelId, id);
     let paypertop: Paypertop = paypertopResp.data[0];
-    paypertop = await this.paypertopModel.save({
-      ...paypertop,
-      ...newData,
+    let tipoPPT: TipoPPT;
+    if (newData.tipoPPTId) {
+      tipoPPT = await this.tipoPPTModel.findOne(newData.tipoPPTId);
+      if (!tipoPPT) {
+        throw new NotFoundException({
+          status: StatusTypes.error,
+          error: 'El TipoPPT no existe',
+        });
+      }
+    }
+    paypertop = this.paypertopModel.merge(paypertop, newData, {
+      tipoPPT: tipoPPT || paypertop.tipoPPT,
       lat_lng:
         newData.latitude && newData.longitude
           ? [newData.latitude, newData.longitude]
           : [paypertop.lat_lng[0], paypertop.lat_lng[1]],
     });
+    paypertop = await this.paypertopModel.save(paypertop);
     return {
       status: StatusTypes.success,
       data: [paypertop],
     };
   }
 
-  async setEstado(id: number, newEstado: boolean): Promise<IGenericResponse> {
-    const paypertopResp: IGenericResponse = await this.findOne(id);
+  async setEstado(
+    hotelId: number,
+    id: number,
+    newEstado: boolean,
+  ): Promise<IGenResp> {
+    const paypertopResp: IGenResp = await this.findOne(hotelId, id);
     let paypertop: Paypertop = paypertopResp.data[0];
     paypertop = await this.paypertopModel.save({
       ...paypertop,
@@ -127,10 +140,13 @@ export class PaypertopService {
     };
   }
 
-  async delete(id: number): Promise<IGenericResponse> {
-    await this.findOne(id); //si falla salta una exception
+  async delete(hotelId: number, id: number): Promise<IGenResp> {
+    await this.findOne(hotelId, id); //si falla salta una exception
     try {
-      await this.paypertopModel.delete(id);
+      await this.paypertopModel.delete({
+        hotel: { id: hotelId },
+        id,
+      });
       return {
         status: StatusTypes.success,
       };
@@ -140,5 +156,18 @@ export class PaypertopService {
         error: error.detail,
       });
     }
+  }
+
+  private async findNextId(hotelId: number) {
+    const entity = await this.paypertopModel.find({
+      where: {
+        hotel: hotelId,
+      },
+      order: {
+        id: 'DESC',
+      },
+      take: 1,
+    });
+    return entity.length === 0 ? 1 : entity[0].id + 1;
   }
 }

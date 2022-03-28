@@ -3,7 +3,7 @@ export enum StatusTypes {
   error = 'ERROR',
 }
 
-export interface IGenericResponse {
+export interface IGenResp {
   status: StatusTypes;
   data?: any[];
   error?: string;

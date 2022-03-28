@@ -6,13 +6,10 @@ import { PaypertopService } from './paypertop.service';
 import { TipoPPT } from './../../db/entities/tipoPPT.entity';
 import { Hotel } from './../../db/entities/hotel.entity';
 import { Paypertop } from './../../db/entities/paypertop.entity';
-import { HotelesModule } from '../hoteles/hoteles.module';
+import { HotelModule } from '../hoteles/hotel.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Paypertop, Hotel, TipoPPT]),
-    HotelesModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Paypertop, Hotel, TipoPPT]), HotelModule],
   controllers: [PaypertopController],
   providers: [PaypertopService],
 })

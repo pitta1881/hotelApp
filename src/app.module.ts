@@ -8,15 +8,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { TypeOrmConfigService } from './db/typeorm-config.service';
-import { FotosModule } from './api/fotos/fotos.module';
-import { HabitacionesModule } from './api/habitaciones/habitaciones.module';
-import { HotelesModule } from './api/hoteles/hoteles.module';
-import { MensajesModule } from './api/mensajes/mensajes.module';
+import { FotoModule } from './api/fotos/foto.module';
+import { HabitacionModule } from './api/habitaciones/habitacion.module';
+import { HotelModule } from './api/hoteles/hotel.module';
+import { MensajeModule } from './api/mensajes/mensaje.module';
 import { PaypertopModule } from './api/paypertop/paypertop.module';
-import { PersonasModule } from './api/personas/personas.module';
-import { ReservasModule } from './api/reservas/reservas.module';
-import { ServiciosModule } from './api/servicios/servicios.module';
-import { UsuariosModule } from './api/usuarios/usuarios.module';
+import { HuespedModule } from './api/huesped/huesped.module';
+import { ReservaModule } from './api/reservas/reserva.module';
+import { ServicioModule } from './api/servicios/servicio.module';
+import { UsuarioModule } from './api/usuarios/usuario.module';
 import { AuthModule } from './api/auth/auth.module';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
@@ -26,16 +26,16 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
-    FotosModule,
-    HabitacionesModule,
-    HotelesModule,
-    MensajesModule,
+    FotoModule,
+    HabitacionModule,
+    HotelModule,
+    MensajeModule,
     PaypertopModule,
-    PersonasModule,
-    ReservasModule,
-    ServiciosModule,
-    UsuariosModule,
-    ServiciosModule,
+    HuespedModule,
+    ReservaModule,
+    ServicioModule,
+    UsuarioModule,
+    ServicioModule,
     AuthModule,
   ],
   controllers: [AppController],

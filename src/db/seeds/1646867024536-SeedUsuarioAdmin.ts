@@ -14,11 +14,12 @@ export class SeedUsuarioAdmin1646867024536 implements MigrationInterface {
       .getOne();
 
     const usuarioAdmin = {
-      nombre: 'admin',
-      apellido: 'admin',
-      email: 'pitta1881@gmail.com',
-      nick: 'admin',
-      password: await bcrypt.hash('admin', 10),
+      id: 1,
+      nombre: `admin-${hotel.nombre_uri}`,
+      apellido: `admin-${hotel.nombre_uri}`,
+      email: `admin-${hotel.nombre_uri}@mail.com`,
+      nick: `admin-${hotel.nombre_uri}`,
+      password: await bcrypt.hash('admin123', 10),
       hotel: hotel,
     };
     queryRunner.manager

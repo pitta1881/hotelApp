@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Paypertop } from './paypertop.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class TipoPPT {
   @PrimaryGeneratedColumn()
   id: number;

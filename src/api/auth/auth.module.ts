@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { UsuariosModule } from './../usuarios/usuarios.module';
+import { UsuarioModule } from '../usuarios/usuario.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './strategies/local.strategy';
@@ -11,7 +11,7 @@ import { JwtConfigService } from './jwt.config.service';
 
 @Module({
   imports: [
-    UsuariosModule,
+    UsuarioModule,
     PassportModule,
     JwtModule.registerAsync({
       useClass: JwtConfigService,

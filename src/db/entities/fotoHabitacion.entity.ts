@@ -1,17 +1,19 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
+  PrimaryColumn,
 } from 'typeorm';
 
 import { Habitacion } from './habitacion.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class FotoHabitacion {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'int' })
   id: number;
 
   @Column({ nullable: false })
@@ -24,20 +26,23 @@ export class FotoHabitacion {
   path: string;
 
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
 
-  @ManyToOne(() => Habitacion, (habitacion: Habitacion) => habitacion.id, {
-    nullable: false,
-  })
+  @ManyToOne(() => Habitacion, { primary: true })
+  @JoinColumn([
+    { name: 'habitacionId', referencedColumnName: 'id' },
+    { name: 'hotelId', referencedColumnName: 'hotel' },
+  ])
   habitacion: Habitacion;
 }

@@ -31,6 +31,7 @@ export class SeedHabitaciones1646918729297 implements MigrationInterface {
 
     const habitaciones = [
       {
+        id: 1,
         nombre: 'Habitacion Simple',
         descripcion_hab: 'Habitacion totalmente amueblada para 1 persona',
         descripcion_camas: '1 Cama Simple',
@@ -40,6 +41,7 @@ export class SeedHabitaciones1646918729297 implements MigrationInterface {
         hotel: hotel,
       },
       {
+        id: 2,
         nombre: 'Habitacion Suite',
         descripcion_hab:
           'Habitacion Suite amueblada para 2 personas y de clase premium',

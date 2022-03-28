@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 import { Habitacion } from './habitacion.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class TipoHabitacion {
   @PrimaryGeneratedColumn()
   id: number;

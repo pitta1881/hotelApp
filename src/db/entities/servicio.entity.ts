@@ -1,18 +1,18 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   ManyToOne,
   ManyToMany,
   JoinTable,
+  PrimaryColumn,
 } from 'typeorm';
 
 import { Hotel } from './hotel.entity';
 import { Habitacion } from './habitacion.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class Servicio {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'int' })
   id: number;
 
   @Column({ nullable: false, unique: true })
@@ -26,16 +26,14 @@ export class Servicio {
 
   @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.servicios, {
     nullable: true,
+    primary: true,
   })
   hotel: Hotel;
 
   @ManyToMany(
     () => Habitacion,
     (habitacion: Habitacion) => habitacion.servicios,
-    {
-      cascade: true,
-    },
   )
-  @JoinTable()
+  @JoinTable({ name: 'servicio_x_habitacion' })
   habitaciones: Habitacion[];
 }

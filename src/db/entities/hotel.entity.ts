@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  BeforeInsert,
 } from 'typeorm';
 
 import { Paypertop } from './paypertop.entity';
@@ -12,14 +13,18 @@ import { Usuario } from './usuario.entity';
 import { Mensaje } from './mensaje.entity';
 import { Servicio } from './servicio.entity';
 import { FotoHotel } from './fotoHotel.entity';
+import { Exclude } from 'class-transformer';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class Hotel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   nombre: string;
+
+  @Column({ nullable: false, unique: true })
+  nombre_uri: string;
 
   @Column({ nullable: false, type: 'text' })
   descripcion_home: string;
@@ -42,16 +47,18 @@ export class Hotel {
   @Column({ nullable: false, array: true, type: 'float' })
   lat_lng: number[];
 
+  @Exclude()
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
 
@@ -69,4 +76,9 @@ export class Hotel {
 
   @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.id)
   fotos: FotoHotel[];
+
+  @BeforeInsert()
+  async nombreUriTransform() {
+    this.nombre_uri = this.nombre.toLowerCase().replace(/\s+/g, '');
+  }
 }

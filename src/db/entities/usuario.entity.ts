@@ -1,17 +1,21 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  BeforeInsert,
+  PrimaryColumn,
+  BeforeUpdate,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 import { Hotel } from './hotel.entity';
+import { Exclude } from 'class-transformer';
 
-@Entity()
+@Entity({ orderBy: { id: 'ASC' } })
 export class Usuario {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'int' })
   id: number;
 
   @Column({ nullable: false })
@@ -26,24 +30,34 @@ export class Usuario {
   @Column({ nullable: false, unique: true })
   nick: string;
 
+  @Exclude()
   @Column({ nullable: false, type: 'text' })
   password: string;
 
+  @Exclude()
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
 
-  @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.id, {
+  @ManyToOne(() => Hotel, {
     nullable: false,
+    primary: true,
   })
   hotel: Hotel;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async passwordHash() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

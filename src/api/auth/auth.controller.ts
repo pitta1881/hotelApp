@@ -21,7 +21,7 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  @ApiBody({ type: LoginDto })
+  @ApiBody({ type: LoginDto, description: 'admin-hotelpato, admin123' })
   async login(@Request() req: RequestWithUser) {
     return await this.authService.login(req.user);
   }
