@@ -23,7 +23,7 @@ En **Documentacion/Wireframes.pdf** encontrará los wireframes del proyecto.
 ### Backend
 
 - [Nest.js](https://nestjs.com/) - Framework de Node.js basado en TypeScript.
-- Base de Datos - Pendiente.
+- Base de Datos - [PostgreSQL](https://www.postgresql.org).
 
 ### Frontend
 
@@ -34,29 +34,35 @@ En **Documentacion/Wireframes.pdf** encontrará los wireframes del proyecto.
 - [Git](https://git-scm.com/) - Control de Versiones.
 - [VS Code](https://code.visualstudio.com/) - Editor de Código.
 
-## Instalación
+## Instalación de Depedencias
 
 ```bash
 $ npm install
 ```
 
+## Generación de Base de Datos y Seeds de prueba
+
+```bash
+$ npm run migrations:run
+$ npm run seeds:run
+```
+
 ## Iniciar la App
 
 ```bash
-# development
 $ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
 ## Abrir Navegador
 
 <pre>
 <a href="http://localhost:3000">http://localhost:3000</a>
+</pre>
+
+## Documentación y prueba de la API
+
+<pre>
+<a href="http://localhost:3000/docs">http://localhost:3000/docs</a>
 </pre>
 
 <small><i>Documento en constante actualización.</i></small>
