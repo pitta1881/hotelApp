@@ -1,0 +1,84 @@
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  BeforeInsert,
+} from 'typeorm';
+
+import { Paypertop } from './paypertop.entity';
+import { Usuario } from './usuario.entity';
+import { Mensaje } from './mensaje.entity';
+import { Servicio } from './servicio.entity';
+import { FotoHotel } from './fotoHotel.entity';
+import { Exclude } from 'class-transformer';
+
+@Entity({ orderBy: { id: 'ASC' } })
+export class Hotel {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ nullable: false, unique: true })
+  nombre: string;
+
+  @Column({ nullable: false, unique: true })
+  nombre_uri: string;
+
+  @Column({ nullable: false, type: 'text' })
+  descripcion_home: string;
+
+  @Column({ nullable: false, type: 'text' })
+  descripcion_ubi: string;
+
+  @Column({ nullable: false })
+  telefono_1: string;
+
+  @Column({ nullable: true })
+  telefono_2: string;
+
+  @Column({ nullable: false })
+  email: string;
+
+  @Column({ nullable: false })
+  direccion: string;
+
+  @Column({ nullable: false, array: true, type: 'float' })
+  lat_lng: number[];
+
+  @Exclude()
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  created_at: Date;
+
+  @Exclude()
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updated_at: Date;
+
+  @OneToMany(() => Mensaje, (mensaje: Mensaje) => mensaje.id)
+  mensajes: Mensaje[];
+
+  @OneToMany(() => Usuario, (usuario: Usuario) => usuario.id)
+  usuarios: Usuario[];
+
+  @OneToMany(() => Paypertop, (paypertop: Paypertop) => paypertop.id)
+  paypertops: Paypertop[];
+
+  @OneToMany(() => Servicio, (servicio: Servicio) => servicio.id)
+  servicios: Servicio[];
+
+  @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.id)
+  fotos: FotoHotel[];
+
+  @BeforeInsert()
+  async nombreUriTransform() {
+    this.nombre_uri = this.nombre.toLowerCase().replace(/\s+/g, '');
+  }
+}
