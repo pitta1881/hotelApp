@@ -1,9 +1,10 @@
-{{!-- pages/page-one.hbs --}}
-
-{{#> layouts/base title="Home" }}
+{{#> layouts/base title="Home" hotel=hotel }}
 
   {{#*inline "main-content-block"}}
-    {{message}}
+    {{#with hotel}}
+      <p>{{nombre}}</p>
+      <p>{{descripcion_home}}</p>
+    {{/with}}
   {{/inline}}
 
 {{/layouts/base}}

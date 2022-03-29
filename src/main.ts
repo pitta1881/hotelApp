@@ -5,6 +5,11 @@ import { AppModule } from './app.module';
 import helmet from 'helmet';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { join } from 'path';
+import * as hbs from 'hbs';
+
+import { HttpExceptionFilter } from './http-exception.filter';
+import { ifEquals, greaterThan, jsonRaw } from './helpers/hbs-helpers';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -34,6 +39,17 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
+  hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
+
+  hbs.registerHelper('ifEquals', ifEquals);
+  hbs.registerHelper('greaterThan', greaterThan);
+  hbs.registerHelper('jsonRaw', jsonRaw);
+
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(configService.get('NESTJS_PORT'));
   console.log(`Hotel App is running on: ${await app.getUrl()}`);

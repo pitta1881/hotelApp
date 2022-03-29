@@ -21,6 +21,13 @@ import { HotelService } from './hotel.service';
 export class HotelController {
   constructor(private readonly hotelService: HotelService) {}
 
+  @ApiOperation({ summary: 'FindAll Hoteles - PÚBLICO' })
+  @Public()
+  @Get()
+  async findAll() {
+    return await this.hotelService.findAll();
+  }
+
   @ApiOperation({ summary: 'FindOne Hotel - PÚBLICO' })
   @Public()
   @Get(':id')

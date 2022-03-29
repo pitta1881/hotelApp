@@ -1,0 +1,13 @@
+{{#> layouts/baseLanding title="Landing" }}
+
+  {{#*inline "main-content-block"}}
+    {{#each hoteles}}
+      <p>{{nombre}}</p>
+      <p>{{descripcion_home}}</p>  
+      <a href="/{{nombre_uri}}">Ir a {{nombre}}</a>      
+    {{else}}
+      <p>No hay hoteles registrados.</p>
+    {{/each}}
+  {{/inline}}
+
+{{/layouts/baseLanding}}

@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { APP_GUARD } from '@nestjs/core';
 
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { TypeOrmConfigService } from './db/typeorm-config.service';
@@ -19,6 +18,7 @@ import { ServicioModule } from './api/servicios/servicio.module';
 import { UsuarioModule } from './api/usuarios/usuario.module';
 import { AuthModule } from './api/auth/auth.module';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { WebModule } from './web/web.module';
 
 @Module({
   imports: [
@@ -37,8 +37,8 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     UsuarioModule,
     ServicioModule,
     AuthModule,
+    WebModule,
   ],
-  controllers: [AppController],
   providers: [
     AppService,
     {
