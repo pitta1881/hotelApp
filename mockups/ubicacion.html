@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ubicacion Page | HotelApp</title>
+    <link rel="stylesheet" href="./css/css-reset.css" />
+    <link rel="stylesheet" href="./css/base/base.css" />
+    <link rel="stylesheet" href="./css/ubicacion.css" />
+    <script src="./js/nav.js" defer></script>
+    <script src="./js/ubicacion.js" defer></script>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+  </head>
+
+  <body>
+    <header>
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="https://huinid.com">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <ul>
+          <li><a href="./home.html">Home</a></li>
+          <li><a href="./habitaciones.html">Habitaciones</a></li>
+          <li><a href="./servicios.html">Servicios y Galeria</a></li>
+          <li><a href="./ubicacion.html">Ubicación</a></li>
+          <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+      </section>
+    </nav>
+    <main>
+      <section id="descripcion">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
+          perspiciatis consequuntur, cumque, laudantium nesciunt impedit harum,
+          libero enim iste animi inventore reiciendis exercitationem eum
+          pariatur odit quod officiis odio iusto.
+        </p>
+      </section>
+      <section id="mapa-container">
+        <div id="btn-container">
+          <input type="checkbox" id="btn-gastro" checked="checked" />
+          <label for="btn-gastro">Gastronomia</label>
+          <input type="checkbox" id="btn-atrac" checked="checked" />
+          <label for="btn-atrac">Atracciones</label>
+          <input type="checkbox" id="btn-super" checked="checked" />
+          <label for="btn-super">Supermercados</label>
+        </div>
+        <section id="inner-mapa-container">
+          <section id="mapa"></section>
+          <div id="listppt">
+            <button id="btnList">
+              <span>-</span>
+              <span>-</span>
+              <span>-</span>
+              <span>-</span>
+            </button>
+            <ul>
+              <li class="list-paypertop list-gastro show" data-marker="1">
+                <img src="./icons/food-svgrepo-com.svg" />
+                <img src="./icons/star-svgrepo-com.svg" />
+                <span>razon_social 1</span>
+              </li>
+              <li class="list-paypertop list-atrac show" data-marker="2">
+                <img src="./icons/balloon-svgrepo-com.svg" />
+                <img src="./icons/star-svgrepo-com.svg" />
+                <span>razon_social 2</span>
+              </li>
+              <li class="list-paypertop list-super show" data-marker="3">
+                <img src="./icons/supermarket-cart-svgrepo-com.svg" />
+                <img src="./icons/star-svgrepo-com.svg" />
+                <span>razon_social 3</span>
+              </li>
+              <li class="list-paypertop list-gastro show" data-marker="4">
+                <img src="./icons/food-svgrepo-com.svg" />
+                <span>razon_social 4</span>
+              </li>
+              <li class="list-paypertop list-gastro show" data-marker="1">
+                <img src="./icons/food-svgrepo-com.svg" />
+                <img src="./icons/star-svgrepo-com.svg" />
+                <span>razon_social 1</span>
+              </li>
+              <li class="list-paypertop list-atrac show" data-marker="2">
+                <img src="./icons/balloon-svgrepo-com.svg" />
+                <img src="./icons/star-svgrepo-com.svg" />
+                <span>razon_social 2</span>
+              </li>
+              <li class="list-paypertop list-super show" data-marker="3">
+                <img src="./icons/supermarket-cart-svgrepo-com.svg" />
+                <img src="./icons/star-svgrepo-com.svg" />
+                <span>razon_social 3</span>
+              </li>
+              <li class="list-paypertop list-gastro show" data-marker="4">
+                <img src="./icons/food-svgrepo-com.svg" />
+                <span>razon_social 4</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </section>
+    </main>
+    <footer>
+      <section id="informacion-hotel">
+        <section id="contacto">
+          <ul>
+            <li>
+              <img
+                src="./icons/location_on_black_24dp.svg"
+                alt="map-icon"
+              /><span>Calle Falsa 123 - Springfield</span>
+            </li>
+            <li>
+              <img
+                src="./icons/schedule_black_24dp.svg"
+                alt="clock-icon"
+              /><span>L-V 9-18hs</span>
+            </li>
+            <li>
+              <a href="tel:011-15-12345678"
+                ><img
+                  src="./icons/phone_black_24dp.svg"
+                  alt="phone-icon"
+                /><span>011-15-12345678</span></a
+              >
+            </li>
+            <li>
+              <a href="mailto:example@test.com"
+                ><img
+                  src="./icons/email_black_24dp.svg"
+                  alt="email-icon"
+                /><span>example@test.com</span></a
+              >
+            </li>
+          </ul>
+        </section>
+        <section id="redes">
+          <ul>
+            <li>
+              <a href=""
+                ><img
+                  src="./icons/facebook-svgrepo-com.svg"
+                  alt="facebook-icon"
+                /><span>/hotelPato</span></a
+              >
+            </li>
+            <li>
+              <a href=""
+                ><img
+                  src="./icons/twitter-svgrepo-com.svg"
+                  alt="twitter-icon"
+                /><span>/hotelPato</span></a
+              >
+            </li>
+            <li>
+              <a href=""
+                ><img
+                  src="./icons/instagram-svgrepo-com.svg"
+                  alt="instagram-icon"
+                /><span>/hotelPato</span></a
+              >
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section id="copyright">
+        <p>Buenos Aires - Argentina</p>
+        <p>Patricio Ariel Pittavino - 121476 - pitta1881@gmail.com</p>
+        <p>Todos los derechos reservados</p>
+      </section>
+    </footer>
+  </body>
+</html>

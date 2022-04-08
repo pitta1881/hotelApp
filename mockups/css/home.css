@@ -1,0 +1,6 @@
+@import './base/carousel.css';
+
+main #descripcion {
+  margin-top: 10px;
+  text-align: center;
+}

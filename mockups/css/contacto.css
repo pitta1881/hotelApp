@@ -1,0 +1,82 @@
+h3 {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+.control-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 20px 0;
+}
+.control-input label {
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+.control-input label:after {
+  content: '*';
+  color: red;
+}
+
+.control-input input,
+.control-input select,
+.control-input textarea {
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width: auto;
+  background-color: white;
+}
+
+.control-input textarea {
+  resize: vertical;
+}
+#button-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+#button-container button {
+  flex-basis: 20%;
+  border: none;
+  background: none;
+  border-color: #960606;
+  color: white;
+  font-size: 20px;
+  background-color: #a51515;
+  padding: 5px 20px;
+  box-shadow: 0px 0px 3px 0px #a51515;
+}
+
+@media screen and (min-width: 768px) {
+  .container-doble {
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-doble .control-input {
+    flex-basis: 48%;
+  }
+  #button-container {
+    text-align: right;
+  }
+  #button-container button {
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container-cuatriple {
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-cuatriple .container-doble {
+    flex-basis: 48%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  main {
+    margin: 1% 20% 3%;
+  }
+}

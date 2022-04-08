@@ -1,0 +1,53 @@
+@import 'header.css';
+@import 'nav.css';
+@import 'footer.css';
+@font-face {
+  font-family: Trip Sans VF;
+  src: url(../../fonts/TripSans-VF.woff2);
+}
+@font-face {
+  font-family: Trip Sans;
+  src: url(../../fonts/TripAdvisor_Regular.woff2);
+}
+
+body {
+  font-family: 'Trip Sans VF', 'Trip Sans', 'Roboto', sans-serif;
+}
+body.noscroll {
+  max-height: 100%;
+  overflow: hidden;
+}
+
+main {
+  margin: 3%;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  font-size: 16px;
+}
+
+h6 {
+  font-size: 14px;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    margin: 1% 5% 3%;
+  }
+}

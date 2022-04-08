@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto Page | HotelApp</title>
+    <link rel="stylesheet" href="./css/css-reset.css" />
+    <link rel="stylesheet" href="./css/base/base.css" />
+    <link rel="stylesheet" href="./css/contacto.css" />
+    <script src="./js/nav.js" defer></script>
+  </head>
+
+  <body>
+    <header>
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="https://huinid.com">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <ul>
+          <li><a href="./home.html">Home</a></li>
+          <li><a href="./habitaciones.html">Habitaciones</a></li>
+          <li><a href="./servicios.html">Servicios y Galeria</a></li>
+          <li><a href="./ubicacion.html">Ubicación</a></li>
+          <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+      </section>
+    </nav>
+    <main>
+      <section id="contacto-container">
+        <h3>Contactanos</h3>
+        <form
+          id="inner-container"
+          action="http://localhost:3800/api/mensajes"
+          method="post"
+        >
+          <div class="container-doble">
+            <div class="control-input">
+              <label for="nombre">Nombre</label>
+              <input type="text" name="nombre" id="nombre" required />
+            </div>
+            <div class="control-input">
+              <label for="apellido">Apellido</label>
+              <input type="text" name="apellido" id="apellido" required />
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" required />
+            </div>
+            <div class="control-input">
+              <label for="pais">País de Residencia</label>
+              <select name="pais" id="pais" required>
+                <option value="ar">Argentina</option>
+                <option value="bo">Bolivia</option>
+                <option value="ur">Uruguay</option>
+                <option value="pa">Paraguay</option>
+                <option value="ch">Chile</option>
+                <option value="br">Brasil</option>
+              </select>
+            </div>
+          </div>
+          <div class="container-cuatriple">
+            <div class="container-doble">
+              <div class="control-input">
+                <label for="checkin">Check-In</label>
+                <input type="date" name="checkin" id="checkin" required />
+              </div>
+              <div class="control-input">
+                <label for="checkout">Check-Out</label>
+                <input type="date" name="checkout" id="checkout" required />
+              </div>
+            </div>
+            <div class="container-doble">
+              <div class="control-input">
+                <label for="adultos">Adultos</label>
+                <input
+                  type="number"
+                  name="adultos"
+                  id="adultos"
+                  min="0"
+                  value="0"
+                  required
+                />
+              </div>
+              <div class="control-input">
+                <label for="menores">Menores</label>
+                <input
+                  type="number"
+                  name="menores"
+                  id="menores"
+                  min="0"
+                  value="0"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="control-input">
+            <label for="mensaje">Mensaje</label>
+            <textarea
+              name="mensaje"
+              id="mensaje"
+              cols="30"
+              rows="10"
+              required
+            ></textarea>
+          </div>
+          <div id="button-container">
+            <button type="reset">Limpiar</button>
+            <button type="submit">Enviar</button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <section id="informacion-hotel">
+        <section id="contacto">
+          <ul>
+            <li>
+              <img
+                src="./icons/location_on_black_24dp.svg"
+                alt="map-icon"
+              /><span>Calle Falsa 123 - Springfield</span>
+            </li>
+            <li>
+              <img
+                src="./icons/schedule_black_24dp.svg"
+                alt="clock-icon"
+              /><span>L-V 9-18hs</span>
+            </li>
+            <li>
+              <a href="tel:011-15-12345678"
+                ><img
+                  src="./icons/phone_black_24dp.svg"
+                  alt="phone-icon"
+                /><span>011-15-12345678</span></a
+              >
+            </li>
+            <li>
+              <a href="mailto:example@test.com"
+                ><img
+                  src="./icons/email_black_24dp.svg"
+                  alt="email-icon"
+                /><span>example@test.com</span></a
+              >
+            </li>
+          </ul>
+        </section>
+        <section id="redes">
+          <ul>
+            <li>
+              <a href=""
+                ><img
+                  src="./icons/facebook-svgrepo-com.svg"
+                  alt="facebook-icon"
+                /><span>/hotelPato</span></a
+              >
+            </li>
+            <li>
+              <a href=""
+                ><img
+                  src="./icons/twitter-svgrepo-com.svg"
+                  alt="twitter-icon"
+                /><span>/hotelPato</span></a
+              >
+            </li>
+            <li>
+              <a href=""
+                ><img
+                  src="./icons/instagram-svgrepo-com.svg"
+                  alt="instagram-icon"
+                /><span>/hotelPato</span></a
+              >
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section id="copyright">
+        <p>Buenos Aires - Argentina</p>
+        <p>Patricio Ariel Pittavino - 121476 - pitta1881@gmail.com</p>
+        <p>Todos los derechos reservados</p>
+      </section>
+    </footer>
+  </body>
+</html>
