@@ -1,6 +1,13 @@
 import { PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsDate, IsDefined, IsEmail, IsInt, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsDefined,
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateHuespedDto {
   @IsString()
@@ -12,7 +19,7 @@ export class CreateHuespedDto {
   apellido: string;
 
   @IsEmail()
-  @IsDefined()
+  @IsOptional()
   email: string;
 
   @IsInt()
@@ -25,7 +32,7 @@ export class CreateHuespedDto {
   fecha_nacimiento: Date;
 
   @IsString()
-  @IsDefined()
+  @IsOptional()
   telefono: string;
 }
 

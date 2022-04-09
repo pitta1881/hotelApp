@@ -20,6 +20,9 @@ export class Hotel {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ nullable: false, default: true, type: 'boolean' })
+  activo: boolean;
+
   @Column({ nullable: false, unique: true })
   nombre: string;
 
@@ -46,6 +49,21 @@ export class Hotel {
 
   @Column({ nullable: false, array: true, type: 'float' })
   lat_lng: number[];
+
+  @Column({ nullable: true })
+  logo_path: string;
+
+  @Column({ nullable: true })
+  horario_contacto: string;
+
+  @Column({ nullable: true })
+  facebook: string;
+
+  @Column({ nullable: true })
+  twitter: string;
+
+  @Column({ nullable: true })
+  instagram: string;
 
   @Exclude()
   @CreateDateColumn({

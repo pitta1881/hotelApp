@@ -16,13 +16,10 @@ export class FotoHabitacion {
   @PrimaryColumn({ type: 'int' })
   id: number;
 
-  @Column({ nullable: false })
-  nombre: string;
-
   @Column({ nullable: true })
   descripcion: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   path: string;
 
   @CreateDateColumn({

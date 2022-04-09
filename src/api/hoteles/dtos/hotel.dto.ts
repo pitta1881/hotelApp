@@ -1,5 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDefined,
   IsEmail,
   IsLatitude,
@@ -40,6 +41,30 @@ export class CreateHotelDto {
   @IsString()
   @IsDefined()
   direccion: string;
+
+  @IsString()
+  @IsDefined()
+  logo_path: string;
+
+  @IsString()
+  @IsDefined()
+  horario_contacto: string;
+
+  @IsString()
+  @IsOptional()
+  facebook?: string;
+
+  @IsString()
+  @IsOptional()
+  twitter?: string;
+
+  @IsString()
+  @IsOptional()
+  instagram?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  activo?: boolean;
 
   @IsLatitude()
   @IsDefined()

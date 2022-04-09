@@ -14,11 +14,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
 
-    response.status(status).render('pages/404', {
-      pagina: request.url,
-      code: exception.getStatus(),
-      response: exception.getResponse(),
-      pageTitle: `Error ${exception.getStatus()}`,
-    });
+    if (!request.url.includes('/api/')) {
+      response.status(status).render('pages/404', {
+        pagina: request.url,
+        code: exception.getStatus(),
+        response: exception.getResponse(),
+        pageTitle: `Error ${exception.getStatus()}`,
+      });
+    } else {
+      response.status(status).send(exception.getResponse());
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { ApiModule } from './api/api.module';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -37,8 +38,11 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  const document = SwaggerModule.createDocument(app, config, {
+    include: [ApiModule],
+    deepScanRoutes: true,
+  });
+  SwaggerModule.setup('api/docs', app, document);
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
@@ -52,7 +56,10 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(configService.get('NESTJS_PORT'));
-  console.log(`Hotel App is running on: ${await app.getUrl()}`);
+  console.log(`Hotel App is running on: 
+  web: ${await app.getUrl()}
+  api: ${await app.getUrl()}/api
+  apidoc: ${await app.getUrl()}/api/docs`);
   console.log(
     `Hotel App is connected to DB at port: ${configService.get('DB_PORT')}`,
   );
