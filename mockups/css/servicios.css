@@ -1,0 +1,68 @@
+@import './base/carousel.css';
+
+h2 {
+  text-align: center;
+}
+
+#servicios-instalaciones {
+  display: flex;
+  flex-direction: column;
+  margin: 0 -3.2% 10px;
+  background-color: #f2f2f2;
+  padding: 20px 30px;
+}
+
+#servicios-instalaciones ul {
+  margin-top: 30px;
+}
+
+#servicios-instalaciones ul li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 0;
+}
+
+#divider {
+  margin: 24px auto;
+  border-bottom: 1px solid grey;
+  display: block;
+  width: 50%;
+  text-align: center;
+}
+
+#galeria {
+  margin-top: 10px;
+}
+#galeria ul {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+#galeria li {
+  flex: 0 0 20%;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  #servicios-instalaciones {
+    margin: 10px -5.6%;
+  }
+  #divider {
+    border-bottom: none;
+    border-left: 1px solid grey;
+    width: auto;
+    height: 200px;
+    margin: 0;
+  }
+  #servicios-instalaciones {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+@media screen and (min-width: 1440px) {
+  #galeria li {
+    flex: 0 0 10%;
+  }
+}

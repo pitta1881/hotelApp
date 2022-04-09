@@ -1,0 +1,124 @@
+main #descripcion {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#mapa {
+  height: 500px;
+}
+
+#btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0 5px;
+}
+
+#mapa-container #btn-container input {
+  display: none;
+}
+#mapa-container #btn-container label {
+  flex: 1;
+  text-align: center;
+  border-color: #960606;
+  color: white;
+  font-size: 16px;
+  background-color: #453e3e;
+  padding: 5px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+#mapa-container #btn-container input:checked + label {
+  background-color: #a51515;
+}
+
+#inner-mapa-container {
+  position: relative;
+  overflow: hidden;
+}
+
+#listppt {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 900;
+  right: -184px;
+  top: 0;
+  margin: 10px 10px 0 0;
+}
+#listppt.active {
+  right: 0;
+  transition: 0.5s all;
+}
+#listppt.active > ul {
+  visibility: visible;
+}
+#listppt ul {
+  visibility: hidden;
+  height: 170px;
+  width: 170px;
+  user-select: none;
+  overflow-y: scroll;
+  background-color: white;
+  color: black;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+#listppt button {
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  background-color: gainsboro;
+  border: 1px solid gray;
+  border-right: none;
+  border-radius: 15px 0 0 15px;
+}
+#listppt button span {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#listppt li {
+  display: none;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+#listppt li.active {
+  border: 1px solid blue;
+}
+#listppt li.show {
+  display: flex;
+}
+
+.list-paypertop {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.list-paypertop img {
+  height: 16px;
+  margin-right: 5px;
+}
+.list-paypertop span {
+  text-align: right;
+  flex: 1;
+}
+
+@media screen and (min-width: 768px) {
+  #mapa {
+    height: 600px;
+  }
+
+  #mapa-container #btn-container label {
+    flex: none;
+    padding: 5px 20px;
+    font-size: 20px;
+  }
+
+  .list-paypertop span {
+    font-size: 14px;
+  }
+}
