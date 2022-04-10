@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/base/base.css" />
     <link rel="stylesheet" href="./css/contacto.css" />
     <script src="./js/nav.js" defer></script>
+    <script src="./js/contacto.js" defer></script>
   </head>
 
   <body>
@@ -40,11 +41,7 @@
     <main>
       <section id="contacto-container">
         <h3>Contactanos</h3>
-        <form
-          id="inner-container"
-          action="http://localhost:3800/api/mensajes"
-          method="post"
-        >
+        <form id="inner-container" action="#" method="post">
           <div class="container-doble">
             <div class="control-input">
               <label for="nombre">Nombre</label>
@@ -90,8 +87,8 @@
                   type="number"
                   name="adultos"
                   id="adultos"
-                  min="0"
-                  value="0"
+                  min="1"
+                  value="1"
                   required
                 />
               </div>
@@ -194,5 +191,9 @@
         <p>Todos los derechos reservados</p>
       </section>
     </footer>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
   </body>
 </html>
