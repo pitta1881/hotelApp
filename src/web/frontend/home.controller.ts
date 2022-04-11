@@ -10,8 +10,14 @@ export class HomeController {
   @Public()
   @Get(':nombre_uri')
   @Render('pages/frontend/home')
-  async renderLanding(@Param('nombre_uri') nombre_uri: string) {
-    const resp = await this.hotelService.findOneByNombreUri(nombre_uri);
+  async renderHome(@Param('nombre_uri') nombre_uri: string) {
+    const resp = await this.hotelService.findOneByNombreUri(nombre_uri, [
+      'fotos',
+      'fotos.tipoCarousel',
+    ]);
+    resp.data[0].fotos = resp.data[0].fotos.filter(
+      (foto) => foto.tipoCarousel.id === 1,
+    );
     return { hotel: resp.data[0] };
   }
 }

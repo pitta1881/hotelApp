@@ -7,7 +7,7 @@ export class init1649521758188 implements MigrationInterface {
       `INSERT INTO hotel 
               ("id","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
             VALUES 
-              (1,'Hotel Pato','hotelpato','Esta es la descripcion del home','Esta es la descripcion de la ubicacion','0112134564','hotelpato@mail.com','calle falsa 123','{-41.12947531850026, -71.34748729871622}','/images/logo-hotel.webp', 'Lu-Do 7-22hs' ,'/hotelpato', '/hotelpatook' )`,
+              (1,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','/images/logo-hotel.png', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_ppt 
@@ -52,19 +52,19 @@ export class init1649521758188 implements MigrationInterface {
       `INSERT INTO servicio
                 ("id","nombre","servInstal","icon_path","hotelId") 
               VALUES 
-                (1,'WiFi',false,'/icons/icon_wifi.png',1),
-                (2,'Desayuno',false,'/icons/icon_desayuno.png',1),
-                (3,'Spa',true,'/icons/icon_spa.png',1),
-                (4,'Estacionamiento',true,'/icons/icon_estacionamiento.png',1),
-                (5,'TV',false,'/icons/icon_tv.png',1),
-                (6,'Frigobar',false,'/icons/icon_frigobar.png',1),
-                (7,'Secador',false,'/icons/icon_secador.png',1),
-                (8,'Sala de Juegos',true,'/icons/sala_juegos.png',1),
-                (9,'Bar',true,'/icons/bar.png',1),
-                (10,'Gimnasio',true,'/icons/gimnasio.png',1),
-                (11,'Bañera',false,'/icons/bañera.png',1),
-                (12,'Caja de Seguridad',false,'/icons/caja_seguridad.png',1),
-                (13,'Jacuzzi',false,'/icons/jacuzzi.png',1)`,
+                (1,'WiFi',false,'/icons/wifi-signal-svgrepo-com.svg',1),
+                (2,'Desayuno',false,'/icons/breakfast-time-svgrepo-com.svg',1),
+                (3,'Spa',true,'/icons/massage-spa-svgrepo-com.svg',1),
+                (4,'Estacionamiento',true,'/icons/parking-garage-transportation-car-parking-svgrepo-com.svg',1),
+                (5,'TV',false,'/icons/tv-svgrepo-com.svg',1),
+                (6,'Frigobar',false,'/icons/minibar-svgrepo-com.svg',1),
+                (7,'Secador',false,'/icons/hair-dryer-svgrepo-com.svg',1),
+                (8,'Sala de Juegos',true,'/icons/board-games-set-svgrepo-com.svg',1),
+                (9,'Bar',true,'/icons/bar-svgrepo-com.svg',1),
+                (10,'Gimnasio',true,'/icons/gym-svgrepo-com.svg',1),
+                (11,'Bañera',false,'/icons/bathtub-svgrepo-com.svg',1),
+                (12,'Caja de Seguridad',false,'/icons/security-box-svgrepo-com.svg',1),
+                (13,'Jacuzzi',false,'/icons/jacuzzi-svgrepo-com.svg',1)`,
     );
     await queryRunner.query(
       `INSERT INTO servicio_x_habitacion
@@ -115,16 +115,16 @@ export class init1649521758188 implements MigrationInterface {
     );
     await queryRunner.query(
       `INSERT INTO paypertop
-              ("id","titular","razon_social","email","descripcion","url","abono_mensual","lat_lng","tipoPPTId","hotelId") 
+              ("id","titular","razon_social","email","descripcion","url","abono_mensual","lat_lng","activo","tipoPPTId","hotelId") 
             VALUES 
-              (1,'Pedro Perez','PePerez S.R.L','pperez@mail.com','Empresa que brinda servicios de Turismo por la ciudad.','http://www.turismopperez.com.ar',15000,'{-41.13534742815715, -71.30578269365238}',2,1),
-              (2,'María Lopez','MaLopez S.A','mlopez@mail.com','Supermercado mas grande de la ciudad.','http://www.supermalopez.com.ar',12000,'{-41.13761429688297, -71.31278257990219}',3,1),
-              (3,'-','Supermercados Todo','-','Supermercado cerca del hotel.','http://www.supertodo.com.ar/',0,'{-41.12784799083812, -71.35088738966584}',3,1),
-              (4,'-','Familia Weiss','-','Restaurante familiar.','https://www.weiss.com.ar/',0,'{-41.13761429688297, -71.31278257990219}',1,1),
-              (5,'-','La Marca Patagónica','-','Restaurante familiar.','https://la-marca-patagonica.negocio.site/',0,'{-41.13761429688297, -71.31278257990219}',1,1),
-              (6,'Manuel Blest','Cervezeria Blest','mblest@blest.com','Cervezería/bar.','http://www.cervezablest.com/',20000,'{-41.12759211083225, -71.35126058495128}',1,1),
-              (7,'-','Teleférico Cerro Otto','-','Teleférico cerca del centro.','http://www.telefericobariloche.com.ar/',0,'{-41.130162240139754, -71.36963340452075}',2,1),
-              (8,'-','Si Turismo','-','Empresa de Turismo.','https://siturismo.com/',0,'{-41.13402538670256, -71.30681160975384}',2,1)`,
+              (1,'Pedro Perez','PePerez S.R.L','pperez@mail.com','Empresa que brinda servicios de Turismo por la ciudad.','http://www.turismopperez.com.ar',15000,'{-41.13534742815715, -71.30578269365238}',true,2,1),
+              (2,'María Lopez','MaLopez S.A','mlopez@mail.com','Supermercado mas grande de la ciudad.','http://www.supermalopez.com.ar',12000,'{-41.13761429688297, -71.31278257990219}',true,3,1),
+              (3,'-','Supermercados Todo','-','Supermercado cerca del hotel.','http://www.supertodo.com.ar/',0,'{-41.12784799083812, -71.35088738966584}',true,3,1),
+              (4,'-','Familia Weiss','-','Restaurante familiar.','https://www.weiss.com.ar/',0,'{-41.13312094364556, -71.30382863726463}',true,1,1),
+              (5,'-','La Marca Patagónica','-','Restaurante familiar.','https://la-marca-patagonica.negocio.site/',0,'{-41.13386676160742, -71.30935194768804}',true,1,1),
+              (6,'Manuel Blest','Cervezeria Blest','mblest@blest.com','Cervezería/bar.','http://www.cervezablest.com/',20000,'{-41.12759211083225, -71.35126058495128}',true,1,1),
+              (7,'-','Teleférico Cerro Otto','-','Teleférico cerca del centro.','http://www.telefericobariloche.com.ar/',0,'{-41.130162240139754, -71.36963340452075}',true,2,1),
+              (8,'-','Si Turismo','-','Empresa de Turismo.','https://siturismo.com/',0,'{-41.13402538670256, -71.30681160975384}',true,2,1)`,
     );
     await queryRunner.query(
       `INSERT INTO huesped

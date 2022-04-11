@@ -17,8 +17,10 @@ export class HotelService {
     private hotelModel: Repository<Hotel>,
   ) {}
 
-  async findAll(): Promise<IGenResp> {
-    const hoteles: Hotel[] = await this.hotelModel.find();
+  async findAll(relations: string[] = []): Promise<IGenResp> {
+    const hoteles: Hotel[] = await this.hotelModel.find({
+      relations,
+    });
     return {
       status: StatusTypes.success,
       data: hoteles,
@@ -39,9 +41,13 @@ export class HotelService {
     };
   }
 
-  async findOneByNombreUri(nombre_uri: string): Promise<IGenResp> {
+  async findOneByNombreUri(
+    nombre_uri: string,
+    relations: string[] = [],
+  ): Promise<IGenResp> {
     const hotel: Hotel = await this.hotelModel.findOne({
       where: { nombre_uri },
+      relations,
     });
     if (!hotel) {
       throw new NotFoundException({

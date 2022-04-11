@@ -14,12 +14,27 @@ import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from './../../decorators/userJWT.decorator';
 import { CreatePaypertopDto, UpdatePaypertopDto } from './dtos/paypertop.dto';
 import { UpdateEstadoPaypertopDto } from './dtos/update-estado-paypertop.dto';
+import { Public } from './../../decorators/public.decorator';
+import { HotelService } from '../hoteles/hotel.service';
+import { Hotel } from './../../db/entities/hotel.entity';
 
 @ApiTags('PayPerTop')
 @ApiBearerAuth()
 @Controller('api/paypertop')
 export class PaypertopController {
-  constructor(private readonly paypertopService: PaypertopService) {}
+  constructor(
+    private readonly paypertopService: PaypertopService,
+    private readonly hotelService: HotelService,
+  ) {}
+
+  @Public()
+  @ApiOperation({ summary: 'FindAll Fotos Habitacion por HotelUri - PÚBLICO' })
+  @Get(':hotel_uri')
+  async findAllByHotelUri(@Param('hotel_uri') hotel_uri: string) {
+    const resp = await this.hotelService.findOneByNombreUri(hotel_uri);
+    const hotel: Hotel = resp.data[0];
+    return await this.paypertopService.findAll(hotel.id, ['tipoPPT']);
+  }
 
   @ApiOperation({ summary: 'FindAll PayPerTops' })
   @Get()

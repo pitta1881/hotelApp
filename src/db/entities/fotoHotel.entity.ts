@@ -38,7 +38,7 @@ export class FotoHotel {
 
   @ManyToOne(
     () => TipoCarousel,
-    (tipoCarousel: TipoCarousel) => tipoCarousel.id,
+    (tipoCarousel: TipoCarousel) => tipoCarousel.fotosHotel,
     {
       nullable: false,
     },

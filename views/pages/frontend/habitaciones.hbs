@@ -1,9 +1,72 @@
-{{!-- pages/page-one.hbs --}}
-
 {{#> layouts/base title="Habitaciones" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/habitaciones.css" />
+    <script src="/js/carousel.js" defer></script>
+    <script src="/js/modal.js" defer></script>
+  {{/inline}}
 
   {{#*inline "main-content-block"}}
-    {{message}}
+    <section class="cards">
+    {{#each hotel.habitaciones as |habitacion|}}
+      <section class="card">
+        <div class="imagen-container">
+          <img
+            src="{{habitacion.fotos.0.path}}"
+            alt="{{habitacion.fotos.0.descripcion}}"
+          />
+        </div>
+        <div class="text-container">
+          <h2 class="nombre-habitacion">{{habitacion.nombre}}</h2>
+          <p class="descripcion">{{habitacion.descripcion_hab}}</p>
+          <div class="items-container">
+            <div class="caracteristicas">
+              <ul>
+                <li>
+                  <img src="/icons/rule-svgrepo-com.svg" alt="" class="icon24"/>
+                  <span>Tamaño: {{habitacion.tamanio_m2}}m²</span>
+                </li>
+                <li>
+                  <img src="/icons/two-persons-shopping-svgrepo-com.svg" alt="" class="icon24"/>
+                  <span>{{habitacion.max_pax}} Personas</span>
+                </li>
+                <li>
+                  <img src="/icons/bed-svgrepo-com.svg" alt="" class="icon24"/>
+                  <span>{{habitacion.descripcion_camas}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="servicios">
+              <ul>
+                {{#each habitacion.servicios as |servicio|}}
+                <li>
+                  <img src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/>
+                  <span>{{servicio.nombre}}</span>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+          <div class="buttons-container">
+            <a href="#" class="btn-ver-fotos" data-habitacion-id="{{habitacion.id}}">Ver Fotos</a>
+            <a href="/{{@root.hotel.nombre_uri}}/contacto">Consultar</a>
+          </div>
+        </div>
+      </section>
+    {{/each}}
+    </section>
+  {{/inline}}
+
+  {{#*inline "modal-block"}}
+    <section id="modal-fotos">
+      <section id="carousel">
+        <section id="oneSlide">
+          <button id="close-modal" class="close-times">&times;</button>
+          <ul></ul>
+          <button id="foto-prev">&#10094;</button>
+          <button id="foto-next">&#10095;</button>
+        </section>
+      </section>
+    </section>
   {{/inline}}
 
 {{/layouts/base}}

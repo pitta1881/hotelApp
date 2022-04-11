@@ -28,7 +28,12 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   const configService = app.get(ConfigService);
 
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('HOTEL APP')
@@ -53,7 +58,7 @@ async function bootstrap() {
   hbs.registerHelper('greaterThan', greaterThan);
   hbs.registerHelper('jsonRaw', jsonRaw);
 
-  app.useGlobalFilters(new HttpExceptionFilter());
+  //app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(configService.get('NESTJS_PORT'));
   console.log(`Hotel App is running on: 

@@ -1,3 +1,4 @@
+import { Habitacion } from './habitacion.entity';
 import {
   Entity,
   Column,
@@ -80,20 +81,23 @@ export class Hotel {
   })
   updated_at: Date;
 
-  @OneToMany(() => Mensaje, (mensaje: Mensaje) => mensaje.id)
+  @OneToMany(() => Mensaje, (mensaje: Mensaje) => mensaje.hotel)
   mensajes: Mensaje[];
 
-  @OneToMany(() => Usuario, (usuario: Usuario) => usuario.id)
+  @OneToMany(() => Usuario, (usuario: Usuario) => usuario.hotel)
   usuarios: Usuario[];
 
-  @OneToMany(() => Paypertop, (paypertop: Paypertop) => paypertop.id)
+  @OneToMany(() => Paypertop, (paypertop: Paypertop) => paypertop.hotel)
   paypertops: Paypertop[];
 
-  @OneToMany(() => Servicio, (servicio: Servicio) => servicio.id)
+  @OneToMany(() => Servicio, (servicio: Servicio) => servicio.hotel)
   servicios: Servicio[];
 
-  @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.id)
+  @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.hotel)
   fotos: FotoHotel[];
+
+  @OneToMany(() => Habitacion, (habitacion: Habitacion) => habitacion.hotel)
+  habitaciones: Habitacion[];
 
   @BeforeInsert()
   async nombreUriTransform() {

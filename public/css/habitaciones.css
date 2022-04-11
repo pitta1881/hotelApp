@@ -1,0 +1,108 @@
+@import './base/carousel.css';
+
+.card {
+  margin: 20px auto;
+  color: black;
+  text-align: center;
+  line-height: 25px;
+  box-shadow: 0px 0px 6px 0px #b1b0ae;
+  padding-bottom: 10px;
+}
+
+.card .imagen-container {
+  height: 200px;
+}
+.card .imagen-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card .text-container {
+  margin: 10px;
+}
+
+.card .items-container {
+  display: flex;
+  align-items: stretch;
+  margin: 10px 0;
+}
+
+.card .items-container li {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin: 5px 0;
+}
+
+.card .caracteristicas,
+.card .servicios {
+  flex: 1;
+  padding: 5px;
+  margin: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border: none;
+}
+
+.card .buttons-container a {
+  height: 33px;
+  background: none;
+  border: none;
+  border-color: #960606;
+  color: white;
+  font-size: 20px;
+  background-color: #a51515;
+  text-decoration: none;
+  padding: 5px 20px;
+}
+
+#modal-fotos {
+  position: fixed;
+  z-index: 3000;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+#modal-fotos.active {
+  display: flex;
+}
+
+#carousel li {
+  height: unset;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    display: flex;
+    padding: 0;
+  }
+  .card:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  .card .imagen-container {
+    height: initial;
+    flex: 0 0 60%;
+  }
+  .card .text-container {
+    flex: 1;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card .items-container {
+    flex-direction: column;
+    margin: 10px 0;
+  }
+  .card .buttons-container {
+    margin: 15px 0;
+  }
+
+  #carousel {
+    max-width: 1000px;
+  }
+}

@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {{title}} | HotelApp </title>
     <link rel="stylesheet" href="/css/css-reset.css">
-    <link rel="stylesheet" href="/css/base.css">
+    <link rel='stylesheet' href='/css/base/base.css' />
+    <script src="/js/nav.js" defer></script>
+
     {{#> head-block}}
       {{!-- Custom <head> content per page could be added. --}}
     {{/head-block}}
   </head>
   <body>
     <header>
-        {{> header/header }}
+        {{> header/header hotel=hotel}}
     </header>
-    <nav>
-        {{> nav/nav }}
+    <nav id="side-nav">
+        {{> nav/nav hotel=hotel}}
     </nav>
     <main>
       {{#> main-content-block}}
@@ -26,7 +28,14 @@
     <footer>
         {{> footer/footer hotel=hotel }}
     </footer>
+    
+    {{#> modal-block}}
+    {{/modal-block}}
 
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
 
     {{#> scripts-block}}
       {{!-- Custom scripts per page can be added. --}}

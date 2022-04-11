@@ -15,14 +15,32 @@ import {
   CreateFotoHabitacionDto,
   UpdateFotoHabitacionDto,
 } from './dtos/foto-habitacion.dto';
+import { Public } from './../../decorators/public.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from '../../decorators/userJWT.decorator';
+import { HotelService } from '../hoteles/hotel.service';
+import { Hotel } from './../../db/entities/hotel.entity';
 
 @ApiTags('Fotos Habitaciones')
 @ApiBearerAuth()
 @Controller('api/habitaciones')
 export class FotoHabitacionController {
-  constructor(private readonly fotoHabitacionService: FotoHabitacionService) {}
+  constructor(
+    private readonly fotoHabitacionService: FotoHabitacionService,
+    private readonly hotelService: HotelService,
+  ) {}
+
+  @Public()
+  @ApiOperation({ summary: 'FindAll Fotos Habitacion por HotelUri - PÚBLICO' })
+  @Get(':hotel_uri/:habitacionId/fotos')
+  async findAllByHotelUri(
+    @Param('hotel_uri') hotel_uri: string,
+    @Param('habitacionId', ParseIntPipe) habitacionId: number,
+  ) {
+    const resp = await this.hotelService.findOneByNombreUri(hotel_uri);
+    const hotel: Hotel = resp.data[0];
+    return await this.fotoHabitacionService.findAll(hotel.id, habitacionId);
+  }
 
   @ApiOperation({ summary: 'FindAll Fotos Habitacion' })
   @Get(':habitacionId/fotos')
