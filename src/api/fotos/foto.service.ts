@@ -25,6 +25,7 @@ export class FotoService {
 
   async findAll(hotelId: number): Promise<IGenResp> {
     const fotosHotel: FotoHotel[] = await this.fotosHotelModel.find({
+      relations: ['tipoCarousel'],
       where: { hotel: hotelId },
     });
     return {

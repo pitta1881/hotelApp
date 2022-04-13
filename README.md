@@ -62,7 +62,7 @@ $ npm run start
 ## Documentación y prueba de la API
 
 <pre>
-<a href="http://localhost:3000/docs">http://localhost:3000/docs</a>
+<a href="http://localhost:3000/api/docs">http://localhost:3000/api/docs</a>
 </pre>
 
 <small><i>Documento en constante actualización.</i></small>

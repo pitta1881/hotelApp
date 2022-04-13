@@ -20,7 +20,7 @@ export class Huesped {
   @Column({ nullable: false })
   apellido: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: true, unique: true })
   email: string;
 
   @Column({ nullable: false, unique: true })
@@ -29,7 +29,7 @@ export class Huesped {
   @Column({ nullable: false })
   fecha_nacimiento: Date;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   telefono: string;
 
   @CreateDateColumn({

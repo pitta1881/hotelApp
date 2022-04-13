@@ -73,7 +73,7 @@ export class Habitacion {
 
   @OneToMany(
     () => FotoHabitacion,
-    (fotoHabitacion: FotoHabitacion) => fotoHabitacion.id,
+    (fotoHabitacion: FotoHabitacion) => fotoHabitacion.habitacion,
   )
   fotos: FotoHabitacion[];
 }

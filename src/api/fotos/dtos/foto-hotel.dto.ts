@@ -4,10 +4,6 @@ import { IsDefined, IsInt, IsPositive, IsString } from 'class-validator';
 export class CreateFotoHotelDto {
   @IsString()
   @IsDefined()
-  nombre: string;
-
-  @IsString()
-  @IsDefined()
   descripcion: string;
 
   @IsString()

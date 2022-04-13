@@ -22,8 +22,9 @@ export class PaypertopService {
     private tipoPPTModel: Repository<TipoPPT>,
   ) {}
 
-  async findAll(hotelId: number): Promise<IGenResp> {
+  async findAll(hotelId: number, relations: string[] = []): Promise<IGenResp> {
     const paypertops: Paypertop[] = await this.paypertopModel.find({
+      relations,
       where: {
         hotel: hotelId,
       },

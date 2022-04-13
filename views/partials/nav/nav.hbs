@@ -1,8 +1,10 @@
-<button>Sandwich</button>
-<ul id='nav-principal'>
-  <li><a href='/'>Inicio</a></li>
-  <li><a href='/habitaciones'>Habitaciones</a></li>
-  <li><a href='/servicios'>Servicios y Galeria</a></li>
-  <li><a href='/ubicacion'>Ubicacion</a></li>
-  <li><a href='/contacto'>Contacto</a></li>
-</ul>
+<section id='nav-container'>
+  <button id='close-nav' class='close-times'>&times</button>
+  <ul>
+    <li><a href='/{{hotel.nombre_uri}}'>Home</a></li>
+    <li><a href='/{{hotel.nombre_uri}}/habitaciones'>Habitaciones</a></li>
+    <li><a href='/{{hotel.nombre_uri}}/servicios'>Servicios y Galeria</a></li>
+    <li><a href='/{{hotel.nombre_uri}}/ubicacion'>Ubicación</a></li>
+    <li><a href='/{{hotel.nombre_uri}}/contacto'>Contacto</a></li>
+  </ul>
+</section>
