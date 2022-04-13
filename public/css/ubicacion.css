@@ -5,11 +5,6 @@ small {
   font-size: 11px;
 }
 
-main #descripcion {
-  margin-top: 10px;
-  text-align: center;
-}
-
 #mapa {
   height: 500px;
 }

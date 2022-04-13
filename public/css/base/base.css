@@ -46,6 +46,12 @@ h6 {
   font-size: 14px;
 }
 
+#descripcion p {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
 #toast {
   visibility: hidden;
   position: fixed;

@@ -1,3 +1,4 @@
+import { RedirectError } from './../../http-redirect.filter';
 import { Controller, Get, Param, Render } from '@nestjs/common';
 
 import { Public } from './../../decorators/public.decorator';
@@ -11,6 +12,9 @@ export class HomeController {
   @Get(':nombre_uri')
   @Render('pages/frontend/home')
   async renderHome(@Param('nombre_uri') nombre_uri: string) {
+    if (nombre_uri === 'api') {
+      throw new RedirectError(301, '/api/docs');
+    }
     const resp = await this.hotelService.findOneByNombreUri(nombre_uri, [
       'fotos',
       'fotos.tipoCarousel',

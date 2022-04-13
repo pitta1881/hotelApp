@@ -1,3 +1,4 @@
+import { RedirectFilter } from './http-redirect.filter';
 import { ApiModule } from './api/api.module';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -58,7 +59,8 @@ async function bootstrap() {
   hbs.registerHelper('greaterThan', greaterThan);
   hbs.registerHelper('jsonRaw', jsonRaw);
 
-  //app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new RedirectFilter());
 
   await app.listen(configService.get('NESTJS_PORT'));
   console.log(`Hotel App is running on: 
