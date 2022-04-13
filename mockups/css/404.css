@@ -1,0 +1,159 @@
+body {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+main {
+  margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#text404 {
+  font-size: 100px;
+  text-align: center;
+  font-weight: 700;
+}
+#first-four {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+
+#not-found {
+  display: inline-block;
+  animation: 20s shake infinite;
+  text-align: center;
+  font-size: 60px;
+}
+#not-found:before {
+  content: 'Pagina no encontrada';
+  animation: 20s changeContent linear infinite;
+}
+
+@keyframes changeContent {
+  0% {
+    content: 'Página no encontrada';
+  }
+  25% {
+    content: 'Page not found ';
+  }
+  50% {
+    content: 'Página não encontrada';
+  }
+  75% {
+    content: 'Seite nicht gefunden';
+  }
+  100% {
+    content: 'Pagina non trovata';
+  }
+}
+@keyframes shake {
+  12.5% {
+    transform: skewX(0deg);
+  }
+  12.6% {
+    transform: skewX(-50deg);
+  }
+  12.7% {
+    transform: skewX(50deg);
+  }
+  12.8% {
+    transform: skewX(-50deg);
+  }
+  12.9% {
+    transform: skewX(50deg);
+  }
+  13% {
+    transform: skewX(0deg);
+  }
+
+  37.5% {
+    transform: skewX(0deg);
+  }
+  37.6% {
+    transform: skewX(-50deg);
+  }
+  37.7% {
+    transform: skewX(50deg);
+  }
+  37.8% {
+    transform: skewX(-50deg);
+  }
+  37.9% {
+    transform: skewX(50deg);
+  }
+  38% {
+    transform: skewX(0deg);
+  }
+
+  62.5% {
+    transform: skewX(0deg);
+  }
+  62.6% {
+    transform: skewX(-50deg);
+  }
+  62.7% {
+    transform: skewX(50deg);
+  }
+  62.8% {
+    transform: skewX(-50deg);
+  }
+  62.9% {
+    transform: skewX(50deg);
+  }
+  63% {
+    transform: skewX(0deg);
+  }
+
+  87.5% {
+    transform: skewX(0deg);
+  }
+  87.6% {
+    transform: skewX(-50deg);
+  }
+  87.7% {
+    transform: skewX(50deg);
+  }
+  87.8% {
+    transform: skewX(-50deg);
+  }
+  87.9% {
+    transform: skewX(50deg);
+  }
+  88% {
+    transform: skewX(0deg);
+  }
+
+  99.5% {
+    transform: skewX(0deg);
+  }
+  99.6% {
+    transform: skewX(-50deg);
+  }
+  99.7% {
+    transform: skewX(50deg);
+  }
+  99.8% {
+    transform: skewX(-50deg);
+  }
+  99.9% {
+    transform: skewX(50deg);
+  }
+  100% {
+    transform: skewX(0deg);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #text404 {
+    font-size: 150px;
+  }
+  #not-found {
+    font-size: 80px;
+  }
+}
