@@ -15,10 +15,6 @@ export class CreateHotelDto {
   nombre: string;
 
   @IsString()
-  @IsOptional()
-  nombre_uri?: string;
-
-  @IsString()
   @IsDefined()
   descripcion_home: string;
 
@@ -64,7 +60,7 @@ export class CreateHotelDto {
 
   @IsBoolean()
   @IsOptional()
-  activo?: boolean;
+  activo?: boolean = false;
 
   @IsLatitude()
   @IsDefined()

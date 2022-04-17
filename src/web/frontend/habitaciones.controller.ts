@@ -1,4 +1,10 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Render,
+} from '@nestjs/common';
 
 import { Public } from './../../decorators/public.decorator';
 import { HotelService } from './../../api/hoteles/hotel.service';
@@ -17,6 +23,9 @@ export class HabitacionesController {
       'habitaciones.fotos',
       'habitaciones.servicios',
     ]);
+    if (!resp.data[0].activo) {
+      throw new NotFoundException();
+    }
     return { hotel: resp.data[0] };
   }
 }

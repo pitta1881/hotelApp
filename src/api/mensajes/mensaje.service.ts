@@ -12,6 +12,7 @@ import { Mensaje } from '../../db/entities/mensaje.entity';
 import { Hotel } from '../../db/entities/hotel.entity';
 import { HotelService } from '../hoteles/hotel.service';
 import { CreateMensajeDto } from './dtos/mensaje.dto';
+import { MailService } from './../../mail/mail.service';
 
 @Injectable()
 export class MensajeService {
@@ -19,6 +20,7 @@ export class MensajeService {
     private hotelService: HotelService,
     @InjectRepository(Mensaje)
     private mensajeModel: Repository<Mensaje>,
+    private mailService: MailService,
   ) {}
 
   async findAll(hotelId: number): Promise<IGenResp> {
@@ -56,6 +58,7 @@ export class MensajeService {
   async create(newData: CreateMensajeDto): Promise<IGenResp> {
     const hotelResp: IGenResp = await this.hotelService.findOneByNombreUri(
       newData.hotel_nombre_uri,
+      ['usuarios'],
     );
     const hotel: Hotel = hotelResp.data[0];
     try {
@@ -65,6 +68,8 @@ export class MensajeService {
         ...newData,
         id: nextId,
       });
+      await this.mailService.newMessageToAdmins(hotel, newMensaje);
+      await this.mailService.copyMessageToClient(hotel, newMensaje);
       return {
         status: StatusTypes.success,
         data: [newMensaje],

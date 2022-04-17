@@ -11,7 +11,9 @@ export class LandingController {
   @Get()
   @Render('pages/frontend/landing')
   async renderLanding() {
-    const resp = await this.hotelService.findAll(['servicios', 'fotos']);
+    const resp = await this.hotelService.findAll(['servicios', 'fotos'], {
+      activo: true,
+    });
     return { hoteles: resp.data };
   }
 }

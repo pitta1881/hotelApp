@@ -5,9 +5,9 @@ export class init1649521758188 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `INSERT INTO hotel 
-              ("id","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
+              ("id","activo","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
             VALUES 
-              (1,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','/images/logo-hotel.png', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
+              (1,true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','/images/logo-hotel.png', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_ppt 

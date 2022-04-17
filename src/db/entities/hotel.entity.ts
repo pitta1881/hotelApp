@@ -21,7 +21,7 @@ export class Hotel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, default: true, type: 'boolean' })
+  @Column({ nullable: false, default: false, type: 'boolean' })
   activo: boolean;
 
   @Column({ nullable: false, unique: true })

@@ -5,7 +5,7 @@ export class redeslogoactive1649527503804 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "hotel" ADD "activo" boolean NOT NULL DEFAULT true`,
+      `ALTER TABLE "hotel" ADD "activo" boolean NOT NULL DEFAULT false`,
     );
     await queryRunner.query(
       `ALTER TABLE "hotel" ADD "logo_path" character varying`,

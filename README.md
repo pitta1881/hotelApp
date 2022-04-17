@@ -24,6 +24,11 @@ En **Documentacion/Wireframes.pdf** encontrará los wireframes del proyecto.
 
 - [Nest.js](https://nestjs.com/) - Framework de Node.js basado en TypeScript.
 - Base de Datos - [PostgreSQL](https://www.postgresql.org).
+- ORM - [TypeORM](https://github.com/typeorm/typeorm)
+- Documentador - [Swagger](https://github.com/nestjs/swagger)
+- Hashing Password - [bcrypt](https://www.npmjs.com/package/bcrypt)
+- Autenticación - [passport-local](https://www.npmjs.com/package/bcrypt) y [jwt](https://jwt.io/)
+- Mailer - [@nestjs-modules/mailer y Nodemailer](https://nest-modules.github.io/mailer/)
 
 ### Frontend
 
@@ -33,11 +38,24 @@ En **Documentacion/Wireframes.pdf** encontrará los wireframes del proyecto.
 
 - [Git](https://git-scm.com/) - Control de Versiones.
 - [VS Code](https://code.visualstudio.com/) - Editor de Código.
+- [Docker](https://www.docker.com/) - Contenedores. (Pg y PgAdmin)
 
 ## Instalación de Depedencias
 
 ```bash
 $ npm install
+```
+
+## Iniciar Contenedores Docker
+
+```bash
+$ docker-compose up
+```
+
+## Limpiar schema y Base de Datos
+
+```bash
+$ npm run typeorm:drop
 ```
 
 ## Generación de Base de Datos y Seeds de prueba
@@ -64,5 +82,18 @@ $ npm run start
 <pre>
 <a href="http://localhost:3000/api/docs">http://localhost:3000/api/docs</a>
 </pre>
+
+## Notas
+
+- Antes de iniciar la app, completar el archivo .env con los datos solicitados.
+- Las credenciales del usuario y hotel de prueba están en swagger(http://localhost:3000/api/docs/#/Auth/AuthController_login), sección Auth.
+- Al crear un nuevo Hotel, se asigna una uri(nombre_uri) para despues llamarla por URL, la cual sera con trim(), lowerCase() y sin espacios.
+- Al crear un nuevo Hotel, se crea un usuario por defecto con las siguientes credenciales que luego se pueden modificar:
+  - nombre: `admin-{{nombre_uri}}`
+  - apellido: `admin-{{nombre_uri}}`
+  - email: `admin-{{nombre_uri}}@mail.com`
+  - nick: `admin-{{nombre_uri}}`
+  - password: `admin123`
+- Al recibir un Contacto, se envía un email con la copia del mensaje al cliente, y un email a todos los usuarios del hotel en cuestión asi como al email definido para el hotel.
 
 <small><i>Documento en constante actualización.</i></small>

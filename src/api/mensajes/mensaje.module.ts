@@ -6,9 +6,14 @@ import { MensajeController } from './mensaje.controller';
 import { MensajeService } from './mensaje.service';
 import { Mensaje } from '../../db/entities/mensaje.entity';
 import { HotelModule } from '../hoteles/hotel.module';
+import { MailModule } from './../../mail/mail.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Mensaje, Hotel]), HotelModule],
+  imports: [
+    TypeOrmModule.forFeature([Mensaje, Hotel]),
+    HotelModule,
+    MailModule,
+  ],
   controllers: [MensajeController],
   providers: [MensajeService],
 })

@@ -17,9 +17,10 @@ export class HotelService {
     private hotelModel: Repository<Hotel>,
   ) {}
 
-  async findAll(relations: string[] = []): Promise<IGenResp> {
+  async findAll(relations: string[] = [], where: any = {}): Promise<IGenResp> {
     const hoteles: Hotel[] = await this.hotelModel.find({
       relations,
+      where,
     });
     return {
       status: StatusTypes.success,
@@ -73,7 +74,6 @@ export class HotelService {
         data: [newHotel],
       };
     } catch (error) {
-      console.log(error);
       throw new ConflictException({
         status: StatusTypes.error,
         error: error.detail,
