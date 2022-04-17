@@ -1,0 +1,91 @@
+<section id='informacion-hotel'>
+  <section id='contacto'>
+    <ul>
+      <li>
+        <a href='/{{hotel.nombre_uri}}/ubicacion'>
+          <img
+            src='/icons/location_on_black_24dp.svg'
+            alt='map-icon'
+            class='icon24'
+          /><span>{{hotel.direccion}}</span>
+        </a>
+      </li>
+      <li>
+        <img
+          src='/icons/schedule_black_24dp.svg'
+          alt='clock-icon'
+          class='icon24'
+        />
+        <span>{{hotel.horario_contacto}}</span>
+      </li>
+      <li>
+        <a href='tel:{{hotel.telefono_1}}'><img
+            src='/icons/phone_black_24dp.svg'
+            alt='phone-icon'
+            class='icon24'
+          /><span>{{hotel.telefono_1}}</span></a>
+      </li>
+      {{#if hotel.telefono_2}}
+        <li>
+          <a href='tel:{{hotel.telefono_2}}'><img
+              src='/icons/phone_black_24dp.svg'
+              alt='phone-icon'
+              class='icon24'
+            /><span>{{hotel.telefono_2}}</span></a>
+        </li>
+      {{/if}}
+      <li>
+        <a href='mailto:{{hotel.email}}'><img
+            src='/icons/email_black_24dp.svg'
+            alt='email-icon'
+            class='icon24'
+          /><span>{{hotel.email}}</span></a>
+      </li>
+    </ul>
+  </section>
+  <section id='redes'>
+    <ul>
+      {{#if hotel.facebook}}
+        <li>
+          <a
+            href='https://www.facebook.com/{{hotel.facebook}}'
+            target='_blank'
+          ><img
+              src='/icons/facebook-svgrepo-com.svg'
+              alt='facebook-icon'
+              class='icon24'
+            /><span>/{{hotel.facebook}}</span></a>
+        </li>
+      {{/if}}
+      {{#if hotel.twitter}}
+        <li>
+          <a
+            href='https://www.twitter.com/{{hotel.twitter}}'
+            target='_blank'
+          ><img
+              src='/icons/twitter-svgrepo-com.svg'
+              alt='twitter-icon'
+              class='icon24'
+            /><span>#{{hotel.twitter}}</span></a>
+        </li>
+      {{/if}}
+      {{#if hotel.instagram}}
+        <li>
+          <a
+            href='https://www.instagram.com/{{hotel.instagram}}'
+            target='_blank'
+          ><img
+              src='/icons/instagram-svgrepo-com.svg'
+              alt='instagram-icon'
+              class='icon24'
+            /><span>{{hotel.instagram}}</span></a>
+        </li>
+      {{/if}}
+    </ul>
+  </section>
+</section>
+<section id='copyright'>
+  <p>Buenos Aires - Argentina</p>
+  <p>Patricio Ariel Pittavino - 121476 - pitta1881@gmail.com</p>
+  <p>Todos los derechos reservados</p>
+</section>

@@ -1,0 +1,31 @@
+{{#> layouts/base title="Home" hotel=hotel }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/home.css" />
+    <script src="/js/carousel.js" defer></script>
+  {{/inline}}
+
+  {{#*inline "main-content-block"}}
+    <section id="carousel">
+        <section id="oneSlide">
+          <ul>
+            {{#each hotel.fotos as |foto|}}
+              <li class="slide {{#if @first}}active{{/if}}">
+                <img
+                  src="{{foto.path}}"
+                  alt="{{foto.descripcion}}"
+                />
+              </li>
+            {{/each}}
+          </ul>
+          <button id="foto-prev">&#10094;</button>
+          <button id="foto-next">&#10095;</button>
+        </section>
+      </section>
+      <section id="descripcion">
+        <p>
+          {{hotel.descripcion_home}}
+        </p>
+      </section>
+  {{/inline}}
+
+{{/layouts/base}}

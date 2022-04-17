@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Landing Page | HotelApp</title>
+    <link rel='stylesheet' href='./css/css-reset.css' />
+    <link rel='stylesheet' href='./css/base/base.css' />
+    <link rel='stylesheet' href='./css/landing.css' />
+  </head>
+
+  <body>
+    <main>
+      <section class='cards'>
+        {{#each hoteles}}
+          <section class='card'>
+            <div class='imagen-container'>
+              <a href='{{this.nombre_uri}}'>
+                <img
+                  src='{{this.fotos.0.path}}'
+                  alt='{{this.fotos.0.descripcion}}'
+                />
+              </a>
+            </div>
+            <div class='text-container'>
+              <h2 class='nombre-hotel'>Hotel Pato</h2>
+              <p class='descripcion'>
+                {{this.descripcion_home}}
+              </p>
+              <a href='{{this.nombre_uri}}' class='boton-ingresa'>Ingresá a
+                {{this.nombre}}</a>
+              <p class='servicios'>
+                {{#each this.servicios}}
+                  {{this.nombre}}
+                  {{#unless @last}}|{{/unless}}
+                {{/each}}
+              </p>
+            </div>
+          </section>
+        {{/each}}
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{{#> layouts/base title="Ubicacion" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/ubicacion.css" />
+    <script src="/js/ubicacion.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+  {{/inline}}
+
+  {{#*inline "main-content-block"}}
+    <section id="descripcion">
+        <p>
+          {{hotel.descripcion_ubi}}
+        </p>
+      </section>
+      <section id="mapa-container">
+        <div id="btn-container">
+          <input type="checkbox" id="btn-gastro" checked="checked" />
+          <label for="btn-gastro">Gastronomia</label>
+          <input type="checkbox" id="btn-atrac" checked="checked" />
+          <label for="btn-atrac">Atracciones</label>
+          <input type="checkbox" id="btn-super" checked="checked" />
+          <label for="btn-super">Supermercados</label>
+        </div>
+        <section id="inner-mapa-container">
+          <section id="mapa" data-lat-lng="{{hotel.lat_lng}}" data-nombre-hotel="{{hotel.nombre}}"></section>
+          <div id="listppt">
+            <button id="btnList">
+              <span>-</span>
+              <span>-</span>
+              <span>-</span>
+              <span>-</span>
+            </button>
+            <ul></ul>
+          </div>
+        </section>
+      </section>
+  {{/inline}}
+
+{{/layouts/base}}

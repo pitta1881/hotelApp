@@ -1,0 +1,99 @@
+footer {
+  border-top: 1px solid #cccccc;
+}
+
+footer section#informacion-hotel {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+footer section#contacto {
+  margin: 20px 20px;
+}
+footer section#contacto ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+footer section#contacto li:nth-child(1),
+footer section#contacto li:nth-child(2) {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 0;
+}
+
+footer section#contacto li a {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 0;
+  text-decoration: none;
+  color: black;
+}
+
+footer section#contacto li span {
+  margin-left: 5px;
+}
+
+footer section#redes {
+  margin: 20px 20px;
+}
+
+footer section#redes ul {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+footer section#redes ul span {
+  display: none;
+}
+
+footer section#redes img {
+  width: 24px;
+}
+
+footer section#copyright {
+  background-color: black;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  font-size: 12px;
+}
+
+footer section#copyright p {
+  margin: 15px 0;
+}
+
+@media screen and (min-width: 768px) {
+  footer section#informacion-hotel {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  footer section#redes ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  footer section#redes ul span {
+    display: initial;
+  }
+
+  footer section#redes li a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 5px 0;
+    text-decoration: none;
+    color: black;
+  }
+
+  footer section#redes li span {
+    margin-left: 5px;
+  }
+}

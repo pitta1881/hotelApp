@@ -11,7 +11,7 @@ import {
 import { Hotel } from './hotel.entity';
 import { TipoPPT } from './tipoPPT.entity';
 
-@Entity({ orderBy: { id: 'ASC' } })
+@Entity({ orderBy: { abono_mensual: 'DESC' } })
 export class Paypertop {
   @PrimaryColumn({ type: 'int' })
   id: number;

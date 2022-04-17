@@ -1,0 +1,70 @@
+{{#> layouts/base title="Servicios" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/servicios.css" />
+    <script src="/js/carousel.js" defer></script>
+    <script src="/js/galeria.js" defer></script>
+  {{/inline}}
+
+  {{#*inline "main-content-block"}}
+    <section id="servicios-instalaciones">
+        <div id="servicios">
+          <h2>Servicios</h2>
+          <ul>
+            {{#each hotel.servicios as |servicio|}}
+              {{#unless servicio.servInstal}}
+              <li>
+                <img src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/><span
+                  >{{servicio.nombre}}</span
+                >
+              </li>
+              {{/unless}}
+            {{/each}}
+          </ul>
+        </div>
+        <span id="divider"></span>
+        <div id="instalaciones">
+          <h2>Instalaciones</h2>
+          <ul>
+            {{#each hotel.servicios as |servicio|}}
+              {{#if servicio.servInstal}}
+              <li>
+                <img src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/><span
+                  >{{servicio.nombre}}</span
+                >
+              </li>
+              {{/if}}
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+      <section id="carousel">
+        <section id="oneSlide">
+          <ul>
+            {{#each hotel.fotos as |foto|}}
+              <li class="slide {{#if @first}}active{{/if}}" data-img-id="{{foto.id}}">
+                <img
+                  src="{{foto.path}}"
+                  alt="{{foto.descripcion}}"
+                />
+              </li>
+            {{/each}}
+          </ul>
+          <button id="foto-prev">&#10094;</button>
+          <button id="foto-next">&#10095;</button>
+        </section>
+        <section id="galeria">
+          <ul>
+            {{#each hotel.fotos as |foto|}}
+              <li class="slide-miniatura" data-img-id="{{foto.id}}">
+              <img
+                src="{{foto.path}}"
+                alt="{{foto.descripcion}}"
+                />
+              </li>
+            {{/each}}
+          </ul>
+        </section>
+      </section>
+  {{/inline}}
+
+{{/layouts/base}}

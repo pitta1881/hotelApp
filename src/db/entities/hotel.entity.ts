@@ -1,3 +1,4 @@
+import { Habitacion } from './habitacion.entity';
 import {
   Entity,
   Column,
@@ -19,6 +20,9 @@ import { Exclude } from 'class-transformer';
 export class Hotel {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ nullable: false, default: false, type: 'boolean' })
+  activo: boolean;
 
   @Column({ nullable: false, unique: true })
   nombre: string;
@@ -47,6 +51,21 @@ export class Hotel {
   @Column({ nullable: false, array: true, type: 'float' })
   lat_lng: number[];
 
+  @Column({ nullable: true })
+  logo_path: string;
+
+  @Column({ nullable: true })
+  horario_contacto: string;
+
+  @Column({ nullable: true })
+  facebook: string;
+
+  @Column({ nullable: true })
+  twitter: string;
+
+  @Column({ nullable: true })
+  instagram: string;
+
   @Exclude()
   @CreateDateColumn({
     type: 'timestamptz',
@@ -62,20 +81,23 @@ export class Hotel {
   })
   updated_at: Date;
 
-  @OneToMany(() => Mensaje, (mensaje: Mensaje) => mensaje.id)
+  @OneToMany(() => Mensaje, (mensaje: Mensaje) => mensaje.hotel)
   mensajes: Mensaje[];
 
-  @OneToMany(() => Usuario, (usuario: Usuario) => usuario.id)
+  @OneToMany(() => Usuario, (usuario: Usuario) => usuario.hotel)
   usuarios: Usuario[];
 
-  @OneToMany(() => Paypertop, (paypertop: Paypertop) => paypertop.id)
+  @OneToMany(() => Paypertop, (paypertop: Paypertop) => paypertop.hotel)
   paypertops: Paypertop[];
 
-  @OneToMany(() => Servicio, (servicio: Servicio) => servicio.id)
+  @OneToMany(() => Servicio, (servicio: Servicio) => servicio.hotel)
   servicios: Servicio[];
 
-  @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.id)
+  @OneToMany(() => FotoHotel, (fotoHotel: FotoHotel) => fotoHotel.hotel)
   fotos: FotoHotel[];
+
+  @OneToMany(() => Habitacion, (habitacion: Habitacion) => habitacion.hotel)
+  habitaciones: Habitacion[];
 
   @BeforeInsert()
   async nombreUriTransform() {

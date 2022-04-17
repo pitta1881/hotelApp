@@ -1,0 +1,17 @@
+<p>Nuevo mensaje recibido:</p>
+{{#with mensaje}}
+  <p><b>Fecha:</b> {{shortDate created_at}}</p>
+  <ul>
+    <li><b>Nombre:</b> {{nombre}}</li>
+    <li><b>Apellido:</b> {{apellido}}</li>
+    <li><b>Email:</b> {{email}}</li>
+    <li><b>CheckIn:</b> {{shortDate checkin}}</li>
+    <li><b>CheckOut:</b> {{shortDate checkout}}</li>
+    <li><b>Adultos:</b> {{adultos}}</li>
+    <li><b>Menores:</b> {{menores}}</li>
+  </ul>
+  <p>
+    <b>Mensaje:</b>
+    {{mensaje}}
+  </p>
+{{/with}}

@@ -16,13 +16,10 @@ export class FotoHotel {
   @PrimaryColumn({ type: 'int' })
   id: number;
 
-  @Column({ nullable: false })
-  nombre: string;
-
   @Column({ nullable: true })
   descripcion: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   path: string;
 
   @CreateDateColumn({
@@ -41,7 +38,7 @@ export class FotoHotel {
 
   @ManyToOne(
     () => TipoCarousel,
-    (tipoCarousel: TipoCarousel) => tipoCarousel.id,
+    (tipoCarousel: TipoCarousel) => tipoCarousel.fotosHotel,
     {
       nullable: false,
     },
