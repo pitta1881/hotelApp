@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuracion | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/paypertop.js" defer type="module"></script>
+    <script src="./../js/token.js" defer></script>
+    <script src="./../js/modal-backend.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li>
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li>
+            <a href="./configuracion.html"
+              ><img src="./../icons/cogs-svgrepo-com.svg" />Configuración</a
+            >
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>PayPerTop</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear PayPerTop
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Titular</th>
+              <th>Razón Social</th>
+              <th>Email</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>URL</th>
+              <th>Abono Mensual</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="thbefore">Titular</span>Manuel Blest</td>
+              <td>
+                <span class="thbefore">Razón Social</span>Cervezeria Blest
+              </td>
+              <td><span class="thbefore">Email</span>mblest@blest.com</td>
+              <td><span class="thbefore">Tipo</span>Gastronomia</td>
+              <td><span class="thbefore">Estado</span>Inactivo</td>
+              <td><span class="thbefore">Descripción</span>Cervezería/bar</td>
+              <td>
+                <span class="thbefore">URL</span>http://www.cervezablest.com/
+              </td>
+              <td><span class="thbefore">Abono Mensual</span>$20000</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="nowrap">
+                  <button
+                    type="button"
+                    title="Detalles"
+                    class="actions blue open-modal-read"
+                    data-target="modal-read"
+                    data-value="0"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/eye-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar"
+                    class="actions yellow open-modal-update"
+                    data-target="modal-update"
+                    data-value="0"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar Estado"
+                    class="actions yellow open-modal-update-status"
+                    data-target="modal-update-status"
+                    data-value="0"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/change-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Eliminar"
+                    class="actions red open-modal-delete"
+                    data-target="modal-delete"
+                    data-value="0"
+                    data-quien="Cervezeria Blest"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/trash-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="thbefore">Titular</span>Pedro Perez</td>
+              <td><span class="thbefore">Razón Social</span>PePerez S.R.L</td>
+              <td><span class="thbefore">Email</span>pperez@mail.com</td>
+              <td><span class="thbefore">Tipo</span>Atracciones</td>
+              <td><span class="thbefore">Estado</span>Activo</td>
+              <td>
+                <span class="thbefore">Descripción</span>Empresa que brinda
+                servicios de Turismo por la ciudad
+              </td>
+              <td>
+                <span class="thbefore">URL</span
+                >http://www.turismopperez.com.ar/
+              </td>
+              <td><span class="thbefore">Abono Mensual</span>$15000</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="nowrap">
+                  <button
+                    type="button"
+                    title="Detalles"
+                    class="actions blue open-modal-read"
+                    data-target="modal-read"
+                    data-value="1"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/eye-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar"
+                    class="actions yellow open-modal-update"
+                    data-target="modal-update"
+                    data-value="1"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar Estado"
+                    class="actions yellow open-modal-update-status"
+                    data-target="modal-update-status"
+                    data-value="1"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/change-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Eliminar"
+                    class="actions red open-modal-delete"
+                    data-target="modal-delete"
+                    data-value="1"
+                    data-quien="PePerez S.R.L"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/trash-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <section id="modal-create" class="modal">
+      <form id="form-new">
+        <fieldset>
+          <legend class="green">Crear PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-titular">Titular:</label>
+              <input type="text" name="titular" id="new-titular" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-razon-social">Razón Social:</label>
+              <input
+                type="text"
+                name="razon_social"
+                id="new-razon-social"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-url">URL:</label>
+              <input type="text" name="url" id="new-url" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-email">Email:</label>
+              <input type="email" name="email" id="new-email" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-latitud">Latitud:</label>
+              <input
+                type="text"
+                name="latitude"
+                id="new-latitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-longitud">Longitud:</label>
+              <input
+                type="text"
+                name="longitude"
+                id="new-longitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-tipo">Tipo:</label>
+              <select name="tipo" id="new-tipo" required>
+                <option value="1">Gastronomia</option>
+                <option value="2">Atracción</option>
+                <option value="3">Supermercado</option>
+              </select>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-abono-mensual">Abono Mensual:</label>
+              <input
+                type="number"
+                name="abono_mensual"
+                id="new-abono-mensual"
+                min="0"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="new-descripcion">Descripcion:</label>
+            <textarea
+              name="descripcion"
+              id="new-descripcion"
+              rows="5"
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Titular</span><span id="read-titular"></span>
+            </div>
+            <div class="row">
+              <span>Razón Social</span><span id="read-razon-social"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email"></span>
+            </div>
+            <div class="row">
+              <span>Tipo</span>
+              <span id="read-tipo"></span>
+            </div>
+            <div class="row">
+              <span>Descripción</span>
+              <span id="read-descripcion"></span>
+            </div>
+            <div class="row">
+              <span>URL</span>
+              <span id="read-url"></span>
+            </div>
+            <div class="row">
+              <span>Abono Mensual </span>
+              <span id="read-abono-mensual"></span>
+            </div>
+            <div class="row">
+              <span>Latitud</span>
+              <span id="read-latitud"></span>
+            </div>
+            <div class="row">
+              <span>Longitud</span>
+              <span id="read-longitud"></span>
+            </div>
+            <div class="row">
+              <span>Estado</span>
+              <span id="read-activo"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-creado"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-titular">Titular:</label>
+              <input type="text" name="titular" id="update-titular" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-razon-social">Razón Social:</label>
+              <input
+                type="text"
+                name="razon_social"
+                id="update-razon-social"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-url">URL:</label>
+              <input type="text" name="url" id="update-url" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-email">Email:</label>
+              <input type="email" name="email" id="update-email" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-latitud">Latitud:</label>
+              <input
+                type="text"
+                name="latitude"
+                id="update-latitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-longitud">Longitud:</label>
+              <input
+                type="text"
+                name="longitude"
+                id="update-longitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-tipo">Tipo:</label>
+              <select name="tipo" id="update-tipo" required>
+                <option value="1">Gastronomia</option>
+                <option value="2">Atracción</option>
+                <option value="3">Supermercado</option>
+              </select>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-abono-mensual">Abono Mensual:</label>
+              <input
+                type="number"
+                name="abono_mensual"
+                id="update-abono-mensual"
+                min="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="update-descripcion">Descripcion:</label>
+            <textarea
+              name="descripcion"
+              id="update-descripcion"
+              rows="5"
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update-status" class="modal">
+      <form id="form-update-status">
+        <fieldset>
+          <legend class="yellow">Actualizar Estado PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-status-id" hidden />
+          <p>Actualizar estado de <span id="update-status-span"></span></p>
+          <div class="control-input input-validator-container">
+            <label for="update-estado">Estado:</label>
+            <select name="activo" id="update-estado" required>
+              <option value="true">Activo</option>
+              <option value="false">Inactivo</option>
+            </select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>

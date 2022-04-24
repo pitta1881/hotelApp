@@ -1,5 +1,9 @@
 @import 'header-backend.css';
 @import 'nav-backend.css';
+@import 'form.css';
+@import 'modal.css';
+@import 'table.css';
+
 @font-face {
   font-family: Trip Sans VF;
   src: url(../../fonts/TripSans-VF.woff2);
@@ -27,11 +31,15 @@ main {
 h1 {
   font-size: 48px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .icon24 {
   width: 24px;
-  margin-right: 5px;
+  margin: 0 2.5px;
+}
+img.icon24.actions:hover {
+  background-color: lightgrey;
 }
 
 #toast {
@@ -86,85 +94,28 @@ h1 {
   user-select: none;
 }
 
-fieldset {
-  background-color: #fafafa;
-  padding: 15px;
-  border: 2px solid gray;
-}
-
-legend {
-  background-color: gray;
-  color: white;
-  padding: 5px 10px;
-  font-size: 24px;
-  border-radius: 5px;
-}
-
-form {
-  margin: 15px 0;
-}
-
-.container-doble .control-input input {
-  flex-grow: 0;
-}
-
-.control-input {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 20px 0;
-}
-
-.control-input label {
-  font-weight: 700;
-  letter-spacing: 5px;
-}
-.control-input label:after {
-  content: '*';
-  color: red;
-}
-
-.control-input input {
-  margin-top: 5px;
-  border-radius: 5px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  width: auto;
-  background-color: white;
-  flex: 1;
-  font-size: 16px;
-}
-
-.control-input input:read-only {
-  background-color: #ddd;
-  cursor: not-allowed;
-}
-
-.input-container {
-  display: flex;
-  position: relative;
-}
-
-.input-container img {
-  position: absolute;
-  right: 5px;
-  top: 12px;
-  cursor: pointer;
-}
-
 .button-container {
   text-align: center;
+  margin-top: 10px;
 }
 .button-container button {
-  border: none;
   background: none;
-  border-color: #960606;
   color: white;
   font-size: 20px;
-  background-color: #a51515;
   padding: 5px 20px;
-  box-shadow: 0px 0px 3px 0px #a51515;
   cursor: pointer;
+  user-select: none;
+}
+
+.button-container button.green {
+  border: 1px solid green;
+  background-color: rgba(0, 128, 0, 0.9);
+  box-shadow: 0px 0px 3px 0px green;
+}
+.button-container button.red {
+  border: 1px solid red;
+  background-color: rgba(128, 0, 0, 0.9);
+  box-shadow: 0px 0px 3px 0px red;
 }
 
 .button-container button:disabled {
@@ -174,62 +125,11 @@ form {
   cursor: not-allowed;
 }
 
-.input-validator-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-validator-container input.error {
-  outline: none;
-  border: 2px solid red;
-}
-
-.input-validator-container input.valid {
-  outline: none;
-  border: 2px solid green;
-}
-
-.input-validator-container li {
-  margin: 5px 0;
-}
-
-.input-validator-container li.error {
-  color: red;
-}
-
-.input-validator-container li.error::before {
-  content: '\274C';
-  margin-right: 2px;
-}
-
-.input-validator-container li.valid {
-  color: green;
-}
-
-.input-validator-container li.valid::before {
-  content: '\2713';
-  font-size: 20px;
-  margin-right: 2px;
-}
-
-@media screen and (min-width: 768px) {
-  .control-input.control-half-center {
-    width: 50%;
-    margin: 20px auto;
-  }
-  .container-doble {
-    display: flex;
-    justify-content: space-between;
-  }
-  .container-doble .input-validator-container,
-  .container-doble > .control-input {
-    flex-basis: 48%;
-  }
-
-  .input-container {
-    flex-basis: 60%;
-    margin-right: 10px;
-  }
+button:active {
+  transform: scale(0.98);
+  /* Scaling button to 0.98 to its original size */
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  /* Lowering the shadow */
 }
 
 @keyframes fadein {
@@ -260,12 +160,5 @@ form {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  main {
-    max-width: 900px;
-    margin: 3% auto;
   }
 }

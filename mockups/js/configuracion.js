@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       form: document.getElementById('form-update-user'),
       method: 'patch',
       apiUrl: `${location.origin}/api/usuarios`,
+      idAsParam: false,
       validations: {
         'upd-nombre': {
           required: true,
@@ -33,14 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
       form: document.getElementById('form-change-password'),
       method: 'post',
       apiUrl: `${location.origin}/api/usuarios/change-password`,
+      idAsParam: false,
       validations: {
         'old-password': {
           required: true,
         },
         'new-password': {
           required: true,
-          min: 8,
-          max: 50,
+          minLenght: 8,
+          maxLenght: 50,
           inverseRef: 'repeat-password',
         },
         'repeat-password': {
@@ -53,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       form: document.getElementById('form-new-user'),
       method: 'post',
       apiUrl: `${location.origin}/api/usuarios`,
+      idAsParam: false,
       validations: {
         'new-nombre': {
           required: true,

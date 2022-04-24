@@ -1,0 +1,146 @@
+form {
+  margin: 15px auto;
+  max-width: 700px;
+}
+
+fieldset {
+  background-color: #fafafa;
+  padding: 20px;
+  border: 2px solid gray;
+}
+
+legend {
+  background-color: gray;
+  color: white;
+  font-size: 24px;
+  border-radius: 5px;
+  user-select: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.form-content {
+  overflow: hidden;
+  transition: height 0.5s ease-out;
+}
+
+.container-doble .control-input input,
+.container-doble .control-input select,
+.container-doble .control-input textarea {
+  flex-grow: 0;
+}
+
+.control-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 20px 0;
+}
+
+.control-input label {
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+.control-input label:after {
+  content: '*';
+  color: red;
+}
+
+.control-input input,
+.control-input select,
+.control-input textarea {
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width: auto;
+  background-color: white;
+  flex: 1;
+  font-size: 16px;
+  resize: none;
+}
+
+.control-input input:read-only {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.input-container {
+  display: flex;
+  position: relative;
+}
+
+.input-container img {
+  position: absolute;
+  right: 5px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.input-validator-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-validator-container input.error,
+.input-validator-container select.error,
+.input-validator-container textarea.error {
+  outline: none;
+  border: 2px solid red;
+}
+
+.input-validator-container input.valid,
+.input-validator-container select.valid,
+.input-validator-container textarea.valid {
+  outline: none;
+  border: 2px solid green;
+}
+
+.input-validator-container li {
+  margin: 5px 0;
+}
+
+.input-validator-container li.error {
+  color: red;
+}
+
+.input-validator-container li.error::before {
+  content: '\274C';
+  margin-right: 2px;
+}
+
+.input-validator-container li.valid {
+  color: green;
+}
+
+.input-validator-container li.valid::before {
+  content: '\2713';
+  font-size: 20px;
+  margin-right: 2px;
+}
+
+@media screen and (min-width: 768px) {
+  .control-input.control-half-center {
+    width: 50%;
+    margin: 20px auto;
+  }
+  .container-doble {
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-doble .input-validator-container,
+  .container-doble > .control-input {
+    flex-basis: 48%;
+  }
+
+  .input-container {
+    flex-basis: 60%;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  form {
+    margin: 3% auto;
+  }
+}
