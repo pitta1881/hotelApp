@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fetchReadOne = (id) => {
     //TODO: en prod habilitar el fetch
     return new Promise((res) => setTimeout(() => res(data[id]), 1000));
-    /*return fetch(`${location.origin}/api/paypertop/${btn.dataset.value}`, {
+    /*return fetch(`${location.origin}/api/paypertop/${id}`, {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',

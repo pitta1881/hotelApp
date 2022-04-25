@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mensajes | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <link rel="stylesheet" href="./../css/mensajes.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/mensajes.js" defer type="module"></script>
+    <script src="./../js/token.js" defer></script>
+    <script src="./../js/modal-backend.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li>
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li>
+            <a href="./configuracion.html"
+              ><img src="./../icons/cogs-svgrepo-com.svg" />Configuración</a
+            >
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>Mensajes</h1>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Fecha</th>
+              <th>De</th>
+              <th>Mensaje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="open-modal-read" data-value="1">
+              <td>
+                <span class="thbefore">Estado</span
+                ><span class="status unread"></span>
+              </td>
+              <td><span class="thbefore">Fecha</span>2022-05-16</td>
+              <td><span class="thbefore">De</span>testnom1 testape1</td>
+              <td>
+                <span class="thbefore">Mensaje</span>Este es un mensaje de
+                prueba seed 1Este es un mensaje de prueba seed 1Este es un
+                mensaje de prueba seed 1
+              </td>
+            </tr>
+            <tr class="open-modal-read" data-value="2">
+              <td>
+                <span class="thbefore">Estado</span
+                ><span class="status read"></span>
+              </td>
+              <td><span class="thbefore">Fecha</span>2022-05-15</td>
+              <td><span class="thbefore">De</span>testnom2 testape2</td>
+              <td>
+                <span class="thbefore">Mensaje</span>Este es un mensaje de
+                prueba seed 2
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Fecha</span>
+              <span id="read-created_at"></span>
+            </div>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre"></span>
+            </div>
+            <div class="row">
+              <span>Apellido</span><span id="read-apellido"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email"></span>
+            </div>
+            <div class="row">
+              <span>CheckIn</span>
+              <span id="read-checkin"></span>
+            </div>
+            <div class="row">
+              <span>CheckOut</span>
+              <span id="read-checkout"></span>
+            </div>
+            <div class="row">
+              <span>País</span>
+              <span id="read-pais"></span>
+            </div>
+            <div class="row">
+              <span>Adultos</span>
+              <span id="read-adultos"></span>
+            </div>
+            <div class="row">
+              <span>Menores </span>
+              <span id="read-menores"></span>
+            </div>
+            <div class="row">
+              <span>Mensaje</span>
+              <span id="read-mensaje"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>
