@@ -52,9 +52,19 @@
               ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
             >
           </li>
-          <li>
+          <li class="liSuper">
             <a href="./reservas.html"
               ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+            <ul class="ulInner">
+              <li id="liHuespedInner">
+                <a href="./huespedes.html">Huespedes</a>
+              </li>
+            </ul>
+          </li>
+          <li id="liHuesped">
+            <a href="./huespedes.html"
+              ><img src="./../icons/person-svgrepo-com.svg" />Huespedes</a
             >
           </li>
           <li>
@@ -71,10 +81,18 @@
               />Mensajes</a
             >
           </li>
-          <li>
-            <a href="./configuracion.html"
-              ><img src="./../icons/cogs-svgrepo-com.svg" />Configuración</a
+          <li class="liSuper">
+            <a href="#"
+              ><img src="./../icons/user-svgrepo-com.svg" />Elsa Ntorosario</a
             >
+            <ul class="ulInner">
+              <li>
+                <a href="./configuracion.html">Configuración</a>
+              </li>
+              <li>
+                <a href="./logout.html">Cerrar Sesión</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </section>
@@ -88,22 +106,24 @@
             <div class="form-content-fixed">
               <div class="container-doble">
                 <div class="control-input input-validator-container">
-                  <label for="upd-nombre">Nombre:</label>
+                  <label for="update-nombre" class="required">Nombre:</label>
                   <input
                     type="text"
-                    name="upd-nombre"
-                    id="upd-nombre"
+                    name="nombre"
+                    id="update-nombre"
                     value="nombre test"
                     required
                   />
                   <ul></ul>
                 </div>
                 <div class="control-input input-validator-container">
-                  <label for="upd-apellido">Apellido:</label>
+                  <label for="update-apellido" class="required"
+                    >Apellido:</label
+                  >
                   <input
                     type="text"
-                    name="upd-apellido"
-                    id="upd-apellido"
+                    name="apellido"
+                    id="update-apellido"
                     value="apellido test"
                     required
                   />
@@ -112,11 +132,11 @@
               </div>
               <div class="container-doble">
                 <div class="control-input input-validator-container">
-                  <label for="upd-nick">Nick:</label>
+                  <label for="update-nick" class="required">Nick:</label>
                   <input
                     type="text"
-                    name="upd-nick"
-                    id="upd-nick"
+                    name="nick"
+                    id="update-nick"
                     value="testy"
                     readonly
                     required
@@ -124,11 +144,11 @@
                   <ul></ul>
                 </div>
                 <div class="control-input input-validator-container">
-                  <label for="upd-email">Email:</label>
+                  <label for="update-email" class="required">Email:</label>
                   <input
                     type="email"
-                    name="upd-email"
-                    id="upd-email"
+                    name="email"
+                    id="update-email"
                     value="test@example.com"
                     required
                   />
@@ -150,7 +170,9 @@
               <div
                 class="control-input input-validator-container control-half-center"
               >
-                <label for="old-password">Contraseña Actual:</label>
+                <label for="old-password" class="required"
+                  >Contraseña Actual:</label
+                >
                 <div class="input-container">
                   <input
                     type="password"
@@ -169,7 +191,9 @@
               <div
                 class="control-input input-validator-container control-half-center"
               >
-                <label for="new-password">Nueva Contraseña:</label>
+                <label for="new-password" class="required"
+                  >Nueva Contraseña:</label
+                >
                 <div class="input-container">
                   <input
                     type="password"
@@ -190,7 +214,9 @@
               <div
                 class="control-input input-validator-container control-half-center"
               >
-                <label for="repeat-password">Repita Contraseña:</label>
+                <label for="repeat-password" class="required"
+                  >Repita Contraseña:</label
+                >
                 <div class="input-container">
                   <input
                     type="password"
@@ -222,7 +248,7 @@
             <div class="form-content-fixed">
               <div class="container-doble">
                 <div class="control-input input-validator-container">
-                  <label for="new-nombre">Nombre:</label>
+                  <label for="new-nombre" class="required">Nombre:</label>
                   <input
                     type="text"
                     name="new-nombre"
@@ -232,7 +258,7 @@
                   <ul></ul>
                 </div>
                 <div class="control-input input-validator-container">
-                  <label for="new-apellido">Apellido:</label>
+                  <label for="new-apellido" class="required">Apellido:</label>
                   <input
                     type="text"
                     name="new-apellido"
@@ -244,12 +270,12 @@
               </div>
               <div class="container-doble">
                 <div class="control-input input-validator-container">
-                  <label for="new-nick">Nick:</label>
+                  <label for="new-nick" class="required">Nick:</label>
                   <input type="text" name="new-nick" id="new-nick" required />
                   <ul></ul>
                 </div>
                 <div class="control-input input-validator-container">
-                  <label for="new-email">Email:</label>
+                  <label for="new-email" class="required">Email:</label>
                   <input
                     type="email"
                     name="new-email"
@@ -262,7 +288,7 @@
               <div
                 class="control-input input-validator-container control-half-center"
               >
-                <label for="password">Password:</label>
+                <label for="password" class="required">Password:</label>
                 <div class="input-container">
                   <input
                     type="password"

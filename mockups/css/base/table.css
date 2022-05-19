@@ -68,6 +68,19 @@ button.actions.red:hover {
   display: table-cell !important;
 }
 
+td.text-center {
+  text-align: center;
+}
+.action-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.action-flex div:first-child {
+  margin-bottom: 5px;
+}
+
 @media screen and (max-width: 768px) {
   /* Force table to not be like tables anymore */
   table,

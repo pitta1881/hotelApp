@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fotos | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <link rel="stylesheet" href="./../css/servicios.css" />
+    <link rel="stylesheet" href="./../css/fotos.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/fotos.js" defer type="module"></script>
+    <script src="./../js/token.js" defer></script>
+    <script src="./../js/modal-backend.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+            <ul class="ulInner">
+              <li id="liHuespedInner">
+                <a href="./huespedes.html">Huespedes</a>
+              </li>
+            </ul>
+          </li>
+          <li id="liHuesped">
+            <a href="./huespedes.html"
+              ><img src="./../icons/person-svgrepo-com.svg" />Huespedes</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="#"
+              ><img src="./../icons/user-svgrepo-com.svg" />Elsa Ntorosario</a
+            >
+            <ul class="ulInner">
+              <li>
+                <a href="./configuracion.html">Configuración</a>
+              </li>
+              <li>
+                <a href="./logout.html">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>Fotos</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal-carousel green"
+          data-target="modal-carousel"
+          data-value="0"
+        >
+          Carousel Home
+        </button>
+        <button
+          type="button"
+          class="open-modal-carousel green"
+          data-target="modal-carousel"
+          data-value="1"
+        >
+          Carousel Servicios
+        </button>
+      </div>
+    </main>
+    <section id="modal-carousel" class="modal">
+      <section id="carousel">
+        <section id="oneSlide">
+          <ul>
+            <li id="galeria-add-foto" class="slide" data-img-id="0">
+              <div>
+                <form id="form-create-foto">
+                  <fieldset>
+                    <legend id="legend-foto" class="green">Crear Foto</legend>
+                    <input
+                      type="number"
+                      name="tipoCarouselId"
+                      id="tipo-carousel-id"
+                      hidden
+                    />
+                    <div class="control-input input-validator-container">
+                      <label for="new-path" class="required">URL:</label>
+                      <input type="text" name="path" id="new-path" required />
+                      <ul></ul>
+                    </div>
+                    <div class="control-input input-validator-container">
+                      <label for="new-descripcion-foto" class="required"
+                        >Descripcion Foto:</label
+                      >
+                      <textarea
+                        name="descripcion"
+                        id="new-descripcion-foto"
+                        rows="5"
+                        required
+                      ></textarea>
+                      <ul></ul>
+                    </div>
+                    <div class="button-container">
+                      <button type="submit" class="btn-submit green" disabled>
+                        Enviar
+                      </button>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </li>
+          </ul>
+          <button id="foto-prev">&#10094;</button>
+          <button id="foto-next">&#10095;</button>
+          <button type="button" id="btn-delete-foto" class="actions red">
+            <img class="icon24" src="./../icons/trash-svgrepo-com.svg" alt="" />
+          </button>
+        </section>
+        <section id="galeria">
+          <ul>
+            <li
+              id="galeria-add-foto-miniatura"
+              class="slide-miniatura"
+              data-img-id="0"
+            >
+              <div>
+                <img src="./../icons/plus-svgrepo-com.svg" alt="" />
+              </div>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </section>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>

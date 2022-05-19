@@ -33,110 +33,129 @@ const validateInput = (input, objValidations) => {
       validationsHTML += liHTML(testValidation, 'Campo requerido');
       errores = !testValidation ? errores + 1 : errores;
     }
-    if (objValidations[input.id].minLenght) {
-      const testValidation =
-        input.value.length >= objValidations[input.id].minLenght;
-      validationsHTML += liHTML(
-        testValidation,
-        `Min.: ${objValidations[input.id].minLenght} caracteres`,
-      );
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].maxLenght) {
-      const testValidation =
-        input.value.length <= objValidations[input.id].maxLenght;
-      validationsHTML += liHTML(
-        testValidation,
-        `Max.: ${objValidations[input.id].maxLenght} caracteres`,
-      );
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].same) {
-      const sameInput = document.getElementsByName(
-        objValidations[input.id].same,
-      )[0];
-      const testValidation = input.value === sameInput.value;
-      validationsHTML += liHTML(testValidation, 'Contraseñas coinciden');
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].regexString) {
-      const testValidation = objValidations[input.id].regexString.test(
-        input.value,
-      );
-      validationsHTML += liHTML(testValidation, 'Debe tener solo letras');
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].regexEmail) {
-      const testValidation = objValidations[input.id].regexEmail.test(
-        input.value.toLowerCase(),
-      );
-      validationsHTML += liHTML(testValidation, 'Debe tener formato de Email');
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].regexRazonSocial) {
-      const testValidation = objValidations[input.id].regexRazonSocial.test(
-        input.value,
-      );
-      validationsHTML += liHTML(
-        testValidation,
-        'Solo Letras, Número, Guiones, Puntos',
-      );
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].inverseRef) {
-      const inverseRefInput = document.getElementsByName(
-        objValidations[input.id].inverseRef,
-      )[0];
-      const ulValidations = inverseRefInput.closest(
-        '.input-validator-container',
-      ).lastElementChild;
-      inverseRefInput.classList.remove('error');
-      inverseRefInput.classList.add('valid');
-      const validacion = validateInput(inverseRefInput, objValidations);
-      ulValidations.innerHTML = validacion.validationsHTML;
-      if (validacion.hasError) {
-        inverseRefInput.classList.remove('valid');
-        inverseRefInput.classList.add('error');
+    if (input.value) {
+      if (objValidations[input.id].minLenght) {
+        const testValidation =
+          input.value.length >= objValidations[input.id].minLenght;
+        validationsHTML += liHTML(
+          testValidation,
+          `Min.: ${objValidations[input.id].minLenght} caracteres`,
+        );
+        errores = !testValidation ? errores + 1 : errores;
       }
-    }
-    if (objValidations[input.id].regexUrl) {
-      const testValidation = objValidations[input.id].regexUrl.test(
-        input.value.toLowerCase(),
-      );
-      validationsHTML += liHTML(testValidation, 'Debe tener formato de URL');
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].min) {
-      const testValidation =
-        Number(input.value.replace(',', '.')) >= objValidations[input.id].min;
-      validationsHTML += liHTML(
-        testValidation,
-        `Min.: ${objValidations[input.id].min}`,
-      );
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].max) {
-      const testValidation =
-        Number(input.value.replace(',', '.')) <= objValidations[input.id].max;
-      validationsHTML += liHTML(
-        testValidation,
-        `Max.: ${objValidations[input.id].max}`,
-      );
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].regexNumber) {
-      const testValidation = objValidations[input.id].regexNumber.test(
-        input.value,
-      );
-      validationsHTML += liHTML(testValidation, 'Debe ser solo numeros');
-      errores = !testValidation ? errores + 1 : errores;
-    }
-    if (objValidations[input.id].regexLatLng) {
-      const testValidation = objValidations[input.id].regexLatLng.test(
-        input.value,
-      );
-      validationsHTML += liHTML(testValidation, 'Solo numeros y Punto');
-      errores = !testValidation ? errores + 1 : errores;
+      if (objValidations[input.id].maxLenght) {
+        const testValidation =
+          input.value.length <= objValidations[input.id].maxLenght;
+        validationsHTML += liHTML(
+          testValidation,
+          `Max.: ${objValidations[input.id].maxLenght} caracteres`,
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].same) {
+        const sameInput = document.getElementsByName(
+          objValidations[input.id].same,
+        )[0];
+        const testValidation = input.value === sameInput.value;
+        validationsHTML += liHTML(testValidation, 'Contraseñas coinciden');
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexString) {
+        const testValidation = objValidations[input.id].regexString.test(
+          input.value,
+        );
+        validationsHTML += liHTML(testValidation, 'Debe tener solo letras');
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexEmail) {
+        const testValidation = objValidations[input.id].regexEmail.test(
+          input.value.toLowerCase(),
+        );
+        validationsHTML += liHTML(
+          testValidation,
+          'Debe tener formato de Email',
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexRazonSocial) {
+        const testValidation = objValidations[input.id].regexRazonSocial.test(
+          input.value,
+        );
+        validationsHTML += liHTML(
+          testValidation,
+          'Solo Letras, Número, Guiones, Puntos',
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].inverseRef) {
+        const inverseRefInput = document.getElementsByName(
+          objValidations[input.id].inverseRef,
+        )[0];
+        const ulValidations = inverseRefInput.closest(
+          '.input-validator-container',
+        ).lastElementChild;
+        inverseRefInput.classList.remove('error');
+        inverseRefInput.classList.add('valid');
+        const validacion = validateInput(inverseRefInput, objValidations);
+        ulValidations.innerHTML = validacion.validationsHTML;
+        if (validacion.hasError) {
+          inverseRefInput.classList.remove('valid');
+          inverseRefInput.classList.add('error');
+        }
+      }
+      if (objValidations[input.id].regexUrl) {
+        const testValidation = objValidations[input.id].regexUrl.test(
+          input.value.toLowerCase(),
+        );
+        validationsHTML += liHTML(testValidation, 'Debe tener formato de URL');
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].min) {
+        const testValidation =
+          Number(input.value.replace(',', '.')) >= objValidations[input.id].min;
+        validationsHTML += liHTML(
+          testValidation,
+          `Min.: ${objValidations[input.id].min}`,
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].max) {
+        const testValidation =
+          Number(input.value.replace(',', '.')) <= objValidations[input.id].max;
+        validationsHTML += liHTML(
+          testValidation,
+          `Max.: ${objValidations[input.id].max}`,
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexNumber) {
+        const testValidation = objValidations[input.id].regexNumber.test(
+          input.value,
+        );
+        validationsHTML += liHTML(testValidation, 'Debe ser solo numeros');
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexLatLng) {
+        const testValidation = objValidations[input.id].regexLatLng.test(
+          input.value,
+        );
+        validationsHTML += liHTML(testValidation, 'Solo numeros y Punto');
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexTelefono) {
+        const testValidation = objValidations[input.id].regexTelefono.test(
+          input.value,
+        );
+        validationsHTML += liHTML(testValidation, 'Solo numeros, + y -');
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].regexRedes) {
+        const testValidation = objValidations[input.id].regexRedes.test(
+          input.value,
+        );
+        validationsHTML += liHTML(testValidation, 'Solo letras, numeros y _');
+        errores = !testValidation ? errores + 1 : errores;
+      }
     }
   }
   return {
@@ -162,7 +181,7 @@ const joinInputs = (form) => {
 };
 const validateForm = (form, objValidations) => {
   const joinInp = joinInputs(form);
-  const allFilled = joinInp.every((input) => input.value);
+  const allFilled = joinInp.every((input) => input.value || !input.required);
   if (allFilled) {
     return joinInp.every((input) => {
       const validation = validateInput(input, objValidations);
@@ -204,7 +223,7 @@ export const loadFormInputListeners = ({ form, validations }) => {
 export const loadFormSubmitListeners = ({
   form,
   method,
-  idAsParam,
+  params,
   apiUrl,
   validations,
 }) => {
@@ -219,9 +238,11 @@ export const loadFormSubmitListeners = ({
     } else {
       const dataForm = new FormData(e.target);
       const jsonToSend = Object.fromEntries(dataForm.entries());
-      if (idAsParam) {
-        finalApi = `${apiUrl}/${jsonToSend.id}`;
-        delete jsonToSend.id;
+      if (params.length > 0) {
+        params.forEach((param) => {
+          finalApi = finalApi.replace(`:${param}`, jsonToSend[param]);
+          delete jsonToSend[param];
+        });
       }
       await fetch(finalApi, {
         method,

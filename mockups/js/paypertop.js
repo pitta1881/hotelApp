@@ -146,10 +146,10 @@ const data = [
 document.addEventListener('DOMContentLoaded', () => {
   const formsObj = [
     {
-      form: document.getElementById('form-new'),
+      form: document.getElementById('form-create'),
       method: 'post',
       apiUrl: `${location.origin}/api/paypertop`,
-      idAsParam: false,
+      params: [],
       validations: {
         'new-titular': {
           required: true,
@@ -195,15 +195,15 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       form: document.getElementById('form-delete'),
       method: 'delete',
-      apiUrl: `${location.origin}/api/paypertop`,
-      idAsParam: true,
+      apiUrl: `${location.origin}/api/paypertop/:id`,
+      params: ['id'],
       validations: {},
     },
     {
       form: document.getElementById('form-update'),
       method: 'patch',
-      apiUrl: `${location.origin}/api/paypertop`,
-      idAsParam: true,
+      apiUrl: `${location.origin}/api/paypertop/:id`,
+      params: ['id'],
       validations: {
         'update-titular': {
           required: true,
@@ -250,8 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       form: document.getElementById('form-update-status'),
       method: 'patch',
-      apiUrl: `${location.origin}/api/paypertop/activo`,
-      idAsParam: true,
+      apiUrl: `${location.origin}/api/paypertop/activo/:id`,
+      params: ['id'],
       validations: {
         'update-estado': {
           required: true,

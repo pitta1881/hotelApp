@@ -10,21 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
       form: document.getElementById('form-update-user'),
       method: 'patch',
       apiUrl: `${location.origin}/api/usuarios`,
-      idAsParam: false,
+      params: [],
       validations: {
-        'upd-nombre': {
+        'update-nombre': {
           required: true,
           regexString: REGEX_STRING,
         },
-        'upd-apellido': {
+        'update-apellido': {
           required: true,
           regexString: REGEX_STRING,
         },
-        'upd-nick': {
+        'update-nick': {
           required: true,
           regexString: REGEX_STRING,
         },
-        'upd-email': {
+        'update-email': {
           required: true,
           regexEmail: REGEX_EMAIL,
         },
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       form: document.getElementById('form-change-password'),
       method: 'post',
       apiUrl: `${location.origin}/api/usuarios/change-password`,
-      idAsParam: false,
+      params: [],
       validations: {
         'old-password': {
           required: true,
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       form: document.getElementById('form-new-user'),
       method: 'post',
       apiUrl: `${location.origin}/api/usuarios`,
-      idAsParam: false,
+      params: [],
       validations: {
         'new-nombre': {
           required: true,

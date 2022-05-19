@@ -41,7 +41,7 @@ legend {
   font-weight: 700;
   letter-spacing: 5px;
 }
-.control-input label:after {
+.control-input label.required:after {
   content: '*';
   color: red;
 }
@@ -142,5 +142,28 @@ legend {
 @media screen and (min-width: 1024px) {
   form {
     margin: 3% auto;
+  }
+  .container-cuatriple {
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-cuatriple .container-doble {
+    flex-basis: 48%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .container-doble-xxl {
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-doble-xxl .input-validator-container,
+  .container-doble-xxl > .control-input {
+    flex-basis: 48%;
+  }
+
+  .input-container {
+    flex-basis: 60%;
+    margin-right: 10px;
   }
 }
