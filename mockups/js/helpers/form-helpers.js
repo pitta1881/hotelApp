@@ -226,6 +226,7 @@ export const loadFormSubmitListeners = ({
   params,
   apiUrl,
   validations,
+  callback,
 }) => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -258,6 +259,9 @@ export const loadFormSubmitListeners = ({
           if (dataJson.status === 'SUCCESS') {
             e.target.reset();
             toggleToast('success', `<p>Éxito</p>`);
+            if (callback) {
+              callback(dataJson);
+            }
           } else {
             let erroresLi = ``;
             dataJson.message.forEach((mensaje, index) => {
