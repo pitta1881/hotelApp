@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>General | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <link rel="stylesheet" href="./../css/general.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/general.js" defer type="module"></script>
+    <script src="./../js/token.js" defer></script>
+    <script src="./../js/modal-backend.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+            <ul class="ulInner">
+              <li id="liHuespedInner">
+                <a href="./huespedes.html">Huespedes</a>
+              </li>
+            </ul>
+          </li>
+          <li id="liHuesped">
+            <a href="./huespedes.html"
+              ><img src="./../icons/person-svgrepo-com.svg" />Huespedes</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="#"
+              ><img src="./../icons/user-svgrepo-com.svg" />Elsa Ntorosario</a
+            >
+            <ul class="ulInner">
+              <li>
+                <a href="./configuracion.html">Configuración</a>
+              </li>
+              <li>
+                <a href="./logout.html">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>Configuración General</h1>
+      <form id="form-update-hotel">
+        <fieldset>
+          <legend>Modificar Hotel:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div class="control-input input-validator-container">
+                <label for="update-descripcion-home" class="required"
+                  >Descripcion Home:</label
+                >
+                <textarea
+                  name="descripcion_home"
+                  id="update-descripcion-home"
+                  rows="5"
+                  required
+                >
+Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.</textarea
+                >
+                <ul></ul>
+              </div>
+              <div class="control-input input-validator-container">
+                <label for="update-descripcion-ubicacion" class="required"
+                  >Descripcion Ubicación:</label
+                >
+                <textarea
+                  name="descripcion_ubi"
+                  id="update-descripcion-ubicacion"
+                  rows="5"
+                  required
+                >
+Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.</textarea
+                >
+                <ul></ul>
+              </div>
+              <div class="container-cuatriple">
+                <div class="container-doble">
+                  <div class="control-input input-validator-container">
+                    <label for="update-nombre" class="required">Nombre:</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="update-nombre"
+                      value="Pato Hotel"
+                      required
+                    />
+                    <ul></ul>
+                  </div>
+                  <div class="control-input input-validator-container">
+                    <label for="update-email" class="required">Email:</label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="update-email"
+                      value="hotelpato@mail.com"
+                      required
+                    />
+                    <ul></ul>
+                  </div>
+                </div>
+                <div class="container-doble">
+                  <div class="control-input input-validator-container">
+                    <label for="update-telefono-1" class="required"
+                      >Telefono 1:</label
+                    >
+                    <input
+                      type="text"
+                      name="telefono_1"
+                      id="update-telefono-1"
+                      value="0112134564"
+                      required
+                    />
+                    <ul></ul>
+                  </div>
+                  <div class="control-input input-validator-container">
+                    <label for="update-telefono-2">Telefono 2:</label>
+                    <input
+                      type="text"
+                      name="telefono_2"
+                      id="update-telefono-2"
+                      value=""
+                    />
+                    <ul></ul>
+                  </div>
+                </div>
+              </div>
+              <div class="container-doble-xxl">
+                <div class="control-input input-validator-container">
+                  <label for="update-direccion" class="required"
+                    >Dirección:</label
+                  >
+                  <input
+                    type="text"
+                    name="direccion"
+                    id="update-direccion"
+                    value="Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-logo-path" class="required"
+                    >Logo Path:</label
+                  >
+                  <input
+                    type="text"
+                    name="logo_path"
+                    id="update-logo-path"
+                    value="http://imgrepo.com/images/logo-hotel.png"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-latitud" class="required">Latitud:</label>
+                  <input
+                    type="text"
+                    name="latitude"
+                    id="update-latitud"
+                    value="-41.12947531850026"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-longitud" class="required"
+                    >Longitud:</label
+                  >
+                  <input
+                    type="text"
+                    name="longitude"
+                    id="update-longitud"
+                    value="-71.34748729871622"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-cuatriple">
+                <div class="container-doble">
+                  <div class="control-input input-validator-container">
+                    <label for="update-facebook">Facebook:</label>
+                    <input
+                      type="text"
+                      name="facebook"
+                      id="update-facebook"
+                      value="hotelpato"
+                    />
+                    <ul></ul>
+                  </div>
+                  <div class="control-input input-validator-container">
+                    <label for="update-twitter">Twitter:</label>
+                    <input
+                      type="text"
+                      name="twitter"
+                      id="update-twitter"
+                      value="hotelpatook"
+                    />
+                    <ul></ul>
+                  </div>
+                </div>
+                <div class="container-doble">
+                  <div class="control-input input-validator-container">
+                    <label for="update-instagram">Instagram:</label>
+                    <input
+                      type="text"
+                      name="instagram"
+                      id="update-instagram"
+                      value=""
+                    />
+                    <ul></ul>
+                  </div>
+                  <div class="control-input input-validator-container">
+                    <label for="update-horario-contacto" class="required"
+                      >Horario Contacto:</label
+                    >
+                    <input
+                      type="text"
+                      name="horario_contacto"
+                      id="update-horario-contacto"
+                      value="Lu-Do 7-22hs"
+                      required
+                    />
+                    <ul></ul>
+                  </div>
+                </div>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <form>
+        <fieldset>
+          <legend>Servicio/Instalación:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div class="button-container">
+                <button
+                  type="button"
+                  class="open-modal green"
+                  data-target="modal-create"
+                >
+                  Crear Servicio
+                </button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Icono</th>
+                    <th>Icono Path</th>
+                    <th>Tipo</th>
+                    <th class="action-column">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="thbefore">Nombre</span>WiFi</td>
+                    <td class="text-center">
+                      <span class="thbefore">Icono</span
+                      ><img
+                        src="./../icons/wifi-signal-svgrepo-com.svg"
+                        class="icon24"
+                      />
+                    </td>
+                    <td>
+                      <span class="thbefore">Icono Path</span
+                      >/icons/wifi-signal-svgrepo-com.svg
+                    </td>
+                    <td><span class="thbefore">Tipo</span>Servicio</td>
+                    <td class="action-column">
+                      <span class="thbefore">Acción</span>
+                      <div class="nowrap">
+                        <button
+                          type="button"
+                          title="Actualizar"
+                          class="actions yellow open-modal-update"
+                          data-target="modal-update"
+                          data-value="0"
+                        >
+                          <img
+                            class="icon24"
+                            src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          title="Eliminar"
+                          class="actions red open-modal-delete"
+                          data-target="modal-delete"
+                          data-value="0"
+                          data-quien="Wifi"
+                        >
+                          <img
+                            class="icon24"
+                            src="./../icons/trash-svgrepo-com.svg"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="thbefore">Nombre</span>Estacionamiento</td>
+                    <td class="text-center">
+                      <span class="thbefore">Icono</span
+                      ><img
+                        src="./../icons/parking-garage-transportation-car-parking-svgrepo-com.svg"
+                        class="icon24"
+                      />
+                    </td>
+                    <td>
+                      <span class="thbefore">Icono Path</span
+                      >/icons/parking-garage-transportation-car-parking-svgrepo-com.svg
+                    </td>
+                    <td><span class="thbefore">Tipo</span>Instalación</td>
+                    <td class="action-column">
+                      <span class="thbefore">Acción</span>
+                      <div class="nowrap">
+                        <button
+                          type="button"
+                          title="Actualizar"
+                          class="actions yellow open-modal-update"
+                          data-target="modal-update"
+                          data-value="1"
+                        >
+                          <img
+                            class="icon24"
+                            src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          title="Eliminar"
+                          class="actions red open-modal-delete"
+                          data-target="modal-delete"
+                          data-value="1"
+                          data-quien="Estacionamiento"
+                        >
+                          <img
+                            class="icon24"
+                            src="./../icons/trash-svgrepo-com.svg"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </main>
+    <section id="modal-create" class="modal">
+      <form id="form-create-servicio">
+        <fieldset>
+          <legend>Agregar Servicio/Instalación:</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-servicio-nombre" class="required">Nombre:</label>
+              <input
+                type="text"
+                name="nombre"
+                id="new-servicio-nombre"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-servicio-tipo" class="required">Tipo:</label>
+              <select name="servInstal" id="new-servicio-tipo" required>
+                <option value="false">Servicio</option>
+                <option value="true">Instalación</option>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="new-servicio-icon-path" class="required"
+              >Icon Path:</label
+            >
+            <input
+              type="text"
+              name="icon_path"
+              id="new-servicio-icon-path"
+              required
+            />
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update-servicio">
+        <fieldset>
+          <legend>Actualizar Servicio/Instalación:</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-servicio-nombre" class="required"
+                >Nombre:</label
+              >
+              <input
+                type="text"
+                name="nombre"
+                id="update-servicio-nombre"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-servicio-tipo" class="required">Tipo:</label>
+              <select name="servInstal" id="update-servicio-tipo" required>
+                <option value="false">Servicio</option>
+                <option value="true">Instalación</option>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="update-servicio-icon-path" class="required"
+              >Icon Path:</label
+            >
+            <input
+              type="text"
+              name="icon_path"
+              id="update-servicio-icon-path"
+              required
+            />
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Servicio/Instalación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>

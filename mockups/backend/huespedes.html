@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Huespedes | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/huespedes.js" defer type="module"></script>
+    <script src="./../js/token.js" defer></script>
+    <script src="./../js/modal-backend.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+            <ul class="ulInner">
+              <li id="liHuespedInner">
+                <a href="./huespedes.html">Huespedes</a>
+              </li>
+            </ul>
+          </li>
+          <li id="liHuesped">
+            <a href="./huespedes.html"
+              ><img src="./../icons/person-svgrepo-com.svg" />Huespedes</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="#"
+              ><img src="./../icons/user-svgrepo-com.svg" />Elsa Ntorosario</a
+            >
+            <ul class="ulInner">
+              <li>
+                <a href="./configuracion.html">Configuración</a>
+              </li>
+              <li>
+                <a href="./logout.html">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>Huespedes</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear Huesped
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>DNI</th>
+              <th>Fecha Nac.</th>
+              <th>Teléfono</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="thbefore">Nombre</span>Elsa</td>
+              <td><span class="thbefore">Apellido</span>Rampion</td>
+              <td><span class="thbefore">Email</span>erampion@mail.com</td>
+              <td><span class="thbefore">DNI</span>11222333</td>
+              <td><span class="thbefore">Fecha Nac.</span>20/05/1995</td>
+              <td><span class="thbefore">Teléfono</span>11444555666</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="nowrap">
+                  <button
+                    type="button"
+                    title="Detalles"
+                    class="actions blue open-modal-read"
+                    data-target="modal-read"
+                    data-value="0"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/eye-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar"
+                    class="actions yellow open-modal-update"
+                    data-target="modal-update"
+                    data-value="0"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Eliminar"
+                    class="actions red open-modal-delete"
+                    data-target="modal-delete"
+                    data-value="0"
+                    data-quien="Elsa Rampion"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/trash-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="thbefore">Nombre</span>Elsa</td>
+              <td><span class="thbefore">Apellido</span>Lamin</td>
+              <td><span class="thbefore">Email</span>elamin@mail.com</td>
+              <td><span class="thbefore">DNI</span>22333444</td>
+              <td><span class="thbefore">Fecha Nac.</span>15/12/1985</td>
+              <td><span class="thbefore">Teléfono</span>22333444555</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="nowrap">
+                  <button
+                    type="button"
+                    title="Detalles"
+                    class="actions blue open-modal-read"
+                    data-target="modal-read"
+                    data-value="1"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/eye-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar"
+                    class="actions yellow open-modal-update"
+                    data-target="modal-update"
+                    data-value="1"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Eliminar"
+                    class="actions red open-modal-delete"
+                    data-target="modal-delete"
+                    data-value="1"
+                    data-quien="Elsa Lamin"
+                  >
+                    <img
+                      class="icon24"
+                      src="./../icons/trash-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <section id="modal-create" class="modal">
+      <form id="form-create">
+        <fieldset>
+          <legend class="green">Crear Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-nombre" class="required">Nombre:</label>
+              <input type="text" name="nombre" id="new-nombre" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-apellido" class="required">Apellido:</label>
+              <input type="text" name="apellido" id="new-apellido" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-email" class="required">Email:</label>
+              <input type="email" name="email" id="new-email" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-dni" class="required">DNI:</label>
+              <input type="number" name="dni" id="new-dni" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-fecha-nacimiento" class="required"
+                >Fecha Nac.:</label
+              >
+              <input
+                type="date"
+                name="fecha_nacimiento"
+                id="new-fecha-nacimiento"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-telefono" class="required">Telefono:</label>
+              <input type="text" name="telefono" id="new-telefono" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre"></span>
+            </div>
+            <div class="row">
+              <span>Apellido</span><span id="read-apellido"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email"></span>
+            </div>
+            <div class="row">
+              <span>DNI</span>
+              <span id="read-dni"></span>
+            </div>
+            <div class="row">
+              <span>Fecha Nacimiento</span>
+              <span id="read-fecha-nacimiento"></span>
+            </div>
+            <div class="row">
+              <span>Teléfono</span>
+              <span id="read-telefono"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-creado"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-nombre" class="required">Nombre:</label>
+              <input type="text" name="nombre" id="update-nombre" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-apellido" class="required">Apellido:</label>
+              <input
+                type="text"
+                name="apellido"
+                id="update-apellido"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-email" class="required">Email:</label>
+              <input type="email" name="email" id="update-email" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-dni" class="required">DNI:</label>
+              <input type="number" name="dni" id="update-dni" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-fecha-nacimiento" class="required"
+                >Fecha Nac.:</label
+              >
+              <input
+                type="date"
+                name="fecha_nacimiento"
+                id="update-fecha-nacimiento"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-telefono" class="required">Telefono:</label>
+              <input
+                type="text"
+                name="telefono"
+                id="update-telefono"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>

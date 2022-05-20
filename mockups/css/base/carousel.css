@@ -2,11 +2,11 @@
   position: relative;
 }
 
-#carousel #oneSlide li {
-  height: 300px;
+#carousel #oneSlide .slide {
+  height: 400px;
 }
 
-#carousel #oneSlide li:not(.active) {
+#carousel #oneSlide .slide:not(.active) {
   display: none;
 }
 
@@ -46,7 +46,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  #carousel #oneSlide li {
+  #carousel #oneSlide .slide {
     height: 600px;
   }
 }
