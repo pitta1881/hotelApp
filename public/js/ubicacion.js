@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //CARGO LOS PAYPERTOPS
   const hotelUri = location.pathname.split('/')[1];
-  const paypertops = await fetch(`${location.origin}/api/paypertop/${hotelUri}`)
+  const paypertops = await fetch(
+    `${location.origin}/api/paypertop/hotel/${hotelUri}`,
+  )
     .then((response) => response.json())
     .then((dataJson) => dataJson.data);
 

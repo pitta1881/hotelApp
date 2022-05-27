@@ -22,7 +22,7 @@ async function bootstrap() {
       skipMissingProperties: true,
       forbidNonWhitelisted: true,
       transformOptions: {
-        //  enableImplicitConversion: true,
+        //enableImplicitConversion: true,
       },
     }),
   );
@@ -65,6 +65,7 @@ async function bootstrap() {
   await app.listen(configService.get('NESTJS_PORT'));
   console.log(`Hotel App is running on: 
   web: ${await app.getUrl()}
+  backend: ${await app.getUrl()}/backend/login
   api: ${await app.getUrl()}/api
   apidoc: ${await app.getUrl()}/api/docs`);
   console.log(

@@ -1,22 +1,78 @@
-{{!-- pages/page-one.hbs --}}
-
 {{#> layouts/baseBackend title="Mensajes" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/mensajes.css" />
+    <script src="/js/mensajes.js" type="module" defer></script>
+  {{/inline}}
 
   {{#*inline "main-content-block"}}
-    {{message}}
-    Mensajes: 
-    {{#each data as | mensaje |}}
-    <ul>
-      <li>Nombre: {{nombre}}</li>
-      <li>Apellido: {{apellido}}</li>
-      <li>Email: {{email}}</li>
-      <li>Fecha: {{creationDate}}</li>
-      <li>Adultos: {{adultos}}</li>
-      <li>Menores: {{menores}}</li>
-    </ul>
-    {{else}}
-      <p>No content</p>
-    {{/each}}
+    <h1>Mensajes</h1>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Fecha</th>
+              <th>De</th>
+              <th>Mensaje</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-mensajes">
+          </tbody>
+        </table>
+      </section>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Fecha</span>
+              <span id="read-created_at"></span>
+            </div>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre"></span>
+            </div>
+            <div class="row">
+              <span>Apellido</span><span id="read-apellido"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email"></span>
+            </div>
+            <div class="row">
+              <span>CheckIn</span>
+              <span id="read-checkin"></span>
+            </div>
+            <div class="row">
+              <span>CheckOut</span>
+              <span id="read-checkout"></span>
+            </div>
+            <div class="row">
+              <span>País</span>
+              <span id="read-pais"></span>
+            </div>
+            <div class="row">
+              <span>Adultos</span>
+              <span id="read-adultos"></span>
+            </div>
+            <div class="row">
+              <span>Menores </span>
+              <span id="read-menores"></span>
+            </div>
+            <div class="row">
+              <span>Mensaje</span>
+              <span id="read-mensaje"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
   {{/inline}}
 
 {{/layouts/baseBackend}}

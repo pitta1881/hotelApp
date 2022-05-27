@@ -27,6 +27,21 @@ export class FotoController {
     return await this.fotoService.findAll(hotelId);
   }
 
+  @ApiOperation({ summary: 'FindAll Tipo Carousel' })
+  @Get('tiposCarousel')
+  async findAllTipo() {
+    return await this.fotoService.findAllTipo();
+  }
+
+  @ApiOperation({ summary: 'FindAll Fotos Hotel With Carousel ' })
+  @Get('carousel/:carouselId')
+  async findAllWithCarousel(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Param('carouselId', ParseIntPipe) carouselId: number,
+  ) {
+    return await this.fotoService.findAllWithCarousel(hotelId, carouselId);
+  }
+
   @ApiOperation({ summary: 'FindOne Foto Hotel' })
   @Get(':id')
   async findOne(

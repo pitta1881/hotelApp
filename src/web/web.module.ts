@@ -4,6 +4,6 @@ import { BackendModule } from './backend/backend.module';
 import { FrontendModule } from './frontend/frontend.module';
 
 @Module({
-  imports: [FrontendModule, BackendModule],
+  imports: [BackendModule, FrontendModule],
 })
 export class WebModule {}

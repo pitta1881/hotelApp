@@ -51,10 +51,10 @@ export class Hotel {
   @Column({ nullable: false, array: true, type: 'float' })
   lat_lng: number[];
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   logo_path: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   horario_contacto: string;
 
   @Column({ nullable: true })

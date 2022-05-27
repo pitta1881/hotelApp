@@ -39,6 +39,20 @@ export class ServicioController {
     return await this.servicioService.findAllHabitacion(hotelId, habitacionId);
   }
 
+  @ApiOperation({
+    summary: 'FindAll Servicios que no se encuentran en habitacion especifica',
+  })
+  @Get('notIn/habitacion/:habitacionId')
+  async findAllHabitacionNotIn(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Param('habitacionId', ParseIntPipe) habitacionId: number,
+  ) {
+    return await this.servicioService.findAllHabitacionNotIn(
+      hotelId,
+      habitacionId,
+    );
+  }
+
   @ApiOperation({ summary: 'FindOne Servicio' })
   @Get(':id')
   async findOne(

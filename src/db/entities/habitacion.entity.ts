@@ -7,6 +7,7 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinTable,
 } from 'typeorm';
 
 import { Hotel } from './hotel.entity';
@@ -36,9 +37,8 @@ export class Habitacion {
   tamanio_m2: number;
 
   @Column({ nullable: false, default: false, type: 'boolean' })
-  ocupado: boolean;
+  activo: boolean;
 
-  @Exclude()
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
@@ -68,7 +68,9 @@ export class Habitacion {
   )
   tipoHabitacion: TipoHabitacion;
 
-  @ManyToMany(() => Servicio, (servicio: Servicio) => servicio.habitaciones)
+  @ManyToMany(() => Servicio, (servicio: Servicio) => servicio.habitaciones, {
+    onDelete: 'CASCADE',
+  })
   servicios: Servicio[];
 
   @OneToMany(

@@ -1,0 +1,212 @@
+{{#> layouts/baseBackend title="Huespedes" }}
+  {{#*inline "head-block"}}
+    <script src="/js/huespedes.js" type="module" defer></script>
+  {{/inline}}
+
+  {{#*inline "main-content-block"}}
+      <h1>Huespedes</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear Huesped
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>DNI</th>
+              <th>Fecha Nac.</th>
+              <th>Teléfono</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-huespedes">            
+          </tbody>
+        </table>
+      </section>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+<section id="modal-create" class="modal">
+      <form id="form-create">
+        <fieldset>
+          <legend class="green">Crear Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-nombre" class="required">Nombre:</label>
+              <input type="text" name="nombre" id="new-nombre" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-apellido" class="required">Apellido:</label>
+              <input type="text" name="apellido" id="new-apellido" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-email">Email:</label>
+              <input type="email" name="email" id="new-email" />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-dni" class="required">DNI:</label>
+              <input type="number" name="dni" id="new-dni" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-fecha-nacimiento" class="required"
+                >Fecha Nac.:</label
+              >
+              <input
+                type="date"
+                name="fecha_nacimiento"
+                id="new-fecha-nacimiento"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-telefono">Telefono:</label>
+              <input type="text" name="telefono" id="new-telefono" />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre"></span>
+            </div>
+            <div class="row">
+              <span>Apellido</span><span id="read-apellido"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email"></span>
+            </div>
+            <div class="row">
+              <span>DNI</span>
+              <span id="read-dni"></span>
+            </div>
+            <div class="row">
+              <span>Fecha Nacimiento</span>
+              <span id="read-fecha-nacimiento"></span>
+            </div>
+            <div class="row">
+              <span>Teléfono</span>
+              <span id="read-telefono"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-nombre" class="required">Nombre:</label>
+              <input type="text" name="nombre" id="update-nombre" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-apellido" class="required">Apellido:</label>
+              <input
+                type="text"
+                name="apellido"
+                id="update-apellido"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-email">Email:</label>
+              <input type="email" name="email" id="update-email" />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-dni" class="required">DNI:</label>
+              <input type="number" name="dni" id="update-dni" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-fecha-nacimiento" class="required"
+                >Fecha Nac.:</label
+              >
+              <input
+                type="date"
+                name="fecha_nacimiento"
+                id="update-fecha-nacimiento"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-telefono">Telefono:</label>
+              <input
+                type="text"
+                name="telefono"
+                id="update-telefono"
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  {{/inline}}
+
+{{/layouts/baseBackend}}

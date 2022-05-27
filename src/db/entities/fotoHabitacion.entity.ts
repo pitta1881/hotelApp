@@ -36,7 +36,7 @@ export class FotoHabitacion {
   })
   updated_at: Date;
 
-  @ManyToOne(() => Habitacion, { primary: true })
+  @ManyToOne(() => Habitacion, { primary: true, onDelete: 'CASCADE' })
   @JoinColumn([
     { name: 'habitacionId', referencedColumnName: 'id' },
     { name: 'hotelId', referencedColumnName: 'hotel' },

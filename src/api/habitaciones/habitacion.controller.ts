@@ -31,6 +31,12 @@ export class HabitacionController {
     return await this.habitacionService.findAll(hotelId);
   }
 
+  @ApiOperation({ summary: 'FindAll Tipo Habitaciones' })
+  @Get('tiposHabitaciones')
+  async findAllTipo() {
+    return await this.habitacionService.findAllTipo();
+  }
+
   @ApiOperation({ summary: 'FindOne Habitacion' })
   @Get(':id')
   async findOne(
@@ -64,13 +70,13 @@ export class HabitacionController {
   }
 
   @ApiOperation({ summary: 'Update Estado Habitacion' })
-  @Patch('ocupado/:id')
+  @Patch('activo/:id')
   async updateEstado(
     @UserJWT() { hotelId }: IJwtPayload,
     @Param('id', ParseIntPipe) id: number,
-    @Body() { ocupado }: UpdateEstadoHabitacionDto,
+    @Body() { activo }: UpdateEstadoHabitacionDto,
   ) {
-    return await this.habitacionService.setEstado(hotelId, id, ocupado);
+    return await this.habitacionService.setEstado(hotelId, id, activo);
   }
 
   @ApiOperation({ summary: 'Delete Habitacion' })

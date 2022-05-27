@@ -1,9 +1,80 @@
-{{!-- pages/page-one.hbs --}}
-
 {{#> layouts/baseBackend title="Fotos" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/fotos.css" />
+    <link rel="stylesheet" href="/css/servicios.css" />
+    <script src="/js/fotos.js" type="module" defer></script>
+  {{/inline}}
 
   {{#*inline "main-content-block"}}
-    {{message}}
+    <h1>Fotos</h1>
+      <div id="buttons-tipos-carousel" class="button-container">
+      </div>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+    <section id="modal-carousel" class="modal">
+      <section id="carousel">
+        <section id="oneSlide">
+          <ul>
+            <li id="galeria-add-foto" class="slide" data-img-id="0">
+              <div>
+                <form id="form-create-foto">
+                  <fieldset>
+                    <legend id="legend-foto" class="green">Crear Foto</legend>
+                    <input
+                      type="number"
+                      name="tipoCarouselId"
+                      id="tipo-carousel-id"
+                      hidden
+                    />
+                    <div class="control-input input-validator-container">
+                      <label for="new-path" class="required">URL:</label>
+                      <input type="text" name="path" id="new-path" required />
+                      <ul></ul>
+                    </div>
+                    <div class="control-input input-validator-container">
+                      <label for="new-descripcion-foto" class="required"
+                        >Descripcion Foto:</label
+                      >
+                      <textarea
+                        name="descripcion"
+                        id="new-descripcion-foto"
+                        rows="5"
+                        required
+                      ></textarea>
+                      <ul></ul>
+                    </div>
+                    <div class="button-container">
+                      <button type="submit" class="btn-submit green" disabled>
+                        Enviar
+                      </button>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </li>
+          </ul>
+          <button id="foto-prev">&#10094;</button>
+          <button id="foto-next">&#10095;</button>
+          <button type="button" id="btn-delete-foto" class="actions red">
+            <img class="icon24" src="/icons/trash-svgrepo-com.svg" alt="" />
+          </button>
+        </section>
+        <section id="galeria">
+          <ul>
+            <li
+              id="galeria-add-foto-miniatura"
+              class="slide-miniatura"
+              data-img-id="0"
+            >
+              <div>
+                <img src="/icons/plus-svgrepo-com.svg" alt="" />
+              </div>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </section>
   {{/inline}}
 
 {{/layouts/baseBackend}}

@@ -67,7 +67,6 @@ export class ReservaService {
         ...newData,
         id: nextId,
       });
-      console.log(newReserva);
       newReserva = await this.reservaModel.save(newReserva);
       return {
         status: StatusTypes.success,

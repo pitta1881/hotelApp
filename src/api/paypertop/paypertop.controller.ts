@@ -28,18 +28,24 @@ export class PaypertopController {
   ) {}
 
   @Public()
-  @ApiOperation({ summary: 'FindAll Fotos Habitacion por HotelUri - PÚBLICO' })
-  @Get(':hotel_uri')
+  @ApiOperation({ summary: 'FindAll PayPerTops por HotelUri - PÚBLICO' })
+  @Get('hotel/:hotel_uri')
   async findAllByHotelUri(@Param('hotel_uri') hotel_uri: string) {
     const resp = await this.hotelService.findOneByNombreUri(hotel_uri);
     const hotel: Hotel = resp.data[0];
-    return await this.paypertopService.findAll(hotel.id, ['tipoPPT']);
+    return await this.paypertopService.findAll(hotel.id);
   }
 
   @ApiOperation({ summary: 'FindAll PayPerTops' })
   @Get()
   async findAll(@UserJWT() { hotelId }: IJwtPayload) {
     return await this.paypertopService.findAll(hotelId);
+  }
+
+  @ApiOperation({ summary: 'FindAll Tipo Paypertop' })
+  @Get('tiposPaypertop')
+  async findAllTipo() {
+    return await this.paypertopService.findAllTipo();
   }
 
   @ApiOperation({ summary: 'FindOne PayPerTop' })

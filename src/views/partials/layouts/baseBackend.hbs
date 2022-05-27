@@ -6,24 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {{title}} | HotelApp </title>
     <link rel="stylesheet" href="/css/css-reset.css">
-    <link rel="stylesheet" href="/css/base-backend.css">
+    <link rel="stylesheet" href="/css/base/base-backend.css">
+    <script src="/js/nav.js" defer></script>
+    <script src="/js/token.js" defer type="module"></script>
+    <script src="/js/modal-backend.js" defer type="module"></script>
+
     {{#> head-block}}
       {{!-- Custom <head> content per page could be added. --}}
     {{/head-block}}
   </head>
   <body>
-    <header>
+    <header class="hide">
         {{> header/headerBackend }}
     </header>
-    <nav>
+    <nav id="side-nav" class="hide">
         {{> nav/navBackend }}
     </nav>
-    <main>
+    <main class="hide">
       {{#> main-content-block}}
-        {{!-- Hero content goes here. --}}
+        {{!-- Contenido Principal --}}
       {{/main-content-block}}
     </main>
 
+    {{#> modals-block}}
+      {{!-- Modales que puedan haber --}}
+    {{/modals-block}}
+
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
 
     {{#> scripts-block}}
       {{!-- Custom scripts per page can be added. --}}

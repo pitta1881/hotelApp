@@ -7,7 +7,7 @@ export class init1649521758188 implements MigrationInterface {
       `INSERT INTO hotel 
               ("id","activo","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
             VALUES 
-              (1,true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','/images/logo-hotel.png', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
+              (1,true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','https://us.123rf.com/450wm/sitiardi21/sitiardi211701/sitiardi21170100013/70276178-hotel-reflection-logotipo.jpg?ver=6', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_ppt 
@@ -119,12 +119,12 @@ export class init1649521758188 implements MigrationInterface {
             VALUES 
               (1,'Pedro Perez','PePerez S.R.L','pperez@mail.com','Empresa que brinda servicios de Turismo por la ciudad.','http://www.turismopperez.com.ar',15000,'{-41.13534742815715, -71.30578269365238}',true,2,1),
               (2,'María Lopez','MaLopez S.A','mlopez@mail.com','Supermercado mas grande de la ciudad.','http://www.supermalopez.com.ar',12000,'{-41.13761429688297, -71.31278257990219}',true,3,1),
-              (3,'-','Supermercados Todo','-','Supermercado cerca del hotel.','http://www.supertodo.com.ar/',0,'{-41.12784799083812, -71.35088738966584}',true,3,1),
-              (4,'-','Familia Weiss','-','Restaurante familiar.','https://www.weiss.com.ar/',0,'{-41.13312094364556, -71.30382863726463}',true,1,1),
-              (5,'-','La Marca Patagónica','-','Restaurante familiar.','https://la-marca-patagonica.negocio.site/',0,'{-41.13386676160742, -71.30935194768804}',true,1,1),
+              (3,null,'Supermercados Todo',null,'Supermercado cerca del hotel.','http://www.supertodo.com.ar/',0,'{-41.12784799083812, -71.35088738966584}',true,3,1),
+              (4,null,'Familia Weiss',null,'Restaurante familiar.','https://www.weiss.com.ar/',0,'{-41.13312094364556, -71.30382863726463}',true,1,1),
+              (5,null,'La Marca Patagónica',null,'Restaurante familiar.','https://la-marca-patagonica.negocio.site/',0,'{-41.13386676160742, -71.30935194768804}',true,1,1),
               (6,'Manuel Blest','Cervezeria Blest','mblest@blest.com','Cervezería/bar.','http://www.cervezablest.com/',20000,'{-41.12759211083225, -71.35126058495128}',true,1,1),
-              (7,'-','Teleférico Cerro Otto','-','Teleférico cerca del centro.','http://www.telefericobariloche.com.ar/',0,'{-41.130162240139754, -71.36963340452075}',true,2,1),
-              (8,'-','Si Turismo','-','Empresa de Turismo.','https://siturismo.com/',0,'{-41.13402538670256, -71.30681160975384}',true,2,1)`,
+              (7,null,'Teleférico Cerro Otto',null,'Teleférico cerca del centro.','http://www.telefericobariloche.com.ar/',0,'{-41.130162240139754, -71.36963340452075}',true,2,1),
+              (8,null,'Si Turismo',null,'Empresa de Turismo.','https://siturismo.com/',0,'{-41.13402538670256, -71.30681160975384}',true,2,1)`,
     );
     await queryRunner.query(
       `INSERT INTO huesped

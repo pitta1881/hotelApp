@@ -22,9 +22,9 @@ export class PaypertopService {
     private tipoPPTModel: Repository<TipoPPT>,
   ) {}
 
-  async findAll(hotelId: number, relations: string[] = []): Promise<IGenResp> {
+  async findAll(hotelId: number): Promise<IGenResp> {
     const paypertops: Paypertop[] = await this.paypertopModel.find({
-      relations,
+      relations: ['tipoPPT'],
       where: {
         hotel: hotelId,
       },
@@ -35,9 +35,22 @@ export class PaypertopService {
     };
   }
 
-  async findOne(hotelId: number, id: number): Promise<IGenResp> {
+  async findAllTipo(): Promise<IGenResp> {
+    const tiposPPT: TipoPPT[] = await this.tipoPPTModel.find();
+    return {
+      status: StatusTypes.success,
+      data: tiposPPT,
+    };
+  }
+
+  async findOne(
+    hotelId: number,
+    id: number,
+    relations: string[] = [],
+  ): Promise<IGenResp> {
+    relations.push('tipoPPT');
     const paypertop: Paypertop = await this.paypertopModel.findOne({
-      relations: ['hotel'],
+      relations,
       where: {
         hotel: hotelId,
         id,
@@ -80,6 +93,7 @@ export class PaypertopService {
           ...newData,
           id: nextId,
         });
+        delete newPaypertop.hotel;
         return {
           status: StatusTypes.success,
           data: [newPaypertop],
@@ -98,7 +112,7 @@ export class PaypertopService {
     id: number,
     newData: UpdatePaypertopDto,
   ): Promise<IGenResp> {
-    const paypertopResp: IGenResp = await this.findOne(hotelId, id);
+    const paypertopResp: IGenResp = await this.findOne(hotelId, id, ['hotel']);
     let paypertop: Paypertop = paypertopResp.data[0];
     let tipoPPT: TipoPPT;
     if (newData.tipoPPTId) {
@@ -118,6 +132,7 @@ export class PaypertopService {
           : [paypertop.lat_lng[0], paypertop.lat_lng[1]],
     });
     paypertop = await this.paypertopModel.save(paypertop);
+    delete paypertop.hotel;
     return {
       status: StatusTypes.success,
       data: [paypertop],
@@ -129,12 +144,13 @@ export class PaypertopService {
     id: number,
     newEstado: boolean,
   ): Promise<IGenResp> {
-    const paypertopResp: IGenResp = await this.findOne(hotelId, id);
+    const paypertopResp: IGenResp = await this.findOne(hotelId, id, ['hotel']);
     let paypertop: Paypertop = paypertopResp.data[0];
     paypertop = await this.paypertopModel.save({
       ...paypertop,
       activo: newEstado,
     });
+    delete paypertop.hotel;
     return {
       status: StatusTypes.success,
       data: [paypertop],
@@ -142,7 +158,7 @@ export class PaypertopService {
   }
 
   async delete(hotelId: number, id: number): Promise<IGenResp> {
-    await this.findOne(hotelId, id); //si falla salta una exception
+    await this.findOne(hotelId, id, ['hotel']); //si falla salta una exception
     try {
       await this.paypertopModel.delete({
         hotel: { id: hotelId },

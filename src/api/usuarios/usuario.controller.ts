@@ -14,6 +14,7 @@ import { UsuarioService } from './usuario.service';
 import { UserJWT } from '../../decorators/userJWT.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { CreateUsuarioDto, UpdateUsuarioDto } from './dtos/usuario.dto';
+import { ChangePasswordDto } from './dtos/changePassword.dto';
 
 @ApiTags('Usuarios')
 @ApiBearerAuth()
@@ -25,6 +26,12 @@ export class UsuarioController {
   @Get()
   async findAll(@UserJWT() { hotelId }: IJwtPayload) {
     return await this.usuarioService.findAll(hotelId);
+  }
+
+  @ApiOperation({ summary: 'FindThis Usuario (JWT)' })
+  @Get('this')
+  async findThis(@UserJWT() { id, hotelId }: IJwtPayload) {
+    return await this.usuarioService.findOne(hotelId, id);
   }
 
   @ApiOperation({ summary: 'FindOne Usuario' })
@@ -43,6 +50,24 @@ export class UsuarioController {
     @Body() createUsuarioDto: CreateUsuarioDto,
   ) {
     return await this.usuarioService.create(hotelId, createUsuarioDto);
+  }
+
+  @ApiOperation({ summary: 'Update Usuario this (JWT)' })
+  @Patch('this')
+  updateThis(
+    @UserJWT() { id, hotelId }: IJwtPayload,
+    @Body() updateUsuarioDto: UpdateUsuarioDto,
+  ) {
+    return this.usuarioService.update(hotelId, id, updateUsuarioDto);
+  }
+
+  @ApiOperation({ summary: 'Change Password this (JWT)' })
+  @Patch('change-password')
+  changePassword(
+    @UserJWT() { id, hotelId }: IJwtPayload,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    return this.usuarioService.changePassword(hotelId, id, changePasswordDto);
   }
 
   @ApiOperation({ summary: 'Update Usuario' })

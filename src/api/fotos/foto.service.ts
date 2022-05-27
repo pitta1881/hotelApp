@@ -34,6 +34,43 @@ export class FotoService {
     };
   }
 
+  async findAllTipo(): Promise<IGenResp> {
+    const tipoHabitaciones: TipoCarousel[] =
+      await this.tipoCarouselModel.find();
+    return {
+      status: StatusTypes.success,
+      data: tipoHabitaciones,
+    };
+  }
+
+  async findAllWithCarousel(
+    hotelId: number,
+    carouselId: number,
+  ): Promise<IGenResp> {
+    const tipoCarousel: TipoCarousel = await this.tipoCarouselModel.findOne(
+      carouselId,
+    );
+    if (!tipoCarousel) {
+      throw new NotFoundException({
+        status: StatusTypes.error,
+        error: 'El TipoCarousel no existe',
+      });
+    }
+    const fotosHotel: FotoHotel[] = await this.fotosHotelModel.find({
+      relations: ['tipoCarousel'],
+      where: {
+        hotel: hotelId,
+        tipoCarousel: {
+          id: carouselId,
+        },
+      },
+    });
+    return {
+      status: StatusTypes.success,
+      data: fotosHotel,
+    };
+  }
+
   async findOne(hotelId: number, id: number): Promise<IGenResp> {
     const fotoHotel: FotoHotel = await this.fotosHotelModel.findOne({
       relations: ['tipoCarousel', 'hotel'],

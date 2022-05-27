@@ -63,6 +63,35 @@ export class ServicioService {
     };
   }
 
+  async findAllHabitacionNotIn(
+    hotelId: number,
+    habitacionId: number,
+  ): Promise<IGenResp> {
+    await this.habitacionService.findOne(hotelId, habitacionId); //verifico que exista la habitacion
+    let servicios: Servicio[] = await this.servicioModel.find({
+      relations: ['habitaciones'],
+      where: {
+        hotel: hotelId,
+        servInstal: false,
+      },
+    });
+    servicios = servicios
+      .filter(
+        (servicio) =>
+          !servicio.habitaciones.some(
+            (habitacion) => habitacion.id === habitacionId,
+          ),
+      )
+      .map((servicio) => {
+        delete servicio.habitaciones;
+        return servicio;
+      });
+    return {
+      status: StatusTypes.success,
+      data: servicios,
+    };
+  }
+
   async findOne(hotelId: number, id: number): Promise<IGenResp> {
     const servicio: Servicio = await this.servicioModel.findOne({
       relations: ['hotel', 'habitaciones', 'habitaciones.hotel'],

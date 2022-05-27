@@ -1,9 +1,220 @@
-{{!-- pages/page-one.hbs --}}
-
-{{#> layouts/baseBackend title="Configuracion" }}
+{{#> layouts/baseBackend title="Configuración" }}
+  {{#*inline "head-block"}}
+    <script src="/js/configuracion.js" type="module" defer></script>
+  {{/inline}}
 
   {{#*inline "main-content-block"}}
-    {{message}}
+      <h1>Configuración</h1>
+      <form id="form-update-user">
+        <fieldset>
+          <legend>Modificar Perfil:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-nombre" class="required">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    id="update-nombre"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-apellido" class="required"
+                    >Apellido:</label
+                  >
+                  <input
+                    type="text"
+                    name="apellido"
+                    id="update-apellido"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-nick" class="required">Nick:</label>
+                  <input
+                    type="text"
+                    name="nick"
+                    id="update-nick"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-email" class="required">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="update-email"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-change-password">
+        <fieldset>
+          <legend>Cambiar Contraseña:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="old-password" class="required"
+                  >Contraseña Actual:</label
+                >
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="oldPassword"
+                    id="old-password"
+                    required
+                  />
+                  <img
+                    src="/icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="new-password" class="required"
+                  >Nueva Contraseña:</label
+                >
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="newPassword"
+                    id="new-password"
+                    minlength="8"
+                    maxlength="50"
+                    required
+                  />
+                  <img
+                    src="/icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="repeat-password" class="required"
+                  >Repita Contraseña:</label
+                >
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="repeatPassword"
+                    id="repeat-password"
+                    required
+                  />
+                  <img
+                    src="/icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green" disabled>
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-new-user">
+        <fieldset>
+          <legend>Agregar Usuario:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="new-nombre" class="required">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    id="new-nombre"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="new-apellido" class="required">Apellido:</label>
+                  <input
+                    type="text"
+                    name="apellido"
+                    id="new-apellido"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="new-nick" class="required">Nick:</label>
+                  <input type="text" name="nick" id="new-nick" required />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="new-email" class="required">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="new-email"
+                    autocomplete="off"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="password" class="required">Password:</label>
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                  />
+                  <img
+                    src="/icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green" disabled>
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
   {{/inline}}
 
 {{/layouts/baseBackend}}
