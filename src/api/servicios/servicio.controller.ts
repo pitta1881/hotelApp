@@ -14,7 +14,6 @@ import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from '../../decorators/userJWT.decorator';
 import { ServicioService } from './servicio.service';
 import { CreateServicioDto, UpdateServicioDto } from './dtos/servicio.dto';
-import { AssociateServicioDto } from './dtos/associate-servicio.dto';
 
 @ApiTags('Servicios')
 @ApiBearerAuth()
@@ -26,31 +25,6 @@ export class ServicioController {
   @Get('hotel')
   async findAllHotel(@UserJWT() { hotelId }: IJwtPayload) {
     return await this.servicioService.findAllHotel(hotelId);
-  }
-
-  @ApiOperation({
-    summary: 'FindAll Servicios de habitacion especifica',
-  })
-  @Get('habitacion/:habitacionId')
-  async findAllHabitacion(
-    @UserJWT() { hotelId }: IJwtPayload,
-    @Param('habitacionId', ParseIntPipe) habitacionId: number,
-  ) {
-    return await this.servicioService.findAllHabitacion(hotelId, habitacionId);
-  }
-
-  @ApiOperation({
-    summary: 'FindAll Servicios que no se encuentran en habitacion especifica',
-  })
-  @Get('notIn/habitacion/:habitacionId')
-  async findAllHabitacionNotIn(
-    @UserJWT() { hotelId }: IJwtPayload,
-    @Param('habitacionId', ParseIntPipe) habitacionId: number,
-  ) {
-    return await this.servicioService.findAllHabitacionNotIn(
-      hotelId,
-      habitacionId,
-    );
   }
 
   @ApiOperation({ summary: 'FindOne Servicio' })
@@ -71,18 +45,6 @@ export class ServicioController {
     return await this.servicioService.createServiceHotel(
       hotelId,
       createServicioDto,
-    );
-  }
-
-  @ApiOperation({ summary: 'Asociar Servicio a Habitacion' })
-  @Post('habitacion')
-  async manageServicioHabitacion(
-    @UserJWT() { hotelId }: IJwtPayload,
-    @Body() associateServicioDto: AssociateServicioDto,
-  ) {
-    return await this.servicioService.manageServicioHabitacion(
-      hotelId,
-      associateServicioDto,
     );
   }
 

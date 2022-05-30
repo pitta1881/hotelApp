@@ -9,7 +9,9 @@ import { Habitacion } from '../../db/entities/habitacion.entity';
 import { HotelModule } from '../hoteles/hotel.module';
 import { FotoHabitacionService } from './foto-habitacion.service';
 import { FotoHabitacionController } from './foto-habitacion.controller';
-import { FotoHabitacion } from 'src/db/entities/fotoHabitacion.entity';
+import { FotoHabitacion } from '../../db/entities/fotoHabitacion.entity';
+import { Servicio } from './../../db/entities/servicio.entity';
+import { ServicioModule } from './../servicios/servicio.module';
 
 @Module({
   imports: [
@@ -18,8 +20,10 @@ import { FotoHabitacion } from 'src/db/entities/fotoHabitacion.entity';
       TipoHabitacion,
       Hotel,
       FotoHabitacion,
+      Servicio,
     ]),
     HotelModule,
+    ServicioModule,
   ],
   controllers: [HabitacionController, FotoHabitacionController],
   providers: [HabitacionService, FotoHabitacionService],

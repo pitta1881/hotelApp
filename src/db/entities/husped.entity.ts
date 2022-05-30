@@ -5,9 +5,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
-import { Reserva_x_Huesped } from './reserva_x_husped.entity';
+
+import { Reserva } from './reserva.entity';
 
 @Entity({ orderBy: { id: 'ASC' } })
 export class Huesped {
@@ -46,9 +48,9 @@ export class Huesped {
   })
   updated_at: Date;
 
-  @OneToMany(
-    () => Reserva_x_Huesped,
-    (reserva_x_huesped: Reserva_x_Huesped) => reserva_x_huesped.huesped,
-  )
-  reserva_x_huesped: Reserva_x_Huesped[];
+  @ManyToMany(() => Reserva, (reserva: Reserva) => reserva.huespedes, {
+    onDelete: 'RESTRICT',
+  })
+  @JoinTable({ name: 'huesped_x_reserva' })
+  reservas: Reserva[];
 }

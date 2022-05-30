@@ -38,11 +38,11 @@ export const removeFormValidations = (form) => {
 
 export const dateFormat = (date) => {
   const thisDate = new Date(date);
-  const hour = `${thisDate.getHours()}`.padStart(2, '0');
-  const minutes = `${thisDate.getMinutes()}`.padStart(2, '0');
-  const day = `${thisDate.getDate()}`.padStart(2, '0');
-  const month = `${thisDate.getMonth() + 1}`.padStart(2, '0');
-  const year = thisDate.getFullYear();
+  const hour = `${thisDate.getUTCHours()}`.padStart(2, '0');
+  const minutes = `${thisDate.getUTCMinutes()}`.padStart(2, '0');
+  const day = `${thisDate.getUTCDate()}`.padStart(2, '0');
+  const month = `${thisDate.getUTCMonth() + 1}`.padStart(2, '0');
+  const year = thisDate.getUTCFullYear();
   return [`${day}/${month}/${year}`, `${hour}:${minutes}`];
 };
 

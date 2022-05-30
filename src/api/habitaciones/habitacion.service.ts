@@ -15,11 +15,15 @@ import {
   CreateHabitacionDto,
   UpdateHabitacionDto,
 } from './dtos/habitacion.dto';
+import { AssociateServicioDto } from './dtos/associate-servicio.dto';
+import { ServicioService } from './../servicios/servicio.service';
+import { Servicio } from './../../db/entities/servicio.entity';
 
 @Injectable()
 export class HabitacionService {
   constructor(
     private hotelService: HotelService,
+    private servicioService: ServicioService,
     @InjectRepository(Habitacion)
     private habitacionModel: Repository<Habitacion>,
     @InjectRepository(TipoHabitacion)
@@ -71,6 +75,101 @@ export class HabitacionService {
     };
   }
 
+  async findAllServicios(
+    hotelId: number,
+    habitacionId: number,
+  ): Promise<IGenResp> {
+    await this.findOne(hotelId, habitacionId); //verifico que exista la habitacion
+    const serviciosResp: IGenResp = await this.servicioService.findAllHotel(
+      hotelId,
+      ['habitaciones'],
+    );
+    let servicios: Servicio[] = serviciosResp.data;
+    servicios = servicios
+      .filter((servicio) =>
+        servicio.habitaciones.some(
+          (habitacion) => habitacion.id === habitacionId,
+        ),
+      )
+      .map((servicio) => {
+        delete servicio.habitaciones;
+        return servicio;
+      });
+    return {
+      status: StatusTypes.success,
+      data: servicios,
+    };
+  }
+
+  async findAllServiciosNotIn(
+    hotelId: number,
+    habitacionId: number,
+  ): Promise<IGenResp> {
+    await this.findOne(hotelId, habitacionId); //verifico que exista la habitacion
+    const serviciosResp: IGenResp = await this.servicioService.findIfService(
+      hotelId,
+    );
+    let servicios: Servicio[] = serviciosResp.data;
+    servicios = servicios
+      .filter(
+        (servicio) =>
+          !servicio.habitaciones.some(
+            (habitacion) => habitacion.id === habitacionId,
+          ),
+      )
+      .map((servicio) => {
+        delete servicio.habitaciones;
+        return servicio;
+      });
+    return {
+      status: StatusTypes.success,
+      data: servicios,
+    };
+  }
+
+  async manageServicioHabitacion(
+    hotelId: number,
+    { servicioId, habitacionId, operacion }: AssociateServicioDto,
+  ): Promise<IGenResp> {
+    const habitacionResp: IGenResp = await this.findOne(hotelId, habitacionId, [
+      'hotel',
+      'servicios.hotel',
+    ]);
+    const habitacion: Habitacion = habitacionResp.data[0];
+    const servicioResp: IGenResp = await this.servicioService.findOne(
+      hotelId,
+      servicioId,
+    );
+    const servicio: Servicio = servicioResp.data[0];
+    let serviciosNew: Servicio[] = habitacion.servicios;
+    try {
+      //desasignar servicio
+      if (operacion === false) {
+        serviciosNew = habitacion.servicios.filter((servicio) => {
+          return servicio.id !== servicioId;
+        });
+      } else {
+        serviciosNew.push(servicio);
+      }
+      delete habitacion.tipoHabitacion;
+      //guardar relacion, ya sea asignar o desasignar
+      const newAssociation = await this.habitacionModel.save({
+        ...habitacion,
+        servicios: serviciosNew,
+      });
+      return {
+        status: StatusTypes.success,
+        data: [newAssociation],
+      };
+    } catch (error) {
+      console.log(error);
+      throw new ConflictException({
+        status: StatusTypes.error,
+        error: error.detail,
+      });
+    }
+  }
+
   async create(
     hotelId: number,
     newData: CreateHabitacionDto,
@@ -95,6 +194,7 @@ export class HabitacionService {
           hotel,
           tipoHabitacion,
         });
+        delete newHabitacion.hotel;
         return {
           status: StatusTypes.success,
           data: [newHabitacion],

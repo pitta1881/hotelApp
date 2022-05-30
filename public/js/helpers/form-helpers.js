@@ -1,4 +1,5 @@
 import {
+  dateFormat,
   removeFormValidations,
   toggleLoader,
   toggleToast,
@@ -167,6 +168,38 @@ const validateInput = (input, objValidations) => {
         validationsHTML += liHTML(
           testValidation,
           'Solo letras, numeros, _ y -',
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].minDate) {
+        const minDate = new Date(
+          objValidations[input.id].minDate,
+        ).toISOString();
+        const minDateMs = new Date(minDate).getTime();
+        const fechaSeleccionada = new Date(input.value).toISOString();
+        const fechaSeleccionadaMs = new Date(fechaSeleccionada).getTime();
+        const testValidation = fechaSeleccionadaMs >= minDateMs;
+        validationsHTML += liHTML(
+          testValidation,
+          `Fecha Min.: ${dateFormat(minDate)[0]}`,
+        );
+        errores = !testValidation ? errores + 1 : errores;
+      }
+      if (objValidations[input.id].dateGreaterThan) {
+        const checkinInput = document.getElementById(
+          objValidations[input.id].dateGreaterThan,
+        );
+        let minDate = new Date(checkinInput.value);
+        minDate.setDate(minDate.getDate() + 1);
+        minDate = minDate.toISOString();
+        const minDateMs = new Date(minDate).getTime();
+        document.getElementById(input.id).min = minDate.split('T')[0];
+        const fechaSeleccionada = new Date(input.value).toISOString();
+        const fechaSeleccionadaMs = new Date(fechaSeleccionada).getTime();
+        const testValidation = fechaSeleccionadaMs >= minDateMs;
+        validationsHTML += liHTML(
+          testValidation,
+          `Fecha Min.: ${dateFormat(minDate)[0]}`,
         );
         errores = !testValidation ? errores + 1 : errores;
       }

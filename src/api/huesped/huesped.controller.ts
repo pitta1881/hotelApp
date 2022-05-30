@@ -9,9 +9,6 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserJWT } from '../../decorators/userJWT.decorator';
-import { IJwtPayload } from '../auth/jwtPayload.interface';
-import { AssociateHuespedDto } from './dtos/associate-huesped.dto';
 import { CreateHuespedDto, UpdateHuespedDto } from './dtos/huesped.dto';
 import { HuespedService } from './huesped.service';
 
@@ -37,18 +34,6 @@ export class HuespedController {
   @Post()
   async create(@Body() createHuespedDto: CreateHuespedDto) {
     return await this.huespedService.create(createHuespedDto);
-  }
-
-  @ApiOperation({ summary: 'Asociar Huesped a Reserva' })
-  @Post('reserva')
-  async manageHuespedReserva(
-    @UserJWT() { hotelId }: IJwtPayload,
-    @Body() associateHuespedDto: AssociateHuespedDto,
-  ) {
-    return await this.huespedService.manageHuespedReserva(
-      hotelId,
-      associateHuespedDto,
-    );
   }
 
   @ApiOperation({ summary: 'Update Huesped' })

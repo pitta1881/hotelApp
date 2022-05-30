@@ -42,4 +42,9 @@ export class BackendController {
   @Get('fotos')
   @Render('pages/backend/fotos')
   async renderFotos() {}
+
+  @Public()
+  @Get('reservas')
+  @Render('pages/backend/reservas')
+  async renderReservas() {}
 }

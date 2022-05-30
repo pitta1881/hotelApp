@@ -4,24 +4,17 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn,
   PrimaryColumn,
-  OneToMany,
+  ManyToMany,
 } from 'typeorm';
 
+import { Hotel } from './hotel.entity';
+import { Huesped } from './husped.entity';
 import { Habitacion } from './habitacion.entity';
-import { Reserva_x_Huesped } from './reserva_x_husped.entity';
-
 @Entity({ orderBy: { id: 'ASC' } })
 export class Reserva {
   @PrimaryColumn({ type: 'int' })
   id: number;
-
-  @PrimaryColumn({ type: 'int' })
-  habitacionId: number;
-
-  @PrimaryColumn({ type: 'int' })
-  hotelId: number;
 
   @Column({ nullable: false })
   checkin: Date;
@@ -32,7 +25,7 @@ export class Reserva {
   @Column({ nullable: false, type: 'float' })
   monto_final: number;
 
-  @Column({ nullable: false, type: 'float' })
+  @Column({ nullable: false, type: 'float', default: 0 })
   monto_pagado: number;
 
   @CreateDateColumn({
@@ -48,16 +41,19 @@ export class Reserva {
   })
   updated_at: Date;
 
-  @ManyToOne(() => Habitacion)
-  @JoinColumn([
-    { name: 'habitacionId', referencedColumnName: 'id' },
-    { name: 'hotelId', referencedColumnName: 'hotel' },
-  ])
+  @ManyToOne(() => Habitacion, (habitacion: Habitacion) => habitacion.id, {
+    nullable: false,
+  })
   habitacion: Habitacion;
 
-  @OneToMany(
-    () => Reserva_x_Huesped,
-    (reserva_x_huesped: Reserva_x_Huesped) => reserva_x_huesped.reserva,
-  )
-  reserva_x_huesped: Reserva_x_Huesped[];
+  @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.id, {
+    nullable: false,
+  })
+  @PrimaryColumn({ type: 'int', name: 'hotelId' })
+  hotel: Hotel;
+
+  @ManyToMany(() => Huesped, (huesped: Huesped) => huesped.reservas, {
+    onDelete: 'CASCADE',
+  })
+  huespedes: Huesped[];
 }

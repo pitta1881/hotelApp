@@ -1,175 +1,15 @@
-//TODO: sacar habitacionId como PK en el back
-import { toggleLoader } from './helpers/common-helpers.js';
+import {
+  callbackModal,
+  commonFetch,
+  dateFormat,
+} from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
   loadFormSubmitListeners,
 } from './helpers/form-helpers.js';
 import { REGEX_NUMBER } from './helpers/regex-helpers.js';
 
-const data = [
-  {
-    id: 0,
-    checkin: '2022-05-20',
-    checkout: '2022-05-22',
-    monto_final: 20000,
-    monto_pagado: 15000,
-    created_at: '2022-04-17T20:39:45.167Z',
-    habitacion: {
-      id: 1,
-      nombre: 'Simple Comun',
-    },
-    huesped: [
-      {
-        id: 1,
-        nombre: 'Elsa',
-        apellido: 'Rampion',
-        dni: 12345678,
-        fecha_nacimiento: '15/03/1994',
-        telefono: null,
-      },
-      {
-        id: 2,
-        nombre: 'Elsa',
-        apellido: 'Patito',
-        dni: 87654321,
-        fecha_nacimiento: '10/01/1992',
-        telefono: 123456777,
-      },
-    ],
-  },
-  {
-    id: 1,
-    checkin: '2022-05-22',
-    checkout: '2022-05-28',
-    monto_final: 25000,
-    monto_pagado: 17000,
-    created_at: '2022-04-19T20:39:45.167Z',
-    habitacion: {
-      id: 2,
-      nombre: 'Doble Comun',
-    },
-    huesped: [
-      {
-        id: 3,
-        nombre: 'Elsa',
-        apellido: 'Pallo',
-        dni: 11122233,
-        fecha_nacimiento: '19/09/1999',
-        telefono: null,
-      },
-      {
-        id: 4,
-        nombre: 'Elsa',
-        apellido: 'Lame',
-        dni: 44332222,
-        fecha_nacimiento: '16/06/1996',
-        telefono: null,
-      },
-      {
-        id: 5,
-        nombre: 'Elsa',
-        apellido: 'Sonado',
-        dni: 77889955,
-        fecha_nacimiento: '11/11/1991',
-        telefono: 1122222222,
-      },
-    ],
-  },
-];
-const dataHuespedes = [
-  [
-    {
-      id: 1,
-      nombre: 'Elsa',
-      apellido: 'Rampion',
-      dni: 12345678,
-      fecha_nacimiento: '15/03/1994',
-      telefono: null,
-    },
-    {
-      id: 2,
-      nombre: 'Elsa',
-      apellido: 'Patito',
-      dni: 87654321,
-      fecha_nacimiento: '10/01/1992',
-      telefono: 123456777,
-    },
-  ],
-  [
-    {
-      id: 3,
-      nombre: 'Elsa',
-      apellido: 'Pallo',
-      dni: 11122233,
-      fecha_nacimiento: '19/09/1999',
-      telefono: null,
-    },
-    {
-      id: 4,
-      nombre: 'Elsa',
-      apellido: 'Lame',
-      dni: 44332222,
-      fecha_nacimiento: '16/06/1996',
-      telefono: null,
-    },
-    {
-      id: 5,
-      nombre: 'Elsa',
-      apellido: 'Sonado',
-      dni: 77889955,
-      fecha_nacimiento: '11/11/1991',
-      telefono: 1122222222,
-    },
-  ],
-];
-const dataHuespedesNotInReserva = [
-  [
-    {
-      id: 3,
-      nombre: 'Elsa',
-      apellido: 'Pallo',
-      dni: 11122233,
-      fecha_nacimiento: '19/09/1999',
-      telefono: null,
-    },
-    {
-      id: 4,
-      nombre: 'Elsa',
-      apellido: 'Lame',
-      dni: 44332222,
-      fecha_nacimiento: '16/06/1996',
-      telefono: null,
-    },
-    {
-      id: 5,
-      nombre: 'Elsa',
-      apellido: 'Sonado',
-      dni: 77889955,
-      fecha_nacimiento: '11/11/1991',
-      telefono: 1122222222,
-    },
-  ],
-  [
-    {
-      id: 1,
-      nombre: 'Elsa',
-      apellido: 'Rampion',
-      dni: 12345678,
-      fecha_nacimiento: '15/03/1994',
-      telefono: null,
-    },
-    {
-      id: 2,
-      nombre: 'Elsa',
-      apellido: 'Patito',
-      dni: 87654321,
-      fecha_nacimiento: '10/01/1992',
-      telefono: 123456777,
-    },
-  ],
-];
-
-document.addEventListener('DOMContentLoaded', () => {
+const loadFormEvents = (minDate) => {
   const formsObj = [
     {
       form: document.getElementById('form-create'),
@@ -179,9 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
       validations: {
         'new-checkin': {
           required: true,
+          minDate: minDate,
+          inverseRef: 'new-checkout',
         },
         'new-checkout': {
           required: true,
+          dateGreaterThan: 'new-checkin',
         },
         'new-monto-final': {
           required: true,
@@ -192,18 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
           required: true,
         },
       },
+      callback: [loadInitialData, callbackModal],
     },
     {
       form: document.getElementById('form-update'),
       method: 'patch',
-      apiUrl: `${location.origin}/api/reservas`,
-      params: [],
+      apiUrl: `${location.origin}/api/reservas/:id`,
+      params: ['id'],
       validations: {
         'update-checkin': {
           required: true,
+          minDate: minDate,
+          inverseRef: 'update-checkout',
         },
         'update-checkout': {
           required: true,
+          dateGreaterThan: 'update-checkin',
         },
         'update-monto-final': {
           required: true,
@@ -214,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
           required: true,
         },
       },
+      callback: [loadInitialData, callbackModal],
     },
     {
       form: document.getElementById('form-update-monto-pagado'),
@@ -230,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
           min: 0,
         },
       },
+      callback: [loadInitialData, callbackModal],
     },
     {
       form: document.getElementById('form-delete'),
@@ -237,11 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
       apiUrl: `${location.origin}/api/reservas/:id`,
       params: ['id'],
       validations: {},
+      callback: [loadInitialData, callbackModal],
     },
     {
       form: document.getElementById('form-manage-delete-huespedes'),
       method: 'post',
-      apiUrl: `${location.origin}/api/huespedes/reserva`,
+      apiUrl: `${location.origin}/api/reservas/manage-huespedes`,
       params: [],
       validations: {
         'operacion-false': {
@@ -254,11 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
           required: true,
         },
       },
+      callback: [loadInitialData, callbackModal],
     },
     {
       form: document.getElementById('form-manage-add-huespedes'),
       method: 'post',
-      apiUrl: `${location.origin}/api/huespedes/reserva`,
+      apiUrl: `${location.origin}/api/reservas/manage-huespedes`,
       params: [],
       validations: {
         'operacion-true': {
@@ -271,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
           required: true,
         },
       },
+      callback: [loadInitialData, callbackModal],
     },
   ];
 
@@ -278,188 +130,250 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFormInputListeners(formObj);
     loadFormSubmitListeners(formObj);
   });
+};
 
-  const fetchReadOne = (reservaId) => {
-    //TODO: en prod habilitar el fetch
-    return new Promise((res) => setTimeout(() => res(data[reservaId]), 1000));
-    /*return fetch(`${location.origin}/api/reservas/${id}`, {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-          Bearer: sessionStorage.getItem('token'),
-        },
-      })
-        .then((response) => response.json())
-        .then((dataJson) => dataJson.data)
-        .catch((err) => {
-          toggleToast('error', `<p>${err}</p>`);
-        });
-    */
-  };
-  const fetchHuespedesReserva = (reservaId) => {
-    //TODO: en prod habilitar el fetch
-    return new Promise((res) =>
-      setTimeout(() => res(dataHuespedes[reservaId]), 1000),
-    );
-    /*return fetch(`${location.origin}/api/huespedes/${reservaId}`, {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-          Bearer: sessionStorage.getItem('token'),
-        },
-      })
-        .then((response) => response.json())
-        .then((dataJson) => dataJson.data)
-        .catch((err) => {
-          toggleToast('error', `<p>${err}</p>`);
-        });
-    */
-  };
-  const fetchHuespedesNotInReserva = (reservaId) => {
-    //TODO: en prod habilitar el fetch
-    //TODO: crear el endpoint para esto !
-    return new Promise((res) =>
-      setTimeout(() => res(dataHuespedesNotInReserva[reservaId]), 1000),
-    );
-    /*return fetch(`${location.origin}/api/huespedes/notIn/${reservaId}`, {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-          Bearer: sessionStorage.getItem('token'),
-        },
-      })
-        .then((response) => response.json())
-        .then((dataJson) => dataJson.data)
-        .catch((err) => {
-          toggleToast('error', `<p>${err}</p>`);
-        });
-    */
-  };
-
-  const btnsOpenModalRead = document.getElementsByClassName('open-modal-read');
-  Array.from(btnsOpenModalRead).forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      toggleLoader();
-      const dataOne = await fetchReadOne(btn.dataset.value);
-      document.getElementById('read-id').innerHTML = dataOne.id;
-      document.getElementById('read-checkin').innerHTML = dataOne.checkin;
-      document.getElementById('read-checkout').innerHTML = dataOne.checkout;
-      document.getElementById('read-habitacion').innerHTML =
-        dataOne.habitacion.nombre;
-      document.getElementById('read-monto-final').innerHTML =
-        '$' + dataOne.monto_final;
-      document.getElementById('read-monto-pagado').innerHTML =
-        '$' + dataOne.monto_pagado;
-      document.getElementById('read-huespedes').innerHTML =
-        '<ul>' +
-        dataOne.huesped.reduce(
-          (sumHTML, huesped) =>
-            (sumHTML += `
-                  <li>${huesped.nombre} ${huesped.apellido}</li>
-                    `),
-          ``,
-        ) +
-        '</ul>';
-      document.getElementById('read-creado').innerHTML = dataOne.created_at;
-      document.body.classList.toggle('noscroll');
-      const targetEl = document.getElementById(btn.dataset.target);
-      targetEl.classList.add('active');
-      toggleLoader();
+const loadInitialData = async (minDate) => {
+  document.getElementById('new-checkin').min = minDate;
+  document.getElementById('new-checkin').value = minDate;
+  document.getElementById('update-checkin').min = minDate;
+  document.getElementById('update-checkin').value = minDate;
+  const { status, data } = await commonFetch(`${location.origin}/api/reservas`);
+  if (status === 'SUCCESS') {
+    let rowReservas = ``;
+    data.forEach((reserva) => {
+      rowReservas += `
+      <tr>
+              <td><span class="thbefore">ID</span>${reserva.id}</td>
+              <td><span class="thbefore">Habitación</span>${
+                reserva.habitacion.nombre
+              }</td>
+              <td><span class="thbefore">CheckIn</span>${
+                dateFormat(reserva.checkin)[0]
+              }</td>
+              <td><span class="thbefore">CheckOut</span>${
+                dateFormat(reserva.checkout)[0]
+              }</td>
+              <td><span class="thbefore">Pax</span>${
+                reserva.huespedes.length
+              }</td>
+              <td><span class="thbefore">Monto Final</span>$${
+                reserva.monto_final
+              }</td>
+              <td><span class="thbefore">Monto Pagado</span>$${
+                reserva.monto_pagado
+              }</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="action-flex">
+                  <div class="nowrap">
+                    <button
+                      type="button"
+                      title="Detalles"
+                      class="actions blue open-modal-read"
+                      data-target="modal-read"
+                      data-value="${reserva.id}"
+                    >
+                      <img
+                        class="icon24"
+                        src="/icons/eye-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Actualizar"
+                      class="actions yellow open-modal-update"
+                      data-target="modal-update"
+                      data-value="${reserva.id}"
+                    >
+                      <img
+                        class="icon24"
+                        src="/icons/pencil-edit-button-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Actualizar Monto Pagado"
+                      class="actions yellow open-modal-update-monto-pagado"
+                      data-target="modal-update-monto-pagado"
+                      data-value="${reserva.id}"
+                    >
+                      <img
+                        class="icon24"
+                        src="/icons/dollar-sign-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                  <div class="nowrap">
+                    <button
+                      type="button"
+                      title="Administrar Huespedes"
+                      class="actions yellow open-modal-manage-huespedes"
+                      data-target="modal-manage-huespedes"
+                      data-value="${reserva.id}"
+                    >
+                      <img
+                        class="icon24"
+                        src="/icons/person-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Eliminar"
+                      class="actions red open-modal-delete"
+                      data-target="modal-delete"
+                      data-value="${reserva.id}"
+                    >
+                      <img
+                        class="icon24"
+                        src="/icons/trash-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+  `;
     });
-  });
+    document.getElementById('tbody-reservas').innerHTML = rowReservas;
+  }
+};
 
-  const btnsOpenModalUpdate =
-    document.getElementsByClassName('open-modal-update');
-  Array.from(btnsOpenModalUpdate).forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      toggleLoader();
-      const modalTarget = document.getElementById(btn.dataset.target);
-      document.getElementById('update-id').value = btn.dataset.value;
-      const dataOne = await fetchReadOne(btn.dataset.value);
-      document.getElementById('update-checkin').value = dataOne.checkin;
-      document.getElementById('update-checkout').value = dataOne.checkout;
-      document.getElementById('update-monto-final').value = dataOne.monto_final;
-      document.getElementById('update-habitacion-id').value =
-        dataOne.habitacion.id;
-      document.body.classList.toggle('noscroll');
-      modalTarget.classList.add('active');
-      toggleLoader();
-    });
-  });
-
-  const btnsOpenModalManageHuespedes = document.getElementsByClassName(
-    'open-modal-manage-huespedes',
+const loadInitialDataHabitaciones = async () => {
+  const { status, data } = await commonFetch(
+    `${location.origin}/api/habitaciones`,
   );
-  Array.from(btnsOpenModalManageHuespedes).forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      toggleLoader();
-      const modalTarget = document.getElementById(btn.dataset.target);
-      const huespedesReserva = await fetchHuespedesReserva(btn.dataset.value);
-      const huespedesNotInReserva = await fetchHuespedesNotInReserva(
-        btn.dataset.value,
-      );
-      document.getElementById('add-huesped-reservaId').value =
-        btn.dataset.value;
-      document.getElementById('delete-huesped-reservaId').value =
-        btn.dataset.value;
-      document.getElementById('delete-huesped').innerHTML =
-        huespedesReserva.reduce(
-          (sumHTML, huesped) =>
-            (sumHTML += `
-              <option value="${huesped.id}">${huesped.nombre} ${huesped.apellido} - DNI: ${huesped.dni}</option>
-            `),
-          ``,
-        );
-      document.getElementById('add-huesped').innerHTML =
-        huespedesNotInReserva.reduce(
-          (sumHTML, huesped) =>
-            (sumHTML += `
-              <option value="${huesped.id}">${huesped.nombre} ${huesped.apellido} - DNI: ${huesped.dni}</option>
-            `),
-          ``,
-        );
-      document.body.classList.toggle('noscroll');
-      modalTarget.classList.add('active');
-      toggleLoader();
+  if (status === 'SUCCESS') {
+    let rowHabitaciones = ``;
+    data.forEach((habitacion) => {
+      if (habitacion.activo) {
+        rowHabitaciones += `
+          <option value="${habitacion.id}">${habitacion.nombre}(${habitacion.tipoHabitacion.nombre}) | Max.:${habitacion.max_pax} | M²:${habitacion.tamanio_m2}</option>
+        `;
+      }
     });
-  });
+    document.getElementById('new-habitacion-id').innerHTML = rowHabitaciones;
+    document.getElementById('update-habitacion-id').innerHTML = rowHabitaciones;
+  }
+};
 
-  const btnsOpenModalUpdateMontoPagado = document.getElementsByClassName(
-    'open-modal-update-monto-pagado',
-  );
-  Array.from(btnsOpenModalUpdateMontoPagado).forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      toggleLoader();
-      const modalTarget = document.getElementById(btn.dataset.target);
-      document.getElementById('update-reserva-monto-pagado-id').value =
-        btn.dataset.value;
-      const dataOne = await fetchReadOne(btn.dataset.value);
-      document.getElementById('update-monto-pagado-span').innerHTML =
-        dataOne.monto_final;
-      document.getElementById('update-monto-pagado').value =
-        dataOne.monto_pagado;
-      document.getElementById('update-monto-pagado').max = dataOne.monto_final;
-      document.body.classList.toggle('noscroll');
-      modalTarget.classList.add('active');
-      toggleLoader();
+const loadModalEvents = () => {
+  document
+    .getElementById('tbody-reservas')
+    .addEventListener('click', async (e) => {
+      const buttonClicked = e.target.closest('.actions');
+      if (buttonClicked) {
+        const modalTarget = document.getElementById(
+          buttonClicked.dataset.target,
+        );
+        const { status, data } = await commonFetch(
+          `${location.origin}/api/reservas/${buttonClicked.dataset.value}`,
+        );
+        if (status === 'SUCCESS') {
+          const reserva = data[0];
+          if (buttonClicked.classList.contains('open-modal-read')) {
+            document.getElementById('read-id').innerHTML = reserva.id;
+            document.getElementById('read-checkin').innerHTML = dateFormat(
+              reserva.checkin,
+            )[0];
+            document.getElementById('read-checkout').innerHTML = dateFormat(
+              reserva.checkout,
+            )[0];
+            document.getElementById('read-habitacion').innerHTML =
+              reserva.habitacion.nombre;
+            document.getElementById('read-monto-final').innerHTML =
+              '$' + reserva.monto_final;
+            document.getElementById('read-monto-pagado').innerHTML =
+              '$' + reserva.monto_pagado;
+            document.getElementById('read-huespedes').innerHTML =
+              reserva.huespedes.length === 0
+                ? '-'
+                : '<ul>' +
+                  reserva.huespedes.reduce(
+                    (sumHTML, huesped) =>
+                      (sumHTML += `
+                    <li>-${huesped.nombre} ${huesped.apellido}</li>
+                      `),
+                    ``,
+                  ) +
+                  '</ul>';
+            document.getElementById('read-created-at').innerHTML = dateFormat(
+              reserva.created_at,
+            ).join(' ');
+          } else if (buttonClicked.classList.contains('open-modal-update')) {
+            document.getElementById('update-id').value =
+              buttonClicked.dataset.value;
+            document.getElementById('update-checkin').value =
+              reserva.checkin.split('T')[0];
+            document.getElementById('update-checkout').value =
+              reserva.checkout.split('T')[0];
+            document.getElementById('update-monto-final').value =
+              reserva.monto_final;
+            document.getElementById('update-habitacion-id').value =
+              reserva.habitacion.id;
+          } else if (
+            buttonClicked.classList.contains('open-modal-update-monto-pagado')
+          ) {
+            document.getElementById('update-reserva-monto-pagado-id').value =
+              buttonClicked.dataset.value;
+            document.getElementById('update-monto-pagado-span').innerHTML =
+              reserva.monto_final;
+            document.getElementById('update-monto-pagado').value =
+              reserva.monto_pagado;
+            document.getElementById('update-monto-pagado').max =
+              reserva.monto_final;
+          } else if (buttonClicked.classList.contains('open-modal-delete')) {
+            document.getElementById('delete-id').value =
+              buttonClicked.dataset.value;
+            document.getElementById('data-quien').innerHTML = `${reserva.id}`;
+          } else if (
+            buttonClicked.classList.contains('open-modal-manage-huespedes')
+          ) {
+            const huespedesInReserva = await commonFetch(
+              `${location.origin}/api/reservas/huespedes/${reserva.id}`,
+            );
+            const huespedesNotInReserva = await commonFetch(
+              `${location.origin}/api/reservas/notIn/huespedes/${reserva.id}`,
+            );
+            document.getElementById('add-huesped-reservaId').value =
+              buttonClicked.dataset.value;
+            document.getElementById('delete-huesped-reservaId').value =
+              buttonClicked.dataset.value;
+            document.getElementById('delete-huesped').innerHTML =
+              huespedesInReserva.data.reduce(
+                (sumHTML, huesped) =>
+                  (sumHTML += `
+                  <option value="${huesped.id}">${huesped.nombre} ${huesped.apellido} - DNI: ${huesped.dni}</option>
+                `),
+                ``,
+              );
+            document.getElementById('add-huesped').innerHTML =
+              huespedesNotInReserva.data.reduce(
+                (sumHTML, huesped) =>
+                  (sumHTML += `
+                  <option value="${huesped.id}">${huesped.nombre} ${huesped.apellido} - DNI: ${huesped.dni}</option>
+                `),
+                ``,
+              );
+          }
+          document.body.classList.add('noscroll');
+          modalTarget.classList.add('active');
+        }
+      }
     });
-  });
+};
 
-  const btnsOpenModalDelete =
-    document.getElementsByClassName('open-modal-delete');
-  Array.from(btnsOpenModalDelete).forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      toggleLoader();
-      const modalTarget = document.getElementById(btn.dataset.target);
-      document.getElementById('delete-id').value = btn.dataset.value;
-      document.getElementById('data-value').innerHTML = btn.dataset.value;
-      modalTarget.classList.add('active');
-      toggleLoader();
-    });
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  let tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow = tomorrow.toISOString().split('T')[0];
+  loadInitialData(tomorrow);
+  loadInitialDataHabitaciones();
+  loadFormEvents(tomorrow);
+  loadModalEvents();
 });

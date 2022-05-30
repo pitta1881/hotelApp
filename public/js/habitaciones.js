@@ -115,7 +115,7 @@ const loadFormEvents = () => {
     {
       form: document.getElementById('form-manage-delete-services'),
       method: 'post',
-      apiUrl: `${location.origin}/api/servicios/habitacion`,
+      apiUrl: `${location.origin}/api/habitaciones/manage-servicios`,
       params: [],
       validations: {
         'operacion-false': {
@@ -133,7 +133,7 @@ const loadFormEvents = () => {
     {
       form: document.getElementById('form-manage-add-services'),
       method: 'post',
-      apiUrl: `${location.origin}/api/servicios/habitacion`,
+      apiUrl: `${location.origin}/api/habitaciones/manage-servicios`,
       params: [],
       validations: {
         'operacion-true': {
@@ -341,7 +341,7 @@ const loadModalEvents = () => {
                 (acum, servicio) =>
                   (acum += `
                         <img
-                          src="./..${servicio.icon_path}"
+                          src="${servicio.icon_path}"
                           class="icon24"
                           title="${servicio.nombre}"
                         />`),
@@ -382,10 +382,10 @@ const loadModalEvents = () => {
             buttonClicked.classList.contains('open-modal-manage-services')
           ) {
             const serviciosInHabitacion = await commonFetch(
-              `${location.origin}/api/servicios/habitacion/${habitacion.id}`,
+              `${location.origin}/api/habitaciones/servicios/${habitacion.id}`,
             );
             const serviciosNotInHabitacion = await commonFetch(
-              `${location.origin}/api/servicios/notIn/habitacion/${habitacion.id}`,
+              `${location.origin}/api/habitaciones/notIn/servicios/${habitacion.id}`,
             );
             document.getElementById('add-service-habitacionId').value =
               buttonClicked.dataset.value;

@@ -85,7 +85,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       marker.bindPopup(`
         <b>${paypertop.razon_social}</b><br>
         <small>${paypertop.descripcion}</small><br>
-        <a href="${paypertop.url}">${paypertop.url}</a>
+        ${
+          paypertop.url
+            ? `<a href="${paypertop.url}">${paypertop.url}</a>`
+            : 'URL: -'
+        }
       `);
       let tipoList;
       let tipoImg;
