@@ -198,60 +198,63 @@ const loadInitialDataServicios = async () => {
     `${location.origin}/api/servicios/hotel`,
   );
   if (status === 'SUCCESS') {
-    let rowServicios = ``;
-    data.forEach((servicio) => {
-      rowServicios += `
-    <tr>
-      <td><span class="thbefore">Nombre</span>${servicio.nombre}</td>
-      <td class="text-center">
-        <span class="thbefore">Icono</span
-        ><img
-          src="${servicio.icon_path}"
-          class="icon24"
-        />
-      </td>
-      <td>
-        <span class="thbefore">Icono Path</span
-        >${servicio.icon_path}
-      </td>
-      <td><span class="thbefore">Tipo</span>${
-        servicio.servInstal ? 'Instalación' : 'Servicio'
-      }</td>
-      <td class="action-column">
-        <span class="thbefore">Acción</span>
-        <div class="nowrap">
-          <button
-            type="button"
-            title="Actualizar"
-            class="actions yellow open-modal-update"
-            data-value="${servicio.id}"
-            data-target="modal-update"
-          >
-            <img
-              class="icon24"
-              src="/icons/pencil-edit-button-svgrepo-com.svg"
-              alt=""
-            />
-          </button>
-          <button
-            type="button"
-            title="Eliminar"
-            class="actions red open-modal-delete"
-            data-target="modal-delete"
-            data-value="${servicio.id}"
-          >
-            <img
-              class="icon24"
-              src="/icons/trash-svgrepo-com.svg"
-              alt=""
-            />
-          </button>
-        </div>
-      </td>
-    </tr>
-    `;
-    });
-    document.getElementById('tbody-servicios').innerHTML = rowServicios;
+    document.getElementById('tbody-servicios').innerHTML =
+      data.length === 0
+        ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
+        : data.reduce(
+            (acum, servicio) =>
+              (acum += `
+          <tr>
+            <td><span class="thbefore">Nombre</span>${servicio.nombre}</td>
+            <td class="text-center">
+              <span class="thbefore">Icono</span
+              ><img
+                src="${servicio.icon_path}"
+                class="icon24"
+              />
+            </td>
+            <td>
+              <span class="thbefore">Icono Path</span
+              >${servicio.icon_path}
+            </td>
+            <td><span class="thbefore">Tipo</span>${
+              servicio.servInstal ? 'Instalación' : 'Servicio'
+            }</td>
+            <td class="action-column">
+              <span class="thbefore">Acción</span>
+              <div class="nowrap">
+                <button
+                  type="button"
+                  title="Actualizar"
+                  class="actions yellow open-modal-update"
+                  data-value="${servicio.id}"
+                  data-target="modal-update"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/pencil-edit-button-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  type="button"
+                  title="Eliminar"
+                  class="actions red open-modal-delete"
+                  data-target="modal-delete"
+                  data-value="${servicio.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/trash-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+              </div>
+            </td>
+          </tr>
+          `),
+            ``,
+          );
   }
 };
 

@@ -1,11 +1,6 @@
-import { AssociateHuespedDto } from './dtos/associate-huesped.dto';
-import { Huesped } from './../../db/entities/husped.entity';
-import { HuespedService } from './../huesped/huesped.service';
-import { Hotel } from 'src/db/entities/hotel.entity';
-import { HotelService } from './../hoteles/hotel.service';
-import { Habitacion } from './../../db/entities/habitacion.entity';
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -16,6 +11,12 @@ import { IGenResp, StatusTypes } from '../../helpers/generic.response';
 import { Reserva } from '../../db/entities/reserva.entity';
 import { CreateReservaDto, UpdateReservaDto } from './dtos/reserva.dto';
 import { HabitacionService } from '../habitaciones/habitacion.service';
+import { AssociateHuespedDto } from './dtos/associate-huesped.dto';
+import { Huesped } from './../../db/entities/husped.entity';
+import { HuespedService } from './../huesped/huesped.service';
+import { Hotel } from './../../db/entities/hotel.entity';
+import { HotelService } from './../hoteles/hotel.service';
+import { Habitacion } from './../../db/entities/habitacion.entity';
 
 @Injectable()
 export class ReservaService {
@@ -120,6 +121,12 @@ export class ReservaService {
       'hotel',
     ]);
     const reserva: Reserva = reservaResp.data[0];
+    if (operacion && reserva.huespedes.length >= reserva.habitacion.max_pax) {
+      throw new ForbiddenException({
+        status: StatusTypes.error,
+        error: `Máximo de Huespedes para ésta habitación alcanzados. (MAX.: ${reserva.habitacion.max_pax})`,
+      });
+    }
     const huespedResp: IGenResp = await this.huespedesService.findOne(
       huespedId,
     );

@@ -277,6 +277,88 @@
         </fieldset>
       </form>
     </section>
+    <section id="modal-read-habitacion" class="modal">
+      <form id="form-read-habitacion ">
+        <fieldset>
+          <legend class="blue">Detalle Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre-hab"></span>
+            </div>
+            <div class="row"><span>Tipo</span><span id="read-tipo-hab"></span></div>
+            <div class="row">
+              <span>Max. Pax.</span><span id="read-max-pax-hab"></span>
+            </div>
+            <div class="row">
+              <span>Tamaño M²</span>
+              <span id="read-tamanio-hab"></span>
+            </div>
+            <div class="row">
+              <span>Descripción Habitación</span>
+              <span id="read-descripcion-hab"></span>
+            </div>
+            <div class="row">
+              <span>Descripción Camas</span>
+              <span id="read-descripcion-camas-hab"></span>
+            </div>
+            <div class="row">
+              <span>Estado</span>
+              <span id="read-estado-hab"></span>
+            </div>
+            <div class="row">
+              <span>Servicios</span>
+              <span id="read-servicios-hab"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at-hab"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read-huesped" class="modal">
+      <form id="form-read-huesped">
+        <fieldset>
+          <legend class="blue">Detalle Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre-hue"></span>
+            </div>
+            <div class="row">
+              <span>Apellido</span><span id="read-apellido-hue"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email-hue"></span>
+            </div>
+            <div class="row">
+              <span>DNI</span>
+              <span id="read-dni-hue"></span>
+            </div>
+            <div class="row">
+              <span>Fecha Nacimiento</span>
+              <span id="read-fecha-nacimiento-hue"></span>
+            </div>
+            <div class="row">
+              <span>Teléfono</span>
+              <span id="read-telefono-hue"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at-hue"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
   {{/inline}}
 
 {{/layouts/baseBackend}}

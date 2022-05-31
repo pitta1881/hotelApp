@@ -108,10 +108,10 @@ export class init1649521758188 implements MigrationInterface {
     );
     await queryRunner.query(
       `INSERT INTO mensaje
-              ("id","nombre","apellido","email","checkin","checkout","pais","adultos","menores","mensaje","hotelId") 
+              ("id","nombre","apellido","email","checkin","checkout","pais","adultos","menores","mensaje", "leido","hotelId") 
             VALUES 
-              (1,'test nom 1','test ape 1','test1@mail.com','2022-05-20','2022-06-01','AR',2,0,'Este es un mensaje de prueba seed 1',1),
-              (2,'test nom 2','test ape 2','test2@mail.com','2022-05-25','2022-06-05','AR',2,2,'Este es un mensaje de prueba seed 2',1)`,
+              (1,'test nom 1','test ape 1','test1@mail.com','2022-05-20','2022-06-01','AR',2,0,'Este es un mensaje de prueba ya leido seed 1',true,1),
+              (2,'test nom 2','test ape 2','test2@mail.com','2022-05-25','2022-06-05','AR',2,2,'Este es un mensaje de prueba seed 2',false,1)`,
     );
     await queryRunner.query(
       `INSERT INTO paypertop
@@ -130,8 +130,8 @@ export class init1649521758188 implements MigrationInterface {
       `INSERT INTO huesped
               ("id","nombre","apellido","email","dni","fecha_nacimiento","telefono") 
             VALUES 
-              (1,'Huespednom1','Huespedape1',null,12345678,'1990-05-10',null),
-              (2,'Huespednom2','Huespedape2','huesped2@mail.com',87654321,'1992-03-18','0111512345678')`,
+              (1,'HuespednomA','HuespedapeA',null,12345678,'1990-05-10',null),
+              (2,'HuespednomB','HuespedapeB','huesped2@mail.com',87654321,'1992-03-18','0111512345678')`,
     );
   }
 

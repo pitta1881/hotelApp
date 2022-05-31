@@ -141,87 +141,94 @@ const loadInitialData = async () => {
     `${location.origin}/api/paypertop`,
   );
   if (status === 'SUCCESS') {
-    let rowPayPerTop = ``;
-    data.forEach((paypertop) => {
-      rowPayPerTop += `
-      <tr>
-      <td><span class="thbefore">Titular</span>${paypertop.titular || '-'}</td>
-      <td>
-        <span class="thbefore">Razón Social</span>${paypertop.razon_social}
-      </td>
-      <td><span class="thbefore">Email</span>${paypertop.email || '-'}</td>
-      <td><span class="thbefore">Tipo</span>${paypertop.tipoPPT.nombre}</td>
-      <td><span class="thbefore">Estado</span>${
-        paypertop.activo ? 'Activo' : 'Inactivo'
-      }</td>
-      <td><span class="thbefore">Descripción</span>${paypertop.descripcion}</td>
-      <td>
-        <span class="thbefore">URL</span>${paypertop.url || '-'}
-      </td>
-      <td><span class="thbefore">Abono Mensual</span>$${
-        paypertop.abono_mensual
-      }</td>
-      <td class="action-column">
-        <span class="thbefore">Acción</span>
-        <div class="nowrap">
-          <button
-            type="button"
-            title="Detalles"
-            class="actions blue open-modal-read"
-            data-target="modal-read"
-            data-value="${paypertop.id}"
-          >
-            <img
-              class="icon24"
-              src="/icons/eye-svgrepo-com.svg"
-              alt=""
-            />
-          </button>
-          <button
-            type="button"
-            title="Actualizar"
-            class="actions yellow open-modal-update"
-            data-target="modal-update"
-            data-value="${paypertop.id}"
-          >
-            <img
-              class="icon24"
-              src="/icons/pencil-edit-button-svgrepo-com.svg"
-              alt=""
-            />
-          </button>
-          <button
-            type="button"
-            title="Actualizar Estado"
-            class="actions yellow open-modal-update-status"
-            data-target="modal-update-status"
-            data-value="${paypertop.id}"
-          >
-            <img
-              class="icon24"
-              src="/icons/change-svgrepo-com.svg"
-              alt=""
-            />
-          </button>
-          <button
-            type="button"
-            title="Eliminar"
-            class="actions red open-modal-delete"
-            data-target="modal-delete"
-            data-value="${paypertop.id}"
-          >
-            <img
-              class="icon24"
-              src="/icons/trash-svgrepo-com.svg"
-              alt=""
-            />
-          </button>
-        </div>
-      </td>
-    </tr>
-  `;
-    });
-    document.getElementById('tbody-paypertop').innerHTML = rowPayPerTop;
+    document.getElementById('tbody-paypertop').innerHTML =
+      data.length === 0
+        ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
+        : data.reduce(
+            (acum, paypertop) =>
+              (acum += `
+          <tr>
+          <td><span class="thbefore">Titular</span>${
+            paypertop.titular || '-'
+          }</td>
+          <td>
+            <span class="thbefore">Razón Social</span>${paypertop.razon_social}
+          </td>
+          <td><span class="thbefore">Email</span>${paypertop.email || '-'}</td>
+          <td><span class="thbefore">Tipo</span>${paypertop.tipoPPT.nombre}</td>
+          <td><span class="thbefore">Estado</span>${
+            paypertop.activo ? 'Activo' : 'Inactivo'
+          }</td>
+          <td><span class="thbefore">Descripción</span>${
+            paypertop.descripcion
+          }</td>
+          <td>
+            <span class="thbefore">URL</span>${paypertop.url || '-'}
+          </td>
+          <td><span class="thbefore">Abono Mensual</span>$${
+            paypertop.abono_mensual
+          }</td>
+          <td class="action-column">
+            <span class="thbefore">Acción</span>
+            <div class="nowrap">
+              <button
+                type="button"
+                title="Detalles"
+                class="actions blue open-modal-read"
+                data-target="modal-read"
+                data-value="${paypertop.id}"
+              >
+                <img
+                  class="icon24"
+                  src="/icons/eye-svgrepo-com.svg"
+                  alt=""
+                />
+              </button>
+              <button
+                type="button"
+                title="Actualizar"
+                class="actions yellow open-modal-update"
+                data-target="modal-update"
+                data-value="${paypertop.id}"
+              >
+                <img
+                  class="icon24"
+                  src="/icons/pencil-edit-button-svgrepo-com.svg"
+                  alt=""
+                />
+              </button>
+              <button
+                type="button"
+                title="Actualizar Estado"
+                class="actions yellow open-modal-update-status"
+                data-target="modal-update-status"
+                data-value="${paypertop.id}"
+              >
+                <img
+                  class="icon24"
+                  src="/icons/change-svgrepo-com.svg"
+                  alt=""
+                />
+              </button>
+              <button
+                type="button"
+                title="Eliminar"
+                class="actions red open-modal-delete"
+                data-target="modal-delete"
+                data-value="${paypertop.id}"
+              >
+                <img
+                  class="icon24"
+                  src="/icons/trash-svgrepo-com.svg"
+                  alt=""
+                />
+              </button>
+            </div>
+          </td>
+        </tr>
+        `),
+            ``,
+          );
   }
 };
 

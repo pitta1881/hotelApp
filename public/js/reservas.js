@@ -139,14 +139,21 @@ const loadInitialData = async (minDate) => {
   document.getElementById('update-checkin').value = minDate;
   const { status, data } = await commonFetch(`${location.origin}/api/reservas`);
   if (status === 'SUCCESS') {
-    let rowReservas = ``;
-    data.forEach((reserva) => {
-      rowReservas += `
-      <tr>
+    document.getElementById('tbody-reservas').innerHTML =
+      data.length === 0
+        ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
+        : data.reduce(
+            (acum, reserva) =>
+              (acum += `
+            <tr>
               <td><span class="thbefore">ID</span>${reserva.id}</td>
-              <td><span class="thbefore">Habitación</span>${
+              <td><span class="thbefore">Habitación</span>
+              <a href="#" class="actions open-modal-read-habitacion" 
+                data-value="${
+                  reserva.id
+                }" data-target="modal-read-habitacion">${
                 reserva.habitacion.nombre
-              }</td>
+              }</a></td>
               <td><span class="thbefore">CheckIn</span>${
                 dateFormat(reserva.checkin)[0]
               }</td>
@@ -237,9 +244,9 @@ const loadInitialData = async (minDate) => {
                 </div>
               </td>
             </tr>
-  `;
-    });
-    document.getElementById('tbody-reservas').innerHTML = rowReservas;
+            `),
+            ``,
+          );
   }
 };
 
@@ -296,7 +303,10 @@ const loadModalEvents = () => {
                   reserva.huespedes.reduce(
                     (sumHTML, huesped) =>
                       (sumHTML += `
-                    <li>-${huesped.nombre} ${huesped.apellido}</li>
+                    <li><a href="#" class="actions open-modal-read-huesped" 
+                    data-value="${huesped.id}" data-target="modal-read-huesped">
+                      ${huesped.nombre} ${huesped.apellido}
+          </a></li>
                       `),
                     ``,
                   ) +
@@ -355,16 +365,80 @@ const loadModalEvents = () => {
               huespedesNotInReserva.data.reduce(
                 (sumHTML, huesped) =>
                   (sumHTML += `
-                  <option value="${huesped.id}">${huesped.nombre} ${huesped.apellido} - DNI: ${huesped.dni}</option>
+                <option value="${huesped.id}">${huesped.nombre} ${huesped.apellido} - DNI: ${huesped.dni}</option>
                 `),
                 ``,
               );
+          } else if (
+            buttonClicked.classList.contains('open-modal-read-habitacion')
+          ) {
+            const habitacionResp = await commonFetch(
+              `${location.origin}/api/habitaciones/${reserva.habitacion.id}`,
+            );
+            const habitacion = habitacionResp.data[0];
+            document.getElementById('read-nombre-hab').innerHTML =
+              habitacion.nombre;
+            document.getElementById('read-descripcion-hab').innerHTML =
+              habitacion.descripcion_hab;
+            document.getElementById('read-descripcion-camas-hab').innerHTML =
+              habitacion.descripcion_camas;
+            document.getElementById('read-max-pax-hab').innerHTML =
+              habitacion.max_pax;
+            document.getElementById('read-tamanio-hab').innerHTML =
+              habitacion.tamanio_m2;
+            document.getElementById('read-tipo-hab').innerHTML =
+              habitacion.tipoHabitacion.nombre;
+            document.getElementById('read-estado-hab').innerHTML =
+              habitacion.activo ? 'Activo' : 'Inactivo';
+            document.getElementById('read-servicios-hab').innerHTML =
+              habitacion.servicios.reduce(
+                (acum, servicio) =>
+                  (acum += `
+                        <img
+                          src="${servicio.icon_path}"
+                          class="icon24"
+                          title="${servicio.nombre}"
+                        />`),
+                ``,
+              );
+            document.getElementById('read-created-at-hab').innerHTML =
+              dateFormat(habitacion.created_at).join(' ');
           }
           document.body.classList.add('noscroll');
           modalTarget.classList.add('active');
         }
       }
     });
+};
+
+const loadModalEventsClickHuesped = () => {
+  document.getElementById('modal-read').addEventListener('click', async (e) => {
+    const buttonClicked = e.target.closest('.actions');
+    if (buttonClicked) {
+      const modalTarget = document.getElementById(buttonClicked.dataset.target);
+      if (buttonClicked.classList.contains('open-modal-read-huesped')) {
+        const huespedResp = await commonFetch(
+          `${location.origin}/api/huespedes/${buttonClicked.dataset.value}`,
+        );
+        const huesped = huespedResp.data[0];
+        document.getElementById('read-nombre-hue').innerHTML = huesped.nombre;
+        document.getElementById('read-apellido-hue').innerHTML =
+          huesped.apellido;
+        document.getElementById('read-email-hue').innerHTML =
+          huesped.email || '-';
+        document.getElementById('read-dni-hue').innerHTML = huesped.dni;
+        document.getElementById('read-fecha-nacimiento-hue').innerHTML =
+          dateFormat(huesped.fecha_nacimiento)[0];
+        document.getElementById('read-telefono-hue').innerHTML =
+          huesped.telefono || '-';
+        document.getElementById('read-created-at-hue').innerHTML = dateFormat(
+          huesped.created_at,
+        ).join(' ');
+      }
+      document.body.classList.add('noscroll');
+      modalTarget.classList.add('active');
+    }
+  });
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -376,4 +450,5 @@ document.addEventListener('DOMContentLoaded', () => {
   loadInitialDataHabitaciones();
   loadFormEvents(tomorrow);
   loadModalEvents();
+  loadModalEventsClickHuesped();
 });

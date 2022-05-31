@@ -161,132 +161,137 @@ const loadInitialData = async () => {
     `${location.origin}/api/habitaciones`,
   );
   if (status === 'SUCCESS') {
-    let rowHabitaciones = ``;
-    data.forEach((habitacion) => {
-      rowHabitaciones += `
-      <tr>
-      <td><span class="thbefore">Nombre</span>${habitacion.nombre}</td>
-      <td>
-        <span class="thbefore">Descripción</span>${habitacion.descripcion_hab}
-      </td>
-      <td><span class="thbefore">Camas</span>${
-        habitacion.descripcion_camas
-      }</td>
-      <td><span class="thbefore">Pax</span>${habitacion.max_pax}</td>
-      <td><span class="thbefore">M²</span>${habitacion.tamanio_m2}</td>
-      <td><span class="thbefore">Tipo</span>${
-        habitacion.tipoHabitacion.nombre
-      }</td>
-      <td><span class="thbefore">Estado</span>${
-        habitacion.activo ? 'Activo' : 'Inactivo'
-      }</td>
-      <td class="text-center">
-        <span class="thbefore">Servicios</span>
-        <div>
-        ${habitacion.servicios.reduce(
-          (acum, servicio) =>
-            (acum += `
-          <img
-            src="${servicio.icon_path}"
-            class="icon24"
-            title="${servicio.nombre}"
-          />
+    document.getElementById('tbody-habitaciones').innerHTML =
+      data.length === 0
+        ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
+        : data.reduce(
+            (acum, habitacion) =>
+              (acum += `
+          <tr>
+          <td><span class="thbefore">Nombre</span>${habitacion.nombre}</td>
+          <td>
+            <span class="thbefore">Descripción</span>${
+              habitacion.descripcion_hab
+            }
+          </td>
+          <td><span class="thbefore">Camas</span>${
+            habitacion.descripcion_camas
+          }</td>
+          <td><span class="thbefore">Pax</span>${habitacion.max_pax}</td>
+          <td><span class="thbefore">M²</span>${habitacion.tamanio_m2}</td>
+          <td><span class="thbefore">Tipo</span>${
+            habitacion.tipoHabitacion.nombre
+          }</td>
+          <td><span class="thbefore">Estado</span>${
+            habitacion.activo ? 'Activo' : 'Inactivo'
+          }</td>
+          <td class="text-center">
+            <span class="thbefore">Servicios</span>
+            <div>
+            ${habitacion.servicios.reduce(
+              (acum, servicio) =>
+                (acum += `
+              <img
+                src="${servicio.icon_path}"
+                class="icon24"
+                title="${servicio.nombre}"
+              />
+            `),
+              ``,
+            )}
+            </div>
+          </td>
+          <td class="action-column">
+            <span class="thbefore">Acción</span>
+            <div class="action-flex">
+              <div class="nowrap">
+                <button
+                  type="button"
+                  title="Detalles"
+                  class="actions blue open-modal-read"
+                  data-target="modal-read"
+                  data-value="${habitacion.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/eye-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  type="button"
+                  title="Actualizar"
+                  class="actions yellow open-modal-update"
+                  data-target="modal-update"
+                  data-value="${habitacion.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/pencil-edit-button-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  type="button"
+                  title="Actualizar Estado"
+                  class="actions yellow open-modal-update-status"
+                  data-target="modal-update-status"
+                  data-value="${habitacion.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/change-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+              </div>
+              <div class="nowrap">
+                <button
+                  type="button"
+                  title="Administrar Servicios"
+                  class="actions yellow open-modal-manage-services"
+                  data-target="modal-manage-services"
+                  data-value="${habitacion.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/room-service-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  type="button"
+                  title="Administrar Fotos"
+                  class="actions yellow open-modal-carousel"
+                  data-target="modal-carousel"
+                  data-value="${habitacion.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/camera-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  type="button"
+                  title="Eliminar"
+                  class="actions red open-modal-delete"
+                  data-target="modal-delete"
+                  data-value="${habitacion.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/trash-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
         `),
-          ``,
-        )}
-        </div>
-      </td>
-      <td class="action-column">
-        <span class="thbefore">Acción</span>
-        <div class="action-flex">
-          <div class="nowrap">
-            <button
-              type="button"
-              title="Detalles"
-              class="actions blue open-modal-read"
-              data-target="modal-read"
-              data-value="${habitacion.id}"
-            >
-              <img
-                class="icon24"
-                src="/icons/eye-svgrepo-com.svg"
-                alt=""
-              />
-            </button>
-            <button
-              type="button"
-              title="Actualizar"
-              class="actions yellow open-modal-update"
-              data-target="modal-update"
-              data-value="${habitacion.id}"
-            >
-              <img
-                class="icon24"
-                src="/icons/pencil-edit-button-svgrepo-com.svg"
-                alt=""
-              />
-            </button>
-            <button
-              type="button"
-              title="Actualizar Estado"
-              class="actions yellow open-modal-update-status"
-              data-target="modal-update-status"
-              data-value="${habitacion.id}"
-            >
-              <img
-                class="icon24"
-                src="/icons/change-svgrepo-com.svg"
-                alt=""
-              />
-            </button>
-          </div>
-          <div class="nowrap">
-            <button
-              type="button"
-              title="Administrar Servicios"
-              class="actions yellow open-modal-manage-services"
-              data-target="modal-manage-services"
-              data-value="${habitacion.id}"
-            >
-              <img
-                class="icon24"
-                src="/icons/room-service-svgrepo-com.svg"
-                alt=""
-              />
-            </button>
-            <button
-              type="button"
-              title="Administrar Fotos"
-              class="actions yellow open-modal-carousel"
-              data-target="modal-carousel"
-              data-value="${habitacion.id}"
-            >
-              <img
-                class="icon24"
-                src="/icons/camera-svgrepo-com.svg"
-                alt=""
-              />
-            </button>
-            <button
-              type="button"
-              title="Eliminar"
-              class="actions red open-modal-delete"
-              data-target="modal-delete"
-              data-value="${habitacion.id}"
-            >
-              <img
-                class="icon24"
-                src="/icons/trash-svgrepo-com.svg"
-                alt=""
-              />
-            </button>
-          </div>
-        </div>
-      </td>
-    </tr>
-  `;
-    });
-    document.getElementById('tbody-habitaciones').innerHTML = rowHabitaciones;
+            ``,
+          );
   }
 };
 

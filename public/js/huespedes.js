@@ -97,68 +97,73 @@ const loadInitialData = async () => {
     `${location.origin}/api/huespedes`,
   );
   if (status === 'SUCCESS') {
-    let rowHuesped = ``;
-    data.forEach((huesped) => {
-      rowHuesped += `
-        <tr>
-          <td><span class="thbefore">Nombre</span>${huesped.nombre}</td>
-          <td><span class="thbefore">Apellido</span>${huesped.apellido}</td>
-          <td><span class="thbefore">Email</span>${huesped.email || '-'}</td>
-          <td><span class="thbefore">DNI</span>${huesped.dni}</td>
-          <td><span class="thbefore">Fecha Nac.</span>${
-            dateFormat(huesped.fecha_nacimiento)[0]
-          }</td>
-          <td><span class="thbefore">Teléfono</span>${
-            huesped.telefono || '-'
-          }</td>
-          <td class="action-column">
-            <span class="thbefore">Acción</span>
-            <div class="nowrap">
-              <button
-                type="button"
-                title="Detalles"
-                class="actions blue open-modal-read"
-                data-target="modal-read"
-                data-value="${huesped.id}"
-              >
-                <img
-                  class="icon24"
-                  src="/icons/eye-svgrepo-com.svg"
-                  alt=""
-                />
-              </button>
-              <button
-                type="button"
-                title="Actualizar"
-                class="actions yellow open-modal-update"
-                data-target="modal-update"
-                data-value="${huesped.id}"
-              >
-                <img
-                  class="icon24"
-                  src="/icons/pencil-edit-button-svgrepo-com.svg"
-                  alt=""
-                />
-              </button>
-              <button
-                type="button"
-                title="Eliminar"
-                class="actions red open-modal-delete"
-                data-target="modal-delete"
-                data-value="${huesped.id}"
-              >
-                <img
-                  class="icon24"
-                  src="/icons/trash-svgrepo-com.svg"
-                  alt=""
-                />
-              </button>
-            </div>
-          </td>
-        </tr>
-  `;
-    });
-    document.getElementById('tbody-huespedes').innerHTML = rowHuesped;
+    document.getElementById('tbody-huespedes').innerHTML =
+      data.length === 0
+        ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
+        : data.reduce(
+            (acum, huesped) =>
+              (acum += `
+            <tr>
+              <td><span class="thbefore">Nombre</span>${huesped.nombre}</td>
+              <td><span class="thbefore">Apellido</span>${huesped.apellido}</td>
+              <td><span class="thbefore">Email</span>${
+                huesped.email || '-'
+              }</td>
+              <td><span class="thbefore">DNI</span>${huesped.dni}</td>
+              <td><span class="thbefore">Fecha Nac.</span>${
+                dateFormat(huesped.fecha_nacimiento)[0]
+              }</td>
+              <td><span class="thbefore">Teléfono</span>${
+                huesped.telefono || '-'
+              }</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="nowrap">
+                  <button
+                    type="button"
+                    title="Detalles"
+                    class="actions blue open-modal-read"
+                    data-target="modal-read"
+                    data-value="${huesped.id}"
+                  >
+                    <img
+                      class="icon24"
+                      src="/icons/eye-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Actualizar"
+                    class="actions yellow open-modal-update"
+                    data-target="modal-update"
+                    data-value="${huesped.id}"
+                  >
+                    <img
+                      class="icon24"
+                      src="/icons/pencil-edit-button-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    title="Eliminar"
+                    class="actions red open-modal-delete"
+                    data-target="modal-delete"
+                    data-value="${huesped.id}"
+                  >
+                    <img
+                      class="icon24"
+                      src="/icons/trash-svgrepo-com.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+            `),
+            ``,
+          );
   }
 };
 

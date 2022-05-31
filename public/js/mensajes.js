@@ -3,27 +3,30 @@ import { commonFetch, dateFormat } from './helpers/common-helpers.js';
 const loadInitialData = async () => {
   const { status, data } = await commonFetch(`${location.origin}/api/mensajes`);
   if (status === 'SUCCESS') {
-    let rowMensajes = ``;
-    data.forEach((mensaje) => {
-      rowMensajes += `
-    <tr class="open-modal-read" data-value="${mensaje.id}">
-    <td>
-      <span class="thbefore">Estado</span
-      ><span class="status ${mensaje.leido ? 'read' : 'unread'}"></span>
-    </td>
-    <td><span class="thbefore">Fecha</span>${dateFormat(
-      mensaje.created_at,
-    ).join(' ')}</td>
-    <td><span class="thbefore">De</span>${mensaje.nombre} ${
-        mensaje.apellido
-      }</td>
-    <td>
-      <span class="thbefore">Mensaje</span>${mensaje.mensaje}
-    </td>
-  </tr>
-  `;
-    });
-    document.getElementById('tbody-mensajes').innerHTML = rowMensajes;
+    document.getElementById('tbody-mensajes').innerHTML =
+      data.length === 0
+        ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
+        : data.reduce(
+            (acum, mensaje) =>
+              (acum += `
+            <tr class="open-modal-read" data-value="${mensaje.id}">
+            <td>
+              <span class="thbefore">Estado</span
+              ><span class="status ${mensaje.leido ? 'read' : 'unread'}"></span>
+            </td>
+            <td><span class="thbefore">Fecha</span>${dateFormat(
+              mensaje.created_at,
+            ).join(' ')}</td>
+            <td><span class="thbefore">De</span>${mensaje.nombre} ${
+                mensaje.apellido
+              }</td>
+            <td>
+              <span class="thbefore">Mensaje</span>${mensaje.mensaje}
+            </td>
+          </tr>
+          `),
+            ``,
+          );
   }
 };
 
