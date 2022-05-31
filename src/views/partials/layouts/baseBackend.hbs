@@ -5,24 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {{title}} | HotelApp </title>
-    <script src="/js/token.js" type="module"></script>
     <link rel="stylesheet" href="/css/css-reset.css">
     <link rel="stylesheet" href="/css/base/base-backend.css">
-    <script src="/js/nav.js" defer></script>
+    <script src="/js/token.js"></script>
+    <script src="/js/nav.js" defer type="module"></script>
     <script src="/js/modal-backend.js" defer type="module"></script>
 
     {{#> head-block}}
-      {{!-- Custom <head> content per page could be added. --}}
+      {{!-- Scripts/CSS que puedan haber. --}}
     {{/head-block}}
   </head>
   <body>
-    <header class="hide">
+    <header>
         {{> header/headerBackend }}
     </header>
-    <nav id="side-nav" class="hide">
+    <nav id="side-nav">
         {{> nav/navBackend }}
     </nav>
-    <main class="hide">
+    <main>
       {{#> main-content-block}}
         {{!-- Contenido Principal --}}
       {{/main-content-block}}
@@ -37,8 +37,5 @@
       <span></span>
     </section>
 
-    {{#> scripts-block}}
-      {{!-- Custom scripts per page can be added. --}}
-    {{/scripts-block}}
   </body>
 </html>
