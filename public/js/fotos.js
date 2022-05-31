@@ -50,6 +50,7 @@ const loadInitialDataTiposCarousel = async () => {
         class="open-modal-carousel green"
         data-target="modal-carousel"
         data-value="${tipo.id}"
+        data-quien="${tipo.nombre}"
       >
         Carousel ${tipo.nombre}
       </button>
@@ -75,9 +76,9 @@ const loadButtonsEvents = () => {
       if (status === 'SUCCESS') {
         document.getElementById(
           'legend-foto',
-        ).innerHTML = `Crear Foto - Carousel ${data[0].tipoCarousel.nombre}`;
+        ).innerHTML = `Crear Foto - Carousel ${btn.dataset.quien}`;
         const firstLiForm = document.getElementById('galeria-add-foto');
-        firstLiForm.classList.remove('active');
+        firstLiForm.classList.add('active');
         const btnDeleteFoto = document.getElementById('btn-delete-foto');
         btnDeleteFoto.classList.add('hide');
         if (data.length > 0) {
