@@ -11,6 +11,7 @@ const verifyToken = (token) => {
     .then((response) => response.json())
     .then((dataJson) => {
       if (dataJson.status !== 'SUCCESS') redirectLogin();
+      window.history.replaceState(null, null, window.location.pathname);
     })
     .catch(() => {
       redirectLogin();
@@ -19,7 +20,7 @@ const verifyToken = (token) => {
 
 const redirectLogin = () => {
   sessionStorage.clear();
-  location.href = `${location.origin}/backend/login`;
+  location.href = `/backend/login`;
 };
 
 (() => {

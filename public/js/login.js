@@ -4,15 +4,15 @@ import {
 } from './helpers/form-helpers.js';
 
 (() => {
-  if (sessionStorage.getItem('token'))
-    location.href = `${location.origin}/backend/general`;
+  const token = sessionStorage.getItem('token');
+  if (token) location.href = `/backend/general?token=${token}`;
   const body = document.getElementsByTagName('body')[0];
   body.className = '';
 })();
 
 const callbackSuccessSubmit = (e, data) => {
   sessionStorage.setItem('token', data.access_token);
-  location.href = `${location.origin}/backend/general`;
+  location.href = `/backend/general?token=${data.access_token}`;
 };
 
 const formsObj = [
