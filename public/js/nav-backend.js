@@ -48,6 +48,23 @@ const loadNavEvents = () => {
       body.classList.remove('noscroll');
     }
   });
+  document.getElementById('side-nav').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem('token');
+    const aClicked = e.target.closest('a');
+    if (aClicked && aClicked.id !== 'logout-ref') {
+      if (!token) {
+        location.href = `/backend/login`;
+      } else {
+        window.history.replaceState(
+          null,
+          null,
+          `${window.location.pathname}?token=${token}`,
+        );
+        location.href = `${aClicked.getAttribute('href')}?token=${token}`;
+      }
+    }
+  });
 };
 
 document.addEventListener('DOMContentLoaded', () => {
