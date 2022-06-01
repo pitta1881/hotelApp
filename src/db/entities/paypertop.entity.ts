@@ -16,19 +16,19 @@ export class Paypertop {
   @PrimaryColumn({ type: 'int' })
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   titular: string;
 
   @Column({ nullable: false })
   razon_social: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   email: string;
 
   @Column({ nullable: false, type: 'text' })
   descripcion: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: true, type: 'text' })
   url: string;
 
   @Column({ nullable: false, type: 'float' })

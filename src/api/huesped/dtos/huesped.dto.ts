@@ -7,7 +7,10 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  ValidateIf,
 } from 'class-validator';
+
+import { Huesped } from './../../../db/entities/husped.entity';
 
 export class CreateHuespedDto {
   @IsString()
@@ -19,10 +22,19 @@ export class CreateHuespedDto {
   apellido: string;
 
   @IsEmail()
+  @ValidateIf((huesped: Huesped) => huesped.email !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
   @IsOptional()
-  email: string;
+  email?: string | null;
 
   @IsInt()
+  @Transform(({ value }) => {
+    if (Number(value)) return Number(value);
+    return value;
+  })
   @IsDefined()
   dni: number;
 
@@ -32,8 +44,13 @@ export class CreateHuespedDto {
   fecha_nacimiento: Date;
 
   @IsString()
+  @ValidateIf((huesped: Huesped) => huesped.telefono !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
   @IsOptional()
-  telefono: string;
+  telefono?: string | null;
 }
 
 export class UpdateHuespedDto extends PartialType(CreateHuespedDto) {}

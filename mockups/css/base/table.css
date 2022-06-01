@@ -1,0 +1,146 @@
+table {
+  border: 2px solid black;
+  margin: 20px auto 0;
+}
+
+tr:nth-of-type(even) {
+  background: #eee;
+}
+tr:nth-of-type(even) > td {
+  border-bottom: 1px solid white;
+}
+
+thead {
+  background-color: rgba(0, 128, 0, 0.2);
+  font-size: 18px;
+  height: 60px;
+  border: 2px solid black;
+}
+th {
+  font-weight: 700;
+  vertical-align: middle;
+  padding: 5px;
+  text-align: center;
+}
+
+th,
+td {
+  border: 1px solid black;
+}
+td {
+  padding: 5px;
+  vertical-align: middle;
+}
+
+.nowrap {
+  display: flex;
+}
+
+td span.thbefore {
+  display: none;
+}
+
+.actions {
+  background: none;
+  border: 1px solid black;
+  padding: 3px;
+  margin: 0;
+  cursor: pointer;
+}
+.actions img {
+  vertical-align: middle;
+}
+.actions:not(:last-child) {
+  margin-right: 5px;
+}
+
+button.actions.blue:hover {
+  background-color: rgba(101, 137, 255, 0.5);
+}
+button.actions.yellow:hover {
+  background-color: rgba(255, 207, 0, 0.5);
+}
+button.actions.red:hover {
+  background-color: rgba(255, 101, 101, 0.5);
+}
+
+.action-column {
+  display: table-cell !important;
+}
+
+td.text-center {
+  text-align: center;
+}
+.action-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.action-flex div:first-child {
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  /* Force table to not be like tables anymore */
+  table,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+  }
+
+  td span.thbefore {
+    display: inline-block;
+    font-weight: 700;
+    flex: 0 0 20%;
+    flex-wrap: wrap;
+    text-align: left;
+  }
+
+  th.action-column {
+    display: block !important;
+  }
+  td.action-column {
+    display: flex !important;
+  }
+}
+
+@media screen and (max-width: 1100px) and (min-width: 950px) {
+  th:nth-child(n + 7),
+  td:nth-child(n + 7) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 950px) and (min-width: 850px) {
+  th:nth-child(n + 6),
+  td:nth-child(n + 6) {
+    display: none;
+  }
+}
+@media screen and (max-width: 850px) and (min-width: 768px) {
+  th:nth-child(n + 5),
+  td:nth-child(n + 5) {
+    display: none;
+  }
+}

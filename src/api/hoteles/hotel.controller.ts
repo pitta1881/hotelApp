@@ -28,6 +28,12 @@ export class HotelController {
     return await this.hotelService.findAll();
   }
 
+  @ApiOperation({ summary: 'Find Hotel This (JWT)' })
+  @Get('this')
+  async findOneJWT(@UserJWT() { hotelId }: IJwtPayload) {
+    return await this.hotelService.findOne(hotelId);
+  }
+
   @ApiOperation({ summary: 'FindOne Hotel - PÚBLICO' })
   @Public()
   @Get(':id')

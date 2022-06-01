@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservas | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/token.js" defer></script>
+    <script src="./../js/reservas.js" defer type="module"></script>
+    <script src="./../js/modal-backend.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+            <ul class="ulInner">
+              <li id="liHuespedInner">
+                <a href="./huespedes.html">Huespedes</a>
+              </li>
+            </ul>
+          </li>
+          <li id="liHuesped">
+            <a href="./huespedes.html"
+              ><img src="./../icons/person-svgrepo-com.svg" />Huespedes</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="#"
+              ><img src="./../icons/user-svgrepo-com.svg" />Elsa Ntorosario</a
+            >
+            <ul class="ulInner">
+              <li>
+                <a href="./configuracion.html">Configuración</a>
+              </li>
+              <li>
+                <a href="./logout.html">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>Reservas</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear Reserva
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Habitación</th>
+              <th>CheckIn</th>
+              <th>CheckOut</th>
+              <th>Pax</th>
+              <th>Monto Final</th>
+              <th>Monto Pagado</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="thbefore">ID</span>1</td>
+              <td><span class="thbefore">Habitación</span>Simple Comun</td>
+              <td><span class="thbefore">CheckIn</span>20/05/2022</td>
+              <td><span class="thbefore">CheckOut</span>25/05/2022</td>
+              <td><span class="thbefore">Pax</span>2</td>
+              <td><span class="thbefore">Monto Final</span>$20000</td>
+              <td><span class="thbefore">Monto Pagado</span>$15000</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="action-flex">
+                  <div class="nowrap">
+                    <button
+                      type="button"
+                      title="Detalles"
+                      class="actions blue open-modal-read"
+                      data-target="modal-read"
+                      data-value="0"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/eye-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Actualizar"
+                      class="actions yellow open-modal-update"
+                      data-target="modal-update"
+                      data-value="0"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Actualizar Monto Pagado"
+                      class="actions yellow open-modal-update-monto-pagado"
+                      data-target="modal-update-monto-pagado"
+                      data-value="0"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/dollar-sign-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                  <div class="nowrap">
+                    <button
+                      type="button"
+                      title="Administrar Huespedes"
+                      class="actions yellow open-modal-manage-huespedes"
+                      data-target="modal-manage-huespedes"
+                      data-value="0"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/person-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Eliminar"
+                      class="actions red open-modal-delete"
+                      data-target="modal-delete"
+                      data-value="0"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/trash-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="thbefore">ID</span>2</td>
+              <td><span class="thbefore">Habitación</span>Doble Comun</td>
+              <td><span class="thbefore">CheckIn</span>22/05/2022</td>
+              <td><span class="thbefore">CheckOut</span>28/05/2022</td>
+              <td><span class="thbefore">Pax</span>4</td>
+              <td><span class="thbefore">Monto Final</span>$25000</td>
+              <td><span class="thbefore">Monto Pagado</span>$17000</td>
+              <td class="action-column">
+                <span class="thbefore">Acción</span>
+                <div class="action-flex">
+                  <div class="nowrap">
+                    <button
+                      type="button"
+                      title="Detalles"
+                      class="actions blue open-modal-read"
+                      data-target="modal-read"
+                      data-value="1"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/eye-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Actualizar"
+                      class="actions yellow open-modal-update"
+                      data-target="modal-update"
+                      data-value="1"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/pencil-edit-button-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Actualizar Monto Pagado"
+                      class="actions yellow open-modal-update-monto-pagado"
+                      data-target="modal-update-monto-pagado"
+                      data-value="1"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/dollar-sign-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                  <div class="nowrap">
+                    <button
+                      type="button"
+                      title="Administrar Huespedes"
+                      class="actions yellow open-modal-manage-huespedes"
+                      data-target="modal-manage-huespedes"
+                      data-value="1"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/person-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      title="Eliminar"
+                      class="actions red open-modal-delete"
+                      data-target="modal-delete"
+                      data-value="1"
+                    >
+                      <img
+                        class="icon24"
+                        src="./../icons/trash-svgrepo-com.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <section id="modal-create" class="modal">
+      <form id="form-create">
+        <fieldset>
+          <legend class="green">Crear Reserva</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-checkin" class="required">CheckIn:</label>
+              <input type="date" name="checkin" id="new-checkin" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-checkout" class="required">CheckOut:</label>
+              <input type="date" name="checkout" id="new-checkout" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-monto-final" class="required">Monto Final:</label>
+              <input
+                type="number"
+                name="monto_final"
+                id="new-monto-final"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-habitacion-id" class="required"
+                >Habitación:</label
+              >
+              <select name="habitacionId" id="new-habitacion-id" required>
+                <option value="1">Simple</option>
+                <option value="2">Doble</option>
+                <option value="3">Triple</option>
+                <option value="4">Suite</option>
+                <option value="5">Suite Presidencial</option>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>ID Reserva</span><span id="read-id"></span>
+            </div>
+            <div class="row">
+              <span>CheckIn</span><span id="read-checkin"></span>
+            </div>
+            <div class="row">
+              <span>CheckOut</span><span id="read-checkout"></span>
+            </div>
+            <div class="row">
+              <span>Habitación</span>
+              <span id="read-habitacion"></span>
+            </div>
+            <div class="row">
+              <span>Monto Final</span>
+              <span id="read-monto-final"></span>
+            </div>
+            <div class="row">
+              <span>Monto Pagado</span>
+              <span id="read-monto-pagado"></span>
+            </div>
+            <div class="row">
+              <span>Huespedes</span>
+              <span id="read-huespedes"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-creado"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-checkin" class="required">CheckIn:</label>
+              <input type="date" name="checkin" id="update-checkin" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-checkout" class="required">CheckOut:</label>
+              <input
+                type="date"
+                name="checkout"
+                id="update-checkout"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-monto-final" class="required"
+                >Monto Final:</label
+              >
+              <input
+                type="number"
+                name="monto_final"
+                id="update-monto-final"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-habitacion-id" class="required"
+                >Habitación:</label
+              >
+              <select name="habitacionId" id="update-habitacion-id" required>
+                <option value="1">Simple</option>
+                <option value="2">Doble</option>
+                <option value="3">Triple</option>
+                <option value="4">Suite</option>
+                <option value="5">Suite Presidencial</option>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update-monto-pagado" class="modal">
+      <form id="form-update-monto-pagado">
+        <fieldset>
+          <legend class="yellow">Actualizar Monto Pagado</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input
+            type="number"
+            name="id"
+            id="update-reserva-monto-pagado-id"
+            hidden
+          />
+          <p>
+            MONTO FINAL: $
+            <span id="update-monto-pagado-span"></span>
+          </p>
+          <div class="control-input input-validator-container">
+            <label for="update-monto-pagado" class="required"
+              >Monto Pagado:</label
+            >
+            <input
+              type="number"
+              name="monto_pagado"
+              id="update-monto-pagado"
+              required
+            />
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-manage-huespedes" class="modal">
+      <form id="form-manage-add-huespedes">
+        <fieldset>
+          <legend class="green">Agregar Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input
+            type="number"
+            name="reservaId"
+            id="add-huesped-reservaId"
+            hidden
+          />
+          <input
+            type="text"
+            name="operacion"
+            id="operacion-true"
+            value="true"
+            hidden
+          />
+          <div class="control-input input-validator-container">
+            <label for="add-huesped" class="required">Huesped:</label>
+            <select name="huespedId" id="add-huesped" required></select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Agregar</button>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-manage-delete-huespedes">
+        <fieldset>
+          <legend class="red">Eliminar Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input
+            type="number"
+            name="reservaId"
+            id="delete-huesped-reservaId"
+            hidden
+          />
+          <input
+            type="text"
+            name="operacion"
+            id="operacion-false"
+            value="false"
+            hidden
+          />
+          <div class="control-input input-validator-container">
+            <label for="delete-huesped" class="required">Huesped:</label>
+            <select name="huespedId" id="delete-huesped" required></select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar la reserva Nº
+            <span id="data-value"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>

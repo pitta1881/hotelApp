@@ -5,12 +5,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 import { IGenResp, StatusTypes } from '../../helpers/generic.response';
 import { Usuario } from '../../db/entities/usuario.entity';
 import { Hotel } from '../../db/entities/hotel.entity';
 import { HotelService } from '../hoteles/hotel.service';
 import { CreateUsuarioDto, UpdateUsuarioDto } from './dtos/usuario.dto';
+import { ChangePasswordDto } from './dtos/changePassword.dto';
 
 @Injectable()
 export class UsuarioService {
@@ -30,9 +32,13 @@ export class UsuarioService {
     };
   }
 
-  async findOne(hotelId: number, id: number): Promise<IGenResp> {
+  async findOne(
+    hotelId: number,
+    id: number,
+    relations: string[] = [],
+  ): Promise<IGenResp> {
     const usuario: Usuario = await this.usuarioModel.findOne({
-      relations: ['hotel'],
+      relations,
       where: {
         hotel: hotelId,
         id,
@@ -61,6 +67,7 @@ export class UsuarioService {
     });
     try {
       newUser = await this.usuarioModel.save(newUser);
+      delete newUser.hotel;
       return {
         status: StatusTypes.success,
         data: [newUser],
@@ -78,18 +85,46 @@ export class UsuarioService {
     id: number,
     newData: UpdateUsuarioDto,
   ): Promise<IGenResp> {
-    const usuarioResp: IGenResp = await this.findOne(hotelId, id);
+    const usuarioResp: IGenResp = await this.findOne(hotelId, id, ['hotel']);
     let user: Usuario = usuarioResp.data[0];
     user = this.usuarioModel.merge(user, newData);
     user = await this.usuarioModel.save(user);
+    delete user.hotel;
     return {
       status: StatusTypes.success,
       data: [user],
     };
   }
 
+  async changePassword(
+    hotelId: number,
+    id: number,
+    newData: ChangePasswordDto,
+  ): Promise<IGenResp> {
+    const usuarioResp: IGenResp = await this.findOne(hotelId, id, ['hotel']);
+    let user: Usuario = usuarioResp.data[0];
+    const passVerified = await bcrypt.compare(
+      newData.oldPassword,
+      user.password,
+    );
+    if (passVerified) {
+      user = this.usuarioModel.merge(user, { password: newData.newPassword });
+      user = await this.usuarioModel.save(user);
+      delete user.hotel;
+      return {
+        status: StatusTypes.success,
+        data: [user],
+      };
+    } else {
+      return {
+        status: StatusTypes.error,
+        error: 'La Contraseña Actual es incorrecta.',
+      };
+    }
+  }
+
   async delete(hotelId: number, id: number): Promise<IGenResp> {
-    await this.findOne(hotelId, id); //si falla salta una exception
+    await this.findOne(hotelId, id, ['hotel']); //si falla salta una exception
     try {
       await this.usuarioModel.delete({
         hotel: { id: hotelId },

@@ -8,6 +8,7 @@
   {{#*inline "main-content-block"}}
     <section class="cards">
     {{#each hotel.habitaciones as |habitacion|}}
+     {{#if habitacion.activo}}
       <section class="card">
         <div class="imagen-container">
           <img
@@ -52,6 +53,7 @@
           </div>
         </div>
       </section>
+      {{/if}}
     {{/each}}
     </section>
   {{/inline}}

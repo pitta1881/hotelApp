@@ -5,34 +5,34 @@ export class init1649521758188 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `INSERT INTO hotel 
-              ("id","activo","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
+              ("activo","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
             VALUES 
-              (1,true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','/images/logo-hotel.png', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
+              (true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','https://us.123rf.com/450wm/sitiardi21/sitiardi211701/sitiardi21170100013/70276178-hotel-reflection-logotipo.jpg?ver=6', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_ppt 
-              ("id","nombre") 
+              ("nombre") 
             VALUES 
-              (1,'Gastronomía'),
-              (2,'Atracciones'),
-              (3,'Supermercados')`,
+              ('Gastronomía'),
+              ('Atracciones'),
+              ('Supermercados')`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_carousel 
-              ("id","nombre") 
+              ("nombre") 
             VALUES 
-              (1,'Home'),
-              (2,'Servicios')`,
+              ('Home'),
+              ('Servicios')`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_habitacion
-              ("id","nombre") 
+              ("nombre") 
             VALUES 
-              (1,'Simple'),
-              (2,'Doble'),
-              (3,'Triple'),
-              (4,'Suite'),
-              (5,'Suite Presidencial')`,
+              ('Simple'),
+              ('Doble'),
+              ('Triple'),
+              ('Suite'),
+              ('Suite Presidencial')`,
     );
     const passHashed = await bcrypt.hash('admin123', 10);
     await queryRunner.query(
@@ -108,10 +108,10 @@ export class init1649521758188 implements MigrationInterface {
     );
     await queryRunner.query(
       `INSERT INTO mensaje
-              ("id","nombre","apellido","email","checkin","checkout","pais","adultos","menores","mensaje","hotelId") 
+              ("id","nombre","apellido","email","checkin","checkout","pais","adultos","menores","mensaje", "leido","hotelId") 
             VALUES 
-              (1,'test nom 1','test ape 1','test1@mail.com','2022-05-20','2022-06-01','AR',2,0,'Este es un mensaje de prueba seed 1',1),
-              (2,'test nom 2','test ape 2','test2@mail.com','2022-05-25','2022-06-05','AR',2,2,'Este es un mensaje de prueba seed 2',1)`,
+              (1,'test nom 1','test ape 1','test1@mail.com','2022-05-20','2022-06-01','AR',2,0,'Este es un mensaje de prueba ya leido seed 1',true,1),
+              (2,'test nom 2','test ape 2','test2@mail.com','2022-05-25','2022-06-05','AR',2,2,'Este es un mensaje de prueba seed 2',false,1)`,
     );
     await queryRunner.query(
       `INSERT INTO paypertop
@@ -119,19 +119,19 @@ export class init1649521758188 implements MigrationInterface {
             VALUES 
               (1,'Pedro Perez','PePerez S.R.L','pperez@mail.com','Empresa que brinda servicios de Turismo por la ciudad.','http://www.turismopperez.com.ar',15000,'{-41.13534742815715, -71.30578269365238}',true,2,1),
               (2,'María Lopez','MaLopez S.A','mlopez@mail.com','Supermercado mas grande de la ciudad.','http://www.supermalopez.com.ar',12000,'{-41.13761429688297, -71.31278257990219}',true,3,1),
-              (3,'-','Supermercados Todo','-','Supermercado cerca del hotel.','http://www.supertodo.com.ar/',0,'{-41.12784799083812, -71.35088738966584}',true,3,1),
-              (4,'-','Familia Weiss','-','Restaurante familiar.','https://www.weiss.com.ar/',0,'{-41.13312094364556, -71.30382863726463}',true,1,1),
-              (5,'-','La Marca Patagónica','-','Restaurante familiar.','https://la-marca-patagonica.negocio.site/',0,'{-41.13386676160742, -71.30935194768804}',true,1,1),
+              (3,null,'Supermercados Todo',null,'Supermercado cerca del hotel.','http://www.supertodo.com.ar/',0,'{-41.12784799083812, -71.35088738966584}',true,3,1),
+              (4,null,'Familia Weiss',null,'Restaurante familiar.','https://www.weiss.com.ar/',0,'{-41.13312094364556, -71.30382863726463}',true,1,1),
+              (5,null,'La Marca Patagónica',null,'Restaurante familiar.','https://la-marca-patagonica.negocio.site/',0,'{-41.13386676160742, -71.30935194768804}',true,1,1),
               (6,'Manuel Blest','Cervezeria Blest','mblest@blest.com','Cervezería/bar.','http://www.cervezablest.com/',20000,'{-41.12759211083225, -71.35126058495128}',true,1,1),
-              (7,'-','Teleférico Cerro Otto','-','Teleférico cerca del centro.','http://www.telefericobariloche.com.ar/',0,'{-41.130162240139754, -71.36963340452075}',true,2,1),
-              (8,'-','Si Turismo','-','Empresa de Turismo.','https://siturismo.com/',0,'{-41.13402538670256, -71.30681160975384}',true,2,1)`,
+              (7,null,'Teleférico Cerro Otto',null,'Teleférico cerca del centro.','http://www.telefericobariloche.com.ar/',0,'{-41.130162240139754, -71.36963340452075}',true,2,1),
+              (8,null,'Si Turismo',null,'Empresa de Turismo.','https://siturismo.com/',0,'{-41.13402538670256, -71.30681160975384}',true,2,1)`,
     );
     await queryRunner.query(
       `INSERT INTO huesped
-              ("id","nombre","apellido","email","dni","fecha_nacimiento","telefono") 
+              ("nombre","apellido","email","dni","fecha_nacimiento","telefono") 
             VALUES 
-              (1,'Huespednom1','Huespedape1',null,12345678,'1990-05-10',null),
-              (2,'Huespednom2','Huespedape2','huesped2@mail.com',87654321,'1992-03-18','0111512345678')`,
+              ('HuespednomA','HuespedapeA',null,12345678,'1990-05-10',null),
+              ('HuespednomB','HuespedapeB','huesped2@mail.com',87654321,'1992-03-18','0111512345678')`,
     );
   }
 

@@ -1,9 +1,338 @@
-{{!-- pages/page-one.hbs --}}
-
 {{#> layouts/baseBackend title="Config. General" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/general.css" />
+    <script src="/js/general.js" type="module" defer></script>
+  {{/inline}}
 
   {{#*inline "main-content-block"}}
-    {{message}}
+    <h1>Configuración General</h1>
+    <form id="form-update-hotel">
+      <fieldset>
+        <legend>Modificar Hotel:</legend>
+        <div class="form-content">
+          <div class="form-content-fixed">
+            <div class="control-input input-validator-container">
+              <label for="update-estado" class="required">Estado:</label>
+              <select name="activo" id="update-estado" required>
+                <option value="false">Inactivo</option>
+                <option value="true">Activo</option>
+              </select>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-descripcion-home" class="required"
+                >Descripcion Home:</label
+              >
+              <textarea
+                name="descripcion_home"
+                id="update-descripcion-home"
+                rows="5"
+                required
+              ></textarea>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-descripcion-ubicacion" class="required"
+                >Descripcion Ubicación:</label
+              >
+              <textarea
+                name="descripcion_ubi"
+                id="update-descripcion-ubicacion"
+                rows="5"
+                required
+              ></textarea>
+              <ul></ul>
+            </div>
+            <div class="container-cuatriple">
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-nombre" class="required">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    id="update-nombre"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-email" class="required">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="update-email"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-telefono-1" class="required"
+                    >Telefono 1:</label
+                  >
+                  <input
+                    type="text"
+                    name="telefono_1"
+                    id="update-telefono-1"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-telefono-2">Telefono 2:</label>
+                  <input
+                    type="text"
+                    name="telefono_2"
+                    id="update-telefono-2"
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+            </div>
+            <div class="container-doble-xxl">
+              <div class="control-input input-validator-container">
+                <label for="update-direccion" class="required"
+                  >Dirección:</label
+                >
+                <input
+                  type="text"
+                  name="direccion"
+                  id="update-direccion"
+                  required
+                />
+                <ul></ul>
+              </div>
+              <div class="control-input input-validator-container">
+                <label for="update-logo-path" class="required"
+                  >Logo Path:</label
+                >
+                <input
+                  type="text"
+                  name="logo_path"
+                  id="update-logo-path"
+                  required
+                />
+                <ul></ul>
+              </div>
+            </div>
+            <div class="container-doble">
+              <div class="control-input input-validator-container">
+                <label for="update-latitud" class="required">Latitud:</label>
+                <input
+                  type="text"
+                  name="latitude"
+                  id="update-latitud"
+                  required
+                />
+                <ul></ul>
+              </div>
+              <div class="control-input input-validator-container">
+                <label for="update-longitud" class="required"
+                  >Longitud:</label
+                >
+                <input
+                  type="text"
+                  name="longitude"
+                  id="update-longitud"
+                  required
+                />
+                <ul></ul>
+              </div>
+            </div>
+            <div class="container-cuatriple">
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-facebook">Facebook:</label>
+                  <input
+                    type="text"
+                    name="facebook"
+                    id="update-facebook"
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-twitter">Twitter:</label>
+                  <input
+                    type="text"
+                    name="twitter"
+                    id="update-twitter"
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-instagram">Instagram:</label>
+                  <input
+                    type="text"
+                    name="instagram"
+                    id="update-instagram"
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-horario-contacto" class="required"
+                    >Horario Contacto:</label
+                  >
+                  <input
+                    type="text"
+                    name="horario_contacto"
+                    id="update-horario-contacto"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+            </div>
+            <div class="button-container">
+              <button type="submit" class="btn-submit green">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <form>
+      <fieldset>
+        <legend>Servicio/Instalación:</legend>
+        <div class="form-content">
+          <div class="form-content-fixed">
+            <div class="button-container">
+              <button
+                type="button"
+                class="open-modal green"
+                data-target="modal-create"
+              >
+                Crear Servicio
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Icono</th>
+                  <th>Icono Path</th>
+                  <th>Tipo</th>
+                  <th class="action-column">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-servicios">
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+    <section id="modal-create" class="modal">
+      <form id="form-create-servicio">
+        <fieldset>
+          <legend>Agregar Servicio/Instalación:</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-servicio-nombre" class="required">Nombre:</label>
+              <input
+                type="text"
+                name="nombre"
+                id="new-servicio-nombre"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-servicio-tipo" class="required">Tipo:</label>
+              <select name="servInstal" id="new-servicio-tipo" required>
+                <option value="false">Servicio</option>
+                <option value="true">Instalación</option>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="new-servicio-icon-path" class="required"
+              >Icon Path:</label
+            >
+            <input
+              type="text"
+              name="icon_path"
+              id="new-servicio-icon-path"
+              required
+            />
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update-servicio">
+        <fieldset>
+          <legend>Actualizar Servicio/Instalación:</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-servicio-nombre" class="required"
+                >Nombre:</label
+              >
+              <input
+                type="text"
+                name="nombre"
+                id="update-servicio-nombre"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-servicio-tipo" class="required">Tipo:</label>
+              <select name="servInstal" id="update-servicio-tipo" required>
+                <option value="false">Servicio</option>
+                <option value="true">Instalación</option>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="update-servicio-icon-path" class="required"
+              >Icon Path:</label
+            >
+            <input
+              type="text"
+              name="icon_path"
+              id="update-servicio-icon-path"
+              required
+            />
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Servicio/Instalación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
   {{/inline}}
 
 {{/layouts/baseBackend}}

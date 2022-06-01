@@ -1,9 +1,332 @@
-{{!-- pages/page-one.hbs --}}
-
 {{#> layouts/baseBackend title="PayPerTop" }}
+  {{#*inline "head-block"}}
+    <script src="/js/paypertop.js" type="module" defer></script>
+  {{/inline}}
 
   {{#*inline "main-content-block"}}
-    {{message}}
+      <h1>PayPerTop</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear PayPerTop
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Titular</th>
+              <th>Razón Social</th>
+              <th>Email</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>URL</th>
+              <th>Abono Mensual</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-paypertop">
+            
+          </tbody>
+        </table>
+      </section>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+<section id="modal-create" class="modal">
+      <form id="form-create">
+        <fieldset>
+          <legend class="green">Crear PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-titular">Titular:</label>
+              <input type="text" name="titular" id="new-titular" />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-razon-social" class="required"
+                >Razón Social:</label
+              >
+              <input
+                type="text"
+                name="razon_social"
+                id="new-razon-social"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-url">URL:</label>
+              <input type="text" name="url" id="new-url" />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-email">Email:</label>
+              <input type="email" name="email" id="new-email"/>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-latitud" class="required">Latitud:</label>
+              <input
+                type="text"
+                name="latitude"
+                id="new-latitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-longitud" class="required">Longitud:</label>
+              <input
+                type="text"
+                name="longitude"
+                id="new-longitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-tipo" class="required">Tipo:</label>
+              <select name="tipo" id="new-tipo" required>
+              </select>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-abono-mensual" class="required"
+                >Abono Mensual:</label
+              >
+              <input
+                type="number"
+                name="abono_mensual"
+                id="new-abono-mensual"
+                min="0"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="new-descripcion" class="required">Descripcion:</label>
+            <textarea
+              name="descripcion"
+              id="new-descripcion"
+              rows="5"
+              required
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Titular</span><span id="read-titular"></span>
+            </div>
+            <div class="row">
+              <span>Razón Social</span><span id="read-razon-social"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email"></span>
+            </div>
+            <div class="row">
+              <span>Tipo</span>
+              <span id="read-tipo"></span>
+            </div>
+            <div class="row">
+              <span>Descripción</span>
+              <span id="read-descripcion"></span>
+            </div>
+            <div class="row">
+              <span>URL</span>
+              <span id="read-url"></span>
+            </div>
+            <div class="row">
+              <span>Abono Mensual </span>
+              <span id="read-abono-mensual"></span>
+            </div>
+            <div class="row">
+              <span>Latitud</span>
+              <span id="read-latitud"></span>
+            </div>
+            <div class="row">
+              <span>Longitud</span>
+              <span id="read-longitud"></span>
+            </div>
+            <div class="row">
+              <span>Estado</span>
+              <span id="read-activo"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-titular">Titular:</label>
+              <input type="text" name="titular" id="update-titular"/>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-razon-social" class="required"
+                >Razón Social:</label
+              >
+              <input
+                type="text"
+                name="razon_social"
+                id="update-razon-social"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-url">URL:</label>
+              <input type="text" name="url" id="update-url" />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-email">Email:</label>
+              <input type="email" name="email" id="update-email"/>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-latitud" class="required">Latitud:</label>
+              <input
+                type="text"
+                name="latitude"
+                id="update-latitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-longitud" class="required">Longitud:</label>
+              <input
+                type="text"
+                name="longitude"
+                id="update-longitud"
+                value="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-tipo" class="required">Tipo:</label>
+              <select name="tipoPPTId" id="update-tipo" required>
+              </select>
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-abono-mensual" class="required"
+                >Abono Mensual:</label
+              >
+              <input
+                type="number"
+                name="abono_mensual"
+                id="update-abono-mensual"
+                min="0"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="update-descripcion" class="required"
+              >Descripcion:</label
+            >
+            <textarea
+              name="descripcion"
+              id="update-descripcion"
+              rows="5"
+              required
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update-status" class="modal">
+      <form id="form-update-status">
+        <fieldset>
+          <legend class="yellow">Actualizar Estado PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-status-id" hidden />
+          <p>Actualizar estado de <span id="update-status-span"></span></p>
+          <div class="control-input input-validator-container">
+            <label for="update-estado" class="required">Estado:</label>
+            <select name="activo" id="update-estado" required>
+              <option value="true">Activo</option>
+              <option value="false">Inactivo</option>
+            </select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar PayPerTop</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
   {{/inline}}
 
 {{/layouts/baseBackend}}

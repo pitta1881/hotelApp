@@ -1,0 +1,364 @@
+{{#> layouts/baseBackend title="Reservas" }}
+  {{#*inline "head-block"}}
+    <script src="/js/reservas.js" type="module" defer></script>
+  {{/inline}}
+
+  {{#*inline "main-content-block"}}
+    <h1>Reservas</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear Reserva
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Habitación</th>
+              <th>CheckIn</th>
+              <th>CheckOut</th>
+              <th>Pax</th>
+              <th>Monto Final</th>
+              <th>Monto Pagado</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-reservas">
+          </tbody>
+        </table>
+      </section>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+    <section id="modal-create" class="modal">
+      <form id="form-create">
+        <fieldset>
+          <legend class="green">Crear Reserva</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="control-input input-validator-container">
+              <label for="new-habitacion-id" class="required"
+                >Habitación:</label
+              >
+              <select name="habitacionId" id="new-habitacion-id" required>
+              </select>
+              <ul></ul>
+            </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-checkin" class="required">CheckIn:</label>
+              <input type="date" name="checkin" id="new-checkin" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-checkout" class="required">CheckOut:</label>
+              <input type="date" name="checkout" id="new-checkout" required />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container control-half-center">
+              <label for="new-monto-final" class="required">Monto Final:</label>
+              <input
+                type="number"
+                name="monto_final"
+                id="new-monto-final"
+                required
+              />
+              <ul></ul>
+            </div>
+            
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>ID Reserva</span><span id="read-id"></span>
+            </div>
+            <div class="row">
+              <span>CheckIn</span><span id="read-checkin"></span>
+            </div>
+            <div class="row">
+              <span>CheckOut</span><span id="read-checkout"></span>
+            </div>
+            <div class="row">
+              <span>Habitación</span>
+              <span id="read-habitacion"></span>
+            </div>
+            <div class="row">
+              <span>Monto Final</span>
+              <span id="read-monto-final"></span>
+            </div>
+            <div class="row">
+              <span>Monto Pagado</span>
+              <span id="read-monto-pagado"></span>
+            </div>
+            <div class="row">
+              <span>Huespedes</span>
+              <span id="read-huespedes"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar Reserva</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="control-input input-validator-container">
+            <label for="update-habitacion-id" class="required"
+              >Habitación:</label
+            >
+            <select name="habitacionId" id="update-habitacion-id" required>
+            </select>
+            <ul></ul>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-checkin" class="required">CheckIn:</label>
+              <input type="date" name="checkin" id="update-checkin" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-checkout" class="required">CheckOut:</label>
+              <input
+                type="date"
+                name="checkout"
+                id="update-checkout"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+            <div class="control-input input-validator-container control-half-center">
+              <label for="update-monto-final" class="required"
+                >Monto Final:</label
+              >
+              <input
+                type="number"
+                name="monto_final"
+                id="update-monto-final"
+                required
+              />
+              <ul></ul>
+            </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update-monto-pagado" class="modal">
+      <form id="form-update-monto-pagado">
+        <fieldset>
+          <legend class="yellow">Actualizar Monto Pagado</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input
+            type="number"
+            name="id"
+            id="update-reserva-monto-pagado-id"
+            hidden
+          />
+          <p>
+            MONTO FINAL: $
+            <span id="update-monto-pagado-span"></span>
+          </p>
+          <div class="control-input input-validator-container">
+            <label for="update-monto-pagado" class="required"
+              >Monto Pagado:</label
+            >
+            <input
+              type="number"
+              name="monto_pagado"
+              id="update-monto-pagado"
+              required
+            />
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-manage-huespedes" class="modal">
+      <form id="form-manage-add-huespedes">
+        <fieldset>
+          <legend class="green">Agregar Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input
+            type="number"
+            name="reservaId"
+            id="add-huesped-reservaId"
+            hidden
+          />
+          <input
+            type="text"
+            name="operacion"
+            id="operacion-true"
+            value="true"
+            hidden
+          />
+          <div class="control-input input-validator-container">
+            <label for="add-huesped" class="required">Huesped:</label>
+            <select name="huespedId" id="add-huesped" required></select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Agregar</button>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-manage-delete-huespedes">
+        <fieldset>
+          <legend class="red">Eliminar Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input
+            type="number"
+            name="reservaId"
+            id="delete-huesped-reservaId"
+            hidden
+          />
+          <input
+            type="text"
+            name="operacion"
+            id="operacion-false"
+            value="false"
+            hidden
+          />
+          <div class="control-input input-validator-container">
+            <label for="delete-huesped" class="required">Huesped:</label>
+            <select name="huespedId" id="delete-huesped" required></select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Reserva</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar la reserva Nº
+            <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read-habitacion" class="modal">
+      <form id="form-read-habitacion ">
+        <fieldset>
+          <legend class="blue">Detalle Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre-hab"></span>
+            </div>
+            <div class="row"><span>Tipo</span><span id="read-tipo-hab"></span></div>
+            <div class="row">
+              <span>Max. Pax.</span><span id="read-max-pax-hab"></span>
+            </div>
+            <div class="row">
+              <span>Tamaño M²</span>
+              <span id="read-tamanio-hab"></span>
+            </div>
+            <div class="row">
+              <span>Descripción Habitación</span>
+              <span id="read-descripcion-hab"></span>
+            </div>
+            <div class="row">
+              <span>Descripción Camas</span>
+              <span id="read-descripcion-camas-hab"></span>
+            </div>
+            <div class="row">
+              <span>Estado</span>
+              <span id="read-estado-hab"></span>
+            </div>
+            <div class="row">
+              <span>Servicios</span>
+              <span id="read-servicios-hab"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at-hab"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read-huesped" class="modal">
+      <form id="form-read-huesped">
+        <fieldset>
+          <legend class="blue">Detalle Huesped</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre-hue"></span>
+            </div>
+            <div class="row">
+              <span>Apellido</span><span id="read-apellido-hue"></span>
+            </div>
+            <div class="row">
+              <span>Email</span><span id="read-email-hue"></span>
+            </div>
+            <div class="row">
+              <span>DNI</span>
+              <span id="read-dni-hue"></span>
+            </div>
+            <div class="row">
+              <span>Fecha Nacimiento</span>
+              <span id="read-fecha-nacimiento-hue"></span>
+            </div>
+            <div class="row">
+              <span>Teléfono</span>
+              <span id="read-telefono-hue"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at-hue"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  {{/inline}}
+
+{{/layouts/baseBackend}}

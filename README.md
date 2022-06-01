@@ -77,6 +77,12 @@ $ npm run start
 <a href="http://localhost:3000">http://localhost:3000</a>
 </pre>
 
+## Abrir backend en el Navegador
+
+<pre>
+<a href="http://localhost:3000/backend/login">http://localhost:3000/backend/login</a>
+</pre>
+
 ## Documentación y prueba de la API
 
 <pre>

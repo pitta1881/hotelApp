@@ -1,4 +1,3 @@
-import { Habitacion } from './habitacion.entity';
 import {
   Entity,
   Column,
@@ -8,13 +7,15 @@ import {
   OneToMany,
   BeforeInsert,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import { Paypertop } from './paypertop.entity';
 import { Usuario } from './usuario.entity';
 import { Mensaje } from './mensaje.entity';
 import { Servicio } from './servicio.entity';
 import { FotoHotel } from './fotoHotel.entity';
-import { Exclude } from 'class-transformer';
+import { Reserva } from './reserva.entity';
+import { Habitacion } from './habitacion.entity';
 
 @Entity({ orderBy: { id: 'ASC' } })
 export class Hotel {
@@ -51,10 +52,10 @@ export class Hotel {
   @Column({ nullable: false, array: true, type: 'float' })
   lat_lng: number[];
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   logo_path: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   horario_contacto: string;
 
   @Column({ nullable: true })
@@ -98,6 +99,9 @@ export class Hotel {
 
   @OneToMany(() => Habitacion, (habitacion: Habitacion) => habitacion.hotel)
   habitaciones: Habitacion[];
+
+  @OneToMany(() => Reserva, (reserva: Reserva) => reserva.hotel)
+  reservas: Reserva[];
 
   @BeforeInsert()
   async nombreUriTransform() {

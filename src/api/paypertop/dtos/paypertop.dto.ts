@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { PartialType } from '@nestjs/swagger';
 import {
   IsDefined,
@@ -6,30 +7,50 @@ import {
   IsLatitude,
   IsLongitude,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
+  Min,
+  ValidateIf,
 } from 'class-validator';
+
+import { Paypertop } from './../../../db/entities/paypertop.entity';
 
 export class CreatePaypertopDto {
   @IsString()
-  @IsDefined()
-  titular: string;
+  @ValidateIf((paypertop: Paypertop) => paypertop.titular !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
+  @IsOptional()
+  titular?: string | null;
 
   @IsString()
   @IsDefined()
   razon_social: string;
 
   @IsEmail()
-  @IsDefined()
-  email: string;
+  @ValidateIf((paypertop: Paypertop) => paypertop.email !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
+  @IsOptional()
+  email?: string | null;
 
   @IsString()
   @IsDefined()
   descripcion: string;
 
   @IsString()
-  @IsDefined()
-  url: string;
+  @ValidateIf((paypertop: Paypertop) => paypertop.url !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
+  @IsOptional()
+  url?: string | null;
 
   @IsLatitude()
   @IsDefined()
@@ -40,12 +61,21 @@ export class CreatePaypertopDto {
   longitude: number;
 
   @IsNumber()
-  @IsPositive()
+  @Min(0)
+  @Transform(({ value }) => {
+    if (Number(value)) return Number(value);
+    if (value === '0') return Number(value);
+    return value;
+  })
   @IsDefined()
   abono_mensual: number;
 
   @IsInt()
   @IsPositive()
+  @Transform(({ value }) => {
+    if (Number(value)) return Number(value);
+    return value;
+  })
   @IsDefined()
   tipoPPTId: number;
 }

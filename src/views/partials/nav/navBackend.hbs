@@ -1,11 +1,57 @@
-<nav id="nav-superior">
-    <ul>
-        <li><a href="/backend/general">General</a></li>
-        <li><a href="/backend/fotos">Fotos</a></li>
-        <li><a href="/backend/habitaciones">Habitaciones</a></li>
-        <li><a href="/backend/reservas">Reservas</a></li>
-        <li><a href="/backend/paypertop">PayPerTop</a></li>
-        <li><a href="/backend/mensajes">Mensajes</a></li>
-        <li><a href="/backend/configuracion">Configuracion</a></li>
-    </ul>
-</nav>
+<section id='nav-container'>
+  <button id='close-nav' class='close-times'>&times</button>
+  <a href='./general' id='logo-nav'>
+    <img id='img-logo-nav' alt='img logo hotel' />
+  </a>
+  <ul>
+    <li>
+      <a href='./general'><img
+          src='/icons/dashboard-svgrepo-com.svg'
+        />General</a>
+    </li>
+    <li>
+      <a href='./fotos'><img src='/icons/camera-svgrepo-com.svg' />Fotos</a>
+    </li>
+    <li>
+      <a href='./habitaciones'><img
+          src='/icons/bed-svgrepo-com.svg'
+        />Habitaciones</a>
+    </li>
+    <li class='liSuper'>
+      <a href='./reservas'><img src='/icons/book-svgrepo-com.svg' />Reservas</a>
+      <ul class='ulInner'>
+        <li id='liHuespedInner'>
+          <a href='./huespedes'>Huespedes</a>
+        </li>
+      </ul>
+    </li>
+    <li id='liHuesped'>
+      <a href='./huespedes'><img
+          src='/icons/person-svgrepo-com.svg'
+        />Huespedes</a>
+    </li>
+    <li>
+      <a href='./paypertop'><img
+          src='/icons/dollar-bank-note-svgrepo-com.svg'
+        />Paypertop</a>
+    </li>
+    <li>
+      <a href='./mensajes'><img
+          src='/icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg'
+        />Mensajes</a>
+    </li>
+    <li class='liSuper'>
+      <a href='#'><img src='/icons/user-svgrepo-com.svg' /><span
+          id='user-nombre-apellido'
+        ></span></a>
+      <ul class='ulInner'>
+        <li>
+          <a href='./configuracion'>Configuración</a>
+        </li>
+        <li>
+          <a href='./logout' id='logout-ref'>Cerrar Sesión</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</section>

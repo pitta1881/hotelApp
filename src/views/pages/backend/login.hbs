@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Login | HotelApp</title>
+    <link rel='stylesheet' href='/css/css-reset.css' />
+    <link rel='stylesheet' href='/css/base/base-backend.css' />
+    <link rel='stylesheet' href='/css/base/login.css' />
+    <script src='/js/login.js' defer type='module'></script>
+  </head>
+
+  <body class='hide'>
+    <main>
+      <div id='card'>
+        <div id='title-container'>
+          <h1>Hotel App</h1>
+        </div>
+        <div id='form-container'>
+          <form id='form-login'>
+            <div class='control-input input-validator-container'>
+              <label for='nick' class='required'>Usuario:</label>
+              <input
+                type='text'
+                name='nick'
+                id='nick'
+                placeholder='Nick'
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class='control-input input-validator-container'>
+              <label for='password' class='required'>Contraseña:</label>
+              <input
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Password'
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class='button-container'>
+              <button type='submit' class='btn-submit' disabled>Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <section id='toast'></section>
+    <section id='loader'>
+      <span></span>
+    </section>
+  </body>
+</html>

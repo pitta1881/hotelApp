@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuracion | HotelApp</title>
+    <link rel="stylesheet" href="./../css/css-reset.css" />
+    <link rel="stylesheet" href="./../css/base/base-backend.css" />
+    <link rel="stylesheet" href="./../css/configuracion.css" />
+    <script src="./../js/nav.js" defer></script>
+    <script src="./../js/configuracion.js" defer type="module"></script>
+    <script src="./../js/token.js" defer></script>
+  </head>
+
+  <body>
+    <header class="hide">
+      <botton id="sandwich">
+        <span></span>
+        <span></span>
+        <span></span>
+      </botton>
+      <a href="./general.html">
+        <img
+          alt=""
+          src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+        />
+      </a>
+    </header>
+    <nav id="side-nav" class="hide">
+      <section id="nav-container">
+        <button id="close-nav" class="close-times">&times</button>
+        <a href="./general.html" id="logo-nav">
+          <img
+            alt=""
+            src="https://lenguayliteratura.org/proyectoaula/wp-content/uploads/2016/02/no-logo.jpg"
+          />
+        </a>
+        <ul>
+          <li>
+            <a href="./general.html"
+              ><img src="./../icons/dashboard-svgrepo-com.svg" />General</a
+            >
+          </li>
+          <li>
+            <a href="./fotos.html"
+              ><img src="./../icons/camera-svgrepo-com.svg" />Fotos</a
+            >
+          </li>
+          <li>
+            <a href="./habitaciones.html"
+              ><img src="./../icons/bed-svgrepo-com.svg" />Habitaciones</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="./reservas.html"
+              ><img src="./../icons/book-svgrepo-com.svg" />Reservas</a
+            >
+            <ul class="ulInner">
+              <li id="liHuespedInner">
+                <a href="./huespedes.html">Huespedes</a>
+              </li>
+            </ul>
+          </li>
+          <li id="liHuesped">
+            <a href="./huespedes.html"
+              ><img src="./../icons/person-svgrepo-com.svg" />Huespedes</a
+            >
+          </li>
+          <li>
+            <a href="./paypertop.html"
+              ><img
+                src="./../icons/dollar-bank-note-svgrepo-com.svg"
+              />Paypertop</a
+            >
+          </li>
+          <li>
+            <a href="./mensajes.html"
+              ><img
+                src="./../icons/speech-bubbles-interface-chat-symbol-svgrepo-com.svg"
+              />Mensajes</a
+            >
+          </li>
+          <li class="liSuper">
+            <a href="#"
+              ><img src="./../icons/user-svgrepo-com.svg" />Elsa Ntorosario</a
+            >
+            <ul class="ulInner">
+              <li>
+                <a href="./configuracion.html">Configuración</a>
+              </li>
+              <li>
+                <a href="./logout.html">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <main class="hide">
+      <h1>Configuración</h1>
+      <form id="form-update-user">
+        <fieldset>
+          <legend>Modificar Perfil:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-nombre" class="required">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    id="update-nombre"
+                    value="nombre test"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-apellido" class="required"
+                    >Apellido:</label
+                  >
+                  <input
+                    type="text"
+                    name="apellido"
+                    id="update-apellido"
+                    value="apellido test"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="update-nick" class="required">Nick:</label>
+                  <input
+                    type="text"
+                    name="nick"
+                    id="update-nick"
+                    value="testy"
+                    readonly
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-email" class="required">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="update-email"
+                    value="test@example.com"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-change-password">
+        <fieldset>
+          <legend>Cambiar Contraseña:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="old-password" class="required"
+                  >Contraseña Actual:</label
+                >
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="old-password"
+                    id="old-password"
+                    required
+                  />
+                  <img
+                    src="./../icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="new-password" class="required"
+                  >Nueva Contraseña:</label
+                >
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="new-password"
+                    id="new-password"
+                    minlength="8"
+                    maxlength="50"
+                    required
+                  />
+                  <img
+                    src="./../icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="repeat-password" class="required"
+                  >Repita Contraseña:</label
+                >
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="repeat-password"
+                    id="repeat-password"
+                    required
+                  />
+                  <img
+                    src="./../icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green" disabled>
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-new-user">
+        <fieldset>
+          <legend>Agregar Usuario:</legend>
+          <div class="form-content">
+            <div class="form-content-fixed">
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="new-nombre" class="required">Nombre:</label>
+                  <input
+                    type="text"
+                    name="new-nombre"
+                    id="new-nombre"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="new-apellido" class="required">Apellido:</label>
+                  <input
+                    type="text"
+                    name="new-apellido"
+                    id="new-apellido"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div class="container-doble">
+                <div class="control-input input-validator-container">
+                  <label for="new-nick" class="required">Nick:</label>
+                  <input type="text" name="new-nick" id="new-nick" required />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="new-email" class="required">Email:</label>
+                  <input
+                    type="email"
+                    name="new-email"
+                    id="new-email"
+                    required
+                  />
+                  <ul></ul>
+                </div>
+              </div>
+              <div
+                class="control-input input-validator-container control-half-center"
+              >
+                <label for="password" class="required">Password:</label>
+                <div class="input-container">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                  />
+                  <img
+                    src="./../icons/eye-svgrepo-com.svg"
+                    alt="icon eye-password"
+                    class="icon24 eye-password"
+                  />
+                </div>
+                <ul></ul>
+              </div>
+              <div class="button-container">
+                <button type="submit" class="btn-submit green" disabled>
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </main>
+    <section id="toast"></section>
+    <section id="loader">
+      <span></span>
+    </section>
+  </body>
+</html>

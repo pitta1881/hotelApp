@@ -1,3 +1,4 @@
+import { AssociateHuespedDto } from './dtos/associate-huesped.dto';
 import {
   Body,
   Controller,
@@ -26,14 +27,47 @@ export class ReservaController {
     return await this.reservaService.findAll(hotelId);
   }
 
+  @ApiOperation({ summary: 'Asociar Huesped a Reserva' })
+  @Post('manage-huespedes')
+  async manageHuespedReserva(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Body() associateHuespedDto: AssociateHuespedDto,
+  ) {
+    return await this.reservaService.manageHuespedReserva(
+      hotelId,
+      associateHuespedDto,
+    );
+  }
+
+  @ApiOperation({
+    summary: 'FindAll Huespedes de reserva especifica',
+  })
+  @Get('huespedes/:reservaId')
+  async findAllHuespedes(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Param('reservaId', ParseIntPipe) reservaId: number,
+  ) {
+    return await this.reservaService.findAllHuespedes(hotelId, reservaId);
+  }
+
+  @ApiOperation({
+    summary: 'FindAll Huespedes que no se encuentran en reserva especifica',
+  })
+  @Get('notIn/huespedes/:reservaId')
+  async findAllHuespedesNotIn(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Param('reservaId', ParseIntPipe) reservaId: number,
+  ) {
+    return await this.reservaService.findAllHuespedesNotIn(hotelId, reservaId);
+  }
+
   @ApiOperation({ summary: 'FindOne Reserva' })
-  @Get(':habitacionId/:id')
+  @Get(':id')
   async findOne(
     @UserJWT() { hotelId }: IJwtPayload,
-    @Param('habitacionId', ParseIntPipe) habitacionId: number,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    return await this.reservaService.findOne(hotelId, habitacionId, id);
+    return await this.reservaService.findOne(hotelId, id);
   }
 
   @ApiOperation({ summary: 'Create Reserva' })
@@ -46,28 +80,21 @@ export class ReservaController {
   }
 
   @ApiOperation({ summary: 'Update Reserva' })
-  @Patch(':habitacionId/:id')
+  @Patch(':id')
   update(
     @UserJWT() { hotelId }: IJwtPayload,
-    @Param('habitacionId', ParseIntPipe) habitacionId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() updateHuespedDto: UpdateReservaDto,
   ) {
-    return this.reservaService.update(
-      hotelId,
-      habitacionId,
-      id,
-      updateHuespedDto,
-    );
+    return this.reservaService.update(hotelId, id, updateHuespedDto);
   }
 
   @ApiOperation({ summary: 'Delete Reserva' })
-  @Delete(':habitacionId/:id')
+  @Delete(':id')
   remove(
     @UserJWT() { hotelId }: IJwtPayload,
-    @Param('habitacionId', ParseIntPipe) habitacionId: number,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    return this.reservaService.delete(hotelId, habitacionId, id);
+    return this.reservaService.delete(hotelId, id);
   }
 }

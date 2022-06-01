@@ -1,0 +1,384 @@
+{{#> layouts/baseBackend title="Habitaciones" }}
+  {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/servicios.css" />
+    <link rel="stylesheet" href="/css/fotos.css" />
+    <script src="/js/habitaciones.js" type="module" defer></script>
+  {{/inline}}
+
+  {{#*inline "main-content-block"}}
+    <h1>Habitaciones</h1>
+      <div class="button-container">
+        <button
+          type="button"
+          class="open-modal green"
+          data-target="modal-create"
+        >
+          Crear Habitación
+        </button>
+      </div>
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Camas</th>
+              <th>Pax</th>
+              <th>M²</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Servicios</th>
+              <th class="action-column">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-habitaciones">
+          </tbody>
+        </table>
+      </section>
+  {{/inline}}
+
+  {{#*inline "modals-block"}}
+    <section id="modal-create" class="modal">
+      <form id="form-create">
+        <fieldset>
+          <legend class="green">Crear Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-nombre" class="required">Nombre:</label>
+              <input type="text" name="nombre" id="new-nombre" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-tipo" class="required">Tipo:</label>
+              <select name="tipoHabitacionId" id="new-tipo" required>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="new-max-pax" class="required">Max. Pax.:</label>
+              <input type="number" name="max_pax" id="new-max-pax" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="new-tamanio" class="required">Tamaño M²:</label>
+              <input
+                type="number"
+                name="tamanio_m2"
+                id="new-tamanio"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="new-descripcion-hab" class="required"
+              >Descripcion Habitación:</label
+            >
+            <textarea
+              name="descripcion_hab"
+              id="new-descripcion-hab"
+              rows="5"
+              required
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="new-descripcion-camas" class="required"
+              >Descripcion Camas:</label
+            >
+            <textarea
+              name="descripcion_camas"
+              id="new-descripcion-camas"
+              rows="5"
+              required
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green" disabled>
+              Enviar
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-read" class="modal">
+      <form id="form-read">
+        <fieldset>
+          <legend class="blue">Detalle</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <section>
+            <div class="row">
+              <span>Nombre</span><span id="read-nombre"></span>
+            </div>
+            <div class="row"><span>Tipo</span><span id="read-tipo"></span></div>
+            <div class="row">
+              <span>Max. Pax.</span><span id="read-max-pax"></span>
+            </div>
+            <div class="row">
+              <span>Tamaño M²</span>
+              <span id="read-tamanio"></span>
+            </div>
+            <div class="row">
+              <span>Descripción Habitación</span>
+              <span id="read-descripcion-hab"></span>
+            </div>
+            <div class="row">
+              <span>Descripción Camas</span>
+              <span id="read-descripcion-camas"></span>
+            </div>
+            <div class="row">
+              <span>Estado</span>
+              <span id="read-estado"></span>
+            </div>
+            <div class="row">
+              <span>Servicios</span>
+              <span id="read-servicios"></span>
+            </div>
+            <div class="row">
+              <span>Creado</span>
+              <span id="read-created-at"></span>
+            </div>
+          </section>
+          <div class="button-container">
+            <button type="button" class="close-modal green">Cerrar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update" class="modal">
+      <form id="form-update">
+        <fieldset>
+          <legend class="yellow">Actualizar Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-id" hidden />
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-nombre" class="required">Nombre:</label>
+              <input type="text" name="nombre" id="update-nombre" required />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-tipo" class="required">Tipo:</label>
+              <select name="tipoHabitacionId" id="update-tipo" required>
+              </select>
+              <ul></ul>
+            </div>
+          </div>
+          <div class="container-doble">
+            <div class="control-input input-validator-container">
+              <label for="update-max-pax" class="required">Max. Pax.:</label>
+              <input
+                type="number"
+                name="max_pax"
+                id="update-max-pax"
+                required
+              />
+              <ul></ul>
+            </div>
+            <div class="control-input input-validator-container">
+              <label for="update-tamanio" class="required">Tamaño M²:</label>
+              <input
+                type="number"
+                name="tamanio_m2"
+                id="update-tamanio"
+                required
+              />
+              <ul></ul>
+            </div>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="update-descripcion-hab" class="required"
+              >Descripcion Habitación:</label
+            >
+            <textarea
+              name="descripcion_hab"
+              id="update-descripcion-hab"
+              rows="5"
+              required
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="control-input input-validator-container">
+            <label for="update-descripcion-camas" class="required"
+              >Descripcion Camas:</label
+            >
+            <textarea
+              name="descripcion_camas"
+              id="update-descripcion-camas"
+              rows="5"
+              required
+            ></textarea>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update-status" class="modal">
+      <form id="form-update-status">
+        <fieldset>
+          <legend class="yellow">Actualizar Estado Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-status-id" hidden />
+          <p>Actualizar estado de <span id="update-status-span"></span></p>
+          <div class="control-input input-validator-container">
+            <label for="update-estado" class="required">Estado:</label>
+            <select name="activo" id="update-estado" required>
+              <option value="false">Inactivo</option>
+              <option value="true">Activo</option>
+            </select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-manage-services" class="modal">
+      <form id="form-manage-add-services">
+        <fieldset>
+          <legend class="green">Agregar Servicios</legend>
+          <input
+            type="number"
+            name="habitacionId"
+            id="add-service-habitacionId"
+            hidden
+          />
+          <input
+            type="text"
+            name="operacion"
+            id="operacion-true"
+            value="true"
+            hidden
+          />
+          <div class="control-input input-validator-container">
+            <label for="add-servicio" class="required">Servicio:</label>
+            <select name="servicioId" id="add-servicio" required>
+              <option value="7">Secador</option>
+              <option value="13">Jacuzzi</option>
+            </select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Agregar</button>
+          </div>
+        </fieldset>
+      </form>
+      <form id="form-manage-delete-services">
+        <fieldset>
+          <legend class="red">Eliminar Servicios</legend>
+          <input
+            type="number"
+            name="habitacionId"
+            id="delete-service-habitacionId"
+            hidden
+          />
+          <input
+            type="text"
+            name="operacion"
+            id="operacion-false"
+            value="false"
+            hidden
+          />
+          <div class="control-input input-validator-container">
+            <label for="delete-servicio" class="required">Servicio:</label>
+            <select name="servicioId" id="delete-servicio" required>
+              <option value="7">Secador</option>
+              <option value="13">Jacuzzi</option>
+            </select>
+            <ul></ul>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-delete" class="modal">
+      <form id="form-delete">
+        <fieldset>
+          <legend class="red">Eliminar Habitación</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="delete-id" hidden />
+          <p>
+            ¿Está seguro que desea eliminar a <span id="data-quien"></span> ?
+          </p>
+          <div class="button-container">
+            <button type="submit" class="btn-submit red">Eliminar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-carousel" class="modal">
+      <section id="carousel">
+        <section id="oneSlide">
+          <ul>
+            <li id="galeria-add-foto" class="slide" data-img-id="0">
+              <div>
+                <form id="form-create-foto">
+                  <fieldset>
+                    <legend class="green">Crear Foto Habitación</legend>
+                    <input
+                      type="number"
+                      name="habitacionId"
+                      id="habitacion-id-create-foto"
+                      hidden
+                    />
+                    <div class="control-input input-validator-container">
+                      <label for="new-path" class="required">URL:</label>
+                      <input type="text" name="path" id="new-path" required />
+                      <ul></ul>
+                    </div>
+                    <div class="control-input input-validator-container">
+                      <label for="new-descripcion-foto" class="required"
+                        >Descripcion Foto:</label
+                      >
+                      <textarea
+                        name="descripcion"
+                        id="new-descripcion-foto"
+                        rows="5"
+                        required
+                      ></textarea>
+                      <ul></ul>
+                    </div>
+                    <div class="button-container">
+                      <button type="submit" class="btn-submit green" disabled>
+                        Enviar
+                      </button>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </li>
+          </ul>
+          <button id="foto-prev">&#10094;</button>
+          <button id="foto-next">&#10095;</button>
+          <button type="button" id="btn-delete-foto" class="actions red">
+            <img class="icon24" src="/icons/trash-svgrepo-com.svg" alt="" />
+          </button>
+        </section>
+        <section id="galeria">
+          <ul>
+            <li
+              id="galeria-add-foto-miniatura"
+              class="slide-miniatura"
+              data-img-id="0"
+            >
+              <div>
+                <img src="/icons/plus-svgrepo-com.svg" alt="" />
+              </div>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </section>
+  {{/inline}}
+
+{{/layouts/baseBackend}}

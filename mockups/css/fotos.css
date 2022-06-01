@@ -1,0 +1,36 @@
+#modal-carousel #carousel {
+  max-width: 700px;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 10px;
+}
+
+#btn-delete-foto {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: #fff;
+}
+#btn-delete-foto .icon24 {
+  width: 24px;
+}
+
+#galeria-add-foto,
+#galeria-add-foto-miniatura {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #4caf50;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+#galeria-add-foto > div {
+  flex-basis: 80%;
+}
+
+#galeria-add-foto-miniatura div {
+  width: 50%;
+}

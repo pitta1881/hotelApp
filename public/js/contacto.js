@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           toast.classList.add('active', 'success');
         } else {
-          console.log(dataJson);
           let erroresLi = ``;
           dataJson.message.forEach((mensaje, index) => {
             erroresLi += `<li>${++index}. ${mensaje}</li>`;

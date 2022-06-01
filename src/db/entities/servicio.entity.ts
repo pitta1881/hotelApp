@@ -33,6 +33,9 @@ export class Servicio {
   @ManyToMany(
     () => Habitacion,
     (habitacion: Habitacion) => habitacion.servicios,
+    {
+      onDelete: 'RESTRICT',
+    },
   )
   @JoinTable({ name: 'servicio_x_habitacion' })
   habitaciones: Habitacion[];

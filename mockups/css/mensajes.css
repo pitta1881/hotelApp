@@ -1,0 +1,30 @@
+table {
+  margin: 20px 0;
+  width: 100%;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+tbody tr:hover {
+  background-color: rgba(101, 137, 255, 0.5);
+}
+
+.unread::before {
+  content: '\1F534';
+}
+.read::before {
+  content: '\1F7E2';
+}
+
+@media screen and (min-width: 768px) {
+  tbody td:first-child {
+    text-align: center;
+  }
+  tbody td:nth-child(1),
+  tbody td:nth-child(2),
+  tbody td:nth-child(3) {
+    width: 1%;
+    white-space: nowrap;
+  }
+}

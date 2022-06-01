@@ -7,7 +7,7 @@ import { ApiModule } from './api/api.module';
 import { MailModule } from './mail/mail.module';
 
 @Module({
-  imports: [WebModule, ApiModule, MailModule],
+  imports: [ApiModule, WebModule, MailModule],
   providers: [AppService],
 })
 export class AppModule {}

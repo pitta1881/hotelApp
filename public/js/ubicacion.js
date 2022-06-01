@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //CARGO LOS PAYPERTOPS
   const hotelUri = location.pathname.split('/')[1];
-  const paypertops = await fetch(`${location.origin}/api/paypertop/${hotelUri}`)
+  const paypertops = await fetch(
+    `${location.origin}/api/paypertop/hotel/${hotelUri}`,
+  )
     .then((response) => response.json())
     .then((dataJson) => dataJson.data);
 
@@ -83,7 +85,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       marker.bindPopup(`
         <b>${paypertop.razon_social}</b><br>
         <small>${paypertop.descripcion}</small><br>
-        <a href="${paypertop.url}">${paypertop.url}</a>
+        ${
+          paypertop.url
+            ? `<a href="${paypertop.url}">${paypertop.url}</a>`
+            : 'URL: -'
+        }
       `);
       let tipoList;
       let tipoImg;

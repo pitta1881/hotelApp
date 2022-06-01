@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { PartialType } from '@nestjs/swagger';
 import {
   IsBoolean,
@@ -7,7 +8,10 @@ import {
   IsLongitude,
   IsOptional,
   IsString,
+  ValidateIf,
 } from 'class-validator';
+
+import { Hotel } from './../../../db/entities/hotel.entity';
 
 export class CreateHotelDto {
   @IsString()
@@ -27,8 +31,13 @@ export class CreateHotelDto {
   telefono_1: string;
 
   @IsString()
+  @ValidateIf((hotel: Hotel) => hotel.telefono_2 !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
   @IsOptional()
-  telefono_2?: string;
+  telefono_2?: string | null;
 
   @IsEmail()
   @IsDefined()
@@ -47,18 +56,38 @@ export class CreateHotelDto {
   horario_contacto: string;
 
   @IsString()
+  @ValidateIf((hotel: Hotel) => hotel.facebook !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
   @IsOptional()
-  facebook?: string;
+  facebook?: string | null;
 
   @IsString()
+  @ValidateIf((hotel: Hotel) => hotel.twitter !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
   @IsOptional()
-  twitter?: string;
+  twitter?: string | null;
 
   @IsString()
+  @ValidateIf((hotel: Hotel) => hotel.instagram !== null)
+  @Transform(({ value }) => {
+    if (value === '') return null;
+    return value;
+  })
   @IsOptional()
-  instagram?: string;
+  instagram?: string | null;
 
   @IsBoolean()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
   @IsOptional()
   activo?: boolean = false;
 

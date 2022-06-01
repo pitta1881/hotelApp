@@ -9,23 +9,18 @@ import { Repository } from 'typeorm';
 import { IGenResp, StatusTypes } from './../../helpers/generic.response';
 import { Huesped } from './../../db/entities/husped.entity';
 import { CreateHuespedDto, UpdateHuespedDto } from './dtos/huesped.dto';
-import { AssociateHuespedDto } from './dtos/associate-huesped.dto';
-import { Reserva } from './../../db/entities/reserva.entity';
-import { ReservaService } from '../reservas/reserva.service';
-import { Reserva_x_Huesped } from './../../db/entities/reserva_x_husped.entity';
 
 @Injectable()
 export class HuespedService {
   constructor(
-    private reservaService: ReservaService,
     @InjectRepository(Huesped)
     private huespedModel: Repository<Huesped>,
-    @InjectRepository(Reserva_x_Huesped)
-    private reserva_x_huespedModel: Repository<Reserva_x_Huesped>,
   ) {}
 
-  async findAll(): Promise<IGenResp> {
-    const huespedes: Huesped[] = await this.huespedModel.find();
+  async findAll(relations: string[] = []): Promise<IGenResp> {
+    const huespedes: Huesped[] = await this.huespedModel.find({
+      relations,
+    });
     return {
       status: StatusTypes.success,
       data: huespedes,
@@ -33,7 +28,12 @@ export class HuespedService {
   }
 
   async findOne(id: number): Promise<IGenResp> {
-    const huesped: Huesped = await this.huespedModel.findOne(id);
+    const huesped: Huesped = await this.huespedModel.findOne({
+      relations: ['reservas'],
+      where: {
+        id,
+      },
+    });
     if (!huesped) {
       throw new NotFoundException({
         status: StatusTypes.error,
@@ -64,51 +64,10 @@ export class HuespedService {
     }
   }
 
-  async manageHuespedReserva(
-    hotelId: number,
-    { huespedId, reservaId, habitacionId, operacion }: AssociateHuespedDto,
-  ): Promise<IGenResp> {
-    const huespedResp: IGenResp = await this.findOne(huespedId);
-    const huesped: Huesped = huespedResp.data[0];
-    const reservaResp: IGenResp = await this.reservaService.findOne(
-      hotelId,
-      habitacionId,
-      reservaId,
-    );
-    const reserva: Reserva = reservaResp.data[0];
-    try {
-      //desasignar huesped
-      if (operacion === false) {
-        await this.reserva_x_huespedModel.delete({
-          huesped,
-          reserva,
-        });
-        return {
-          status: StatusTypes.success,
-        };
-      } else {
-        //asignar huesped
-        const newAssociation: Reserva_x_Huesped =
-          await this.reserva_x_huespedModel.save({
-            huesped,
-            reserva,
-          });
-        return {
-          status: StatusTypes.success,
-          data: [newAssociation],
-        };
-      }
-    } catch (error) {
-      throw new ConflictException({
-        status: StatusTypes.error,
-        error: error.detail,
-      });
-    }
-  }
-
   async update(id: number, newData: UpdateHuespedDto): Promise<IGenResp> {
     const huespedResp: IGenResp = await this.findOne(id);
     let huesped: Huesped = huespedResp.data[0];
+    delete huesped.reservas;
     huesped = await this.huespedModel.save({ ...huesped, ...newData });
     return {
       status: StatusTypes.success,
