@@ -169,7 +169,9 @@ const loadModalEvents = () => {
 };
 
 const loadInitialDataHotel = async () => {
-  const { status, data } = await commonFetch(`${location.origin}/api/hoteles`);
+  const { status, data } = await commonFetch(
+    `${location.origin}/api/hoteles/this`,
+  );
   if (status === 'SUCCESS') {
     const hotel = data[0];
     document.getElementById('update-estado').value = hotel.activo;

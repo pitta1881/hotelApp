@@ -21,17 +21,17 @@ import { HotelService } from './hotel.service';
 export class HotelController {
   constructor(private readonly hotelService: HotelService) {}
 
-  @ApiOperation({ summary: 'Find Hotel This (JWT)' })
-  @Get()
-  async findOneJWT(@UserJWT() { hotelId }: IJwtPayload) {
-    return await this.hotelService.findOne(hotelId);
-  }
-
   @ApiOperation({ summary: 'FindAll Hoteles - PÚBLICO' })
   @Public()
   @Get()
   async findAll() {
     return await this.hotelService.findAll();
+  }
+
+  @ApiOperation({ summary: 'Find Hotel This (JWT)' })
+  @Get('this')
+  async findOneJWT(@UserJWT() { hotelId }: IJwtPayload) {
+    return await this.hotelService.findOne(hotelId);
   }
 
   @ApiOperation({ summary: 'FindOne Hotel - PÚBLICO' })

@@ -7,7 +7,6 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinTable,
 } from 'typeorm';
 
 import { Hotel } from './hotel.entity';

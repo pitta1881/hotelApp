@@ -5,34 +5,34 @@ export class init1649521758188 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `INSERT INTO hotel 
-              ("id","activo","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
+              ("activo","nombre","nombre_uri","descripcion_home","descripcion_ubi","telefono_1","email","direccion","lat_lng","logo_path","horario_contacto","facebook", "twitter") 
             VALUES 
-              (1,true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','https://us.123rf.com/450wm/sitiardi21/sitiardi211701/sitiardi21170100013/70276178-hotel-reflection-logotipo.jpg?ver=6', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
+              (true,'Hotel Pato','hotelpato','Distinción e identidad local. Ambientes cálidos y un servicio exclusivo. Spa, piscina, sauna, gimnasio, restaurante gourmet patagónico. Tu tiempo en el hotel es parte del viaje.','Inmerso en la naturaleza, Huinid Bustillo te recibe en ambientes acogedores con detalles en madera y una colección de artistas locales. Disfrutá de una estadía revitalizante en el spa y exquisitos platos de autor fusionados con sabores de la Patagonia.','0112134564','hotelpato@mail.com','Av. Exequiel Bustillo 3380, San Carlos de Bariloche, Río Negro, Argentina','{-41.12947531850026, -71.34748729871622}','https://us.123rf.com/450wm/sitiardi21/sitiardi211701/sitiardi21170100013/70276178-hotel-reflection-logotipo.jpg?ver=6', 'Lu-Do 7-22hs' ,'hotelpato', 'hotelpatook' )`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_ppt 
-              ("id","nombre") 
+              ("nombre") 
             VALUES 
-              (1,'Gastronomía'),
-              (2,'Atracciones'),
-              (3,'Supermercados')`,
+              ('Gastronomía'),
+              ('Atracciones'),
+              ('Supermercados')`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_carousel 
-              ("id","nombre") 
+              ("nombre") 
             VALUES 
-              (1,'Home'),
-              (2,'Servicios')`,
+              ('Home'),
+              ('Servicios')`,
     );
     await queryRunner.query(
       `INSERT INTO tipo_habitacion
-              ("id","nombre") 
+              ("nombre") 
             VALUES 
-              (1,'Simple'),
-              (2,'Doble'),
-              (3,'Triple'),
-              (4,'Suite'),
-              (5,'Suite Presidencial')`,
+              ('Simple'),
+              ('Doble'),
+              ('Triple'),
+              ('Suite'),
+              ('Suite Presidencial')`,
     );
     const passHashed = await bcrypt.hash('admin123', 10);
     await queryRunner.query(
@@ -128,10 +128,10 @@ export class init1649521758188 implements MigrationInterface {
     );
     await queryRunner.query(
       `INSERT INTO huesped
-              ("id","nombre","apellido","email","dni","fecha_nacimiento","telefono") 
+              ("nombre","apellido","email","dni","fecha_nacimiento","telefono") 
             VALUES 
-              (1,'HuespednomA','HuespedapeA',null,12345678,'1990-05-10',null),
-              (2,'HuespednomB','HuespedapeB','huesped2@mail.com',87654321,'1992-03-18','0111512345678')`,
+              ('HuespednomA','HuespedapeA',null,12345678,'1990-05-10',null),
+              ('HuespednomB','HuespedapeB','huesped2@mail.com',87654321,'1992-03-18','0111512345678')`,
     );
   }
 
