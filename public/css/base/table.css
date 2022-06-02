@@ -1,6 +1,7 @@
 table {
   border: 2px solid black;
   margin: 20px auto 0;
+  width: 100%;
 }
 
 tr:nth-of-type(even) {
@@ -77,6 +78,7 @@ button.actions.red:hover {
 
 .action-column {
   display: table-cell !important;
+  width: 1%;
 }
 
 td.text-center {
@@ -133,6 +135,7 @@ td.text-center {
   }
   td.action-column {
     display: flex !important;
+    width: auto;
   }
 }
 
