@@ -172,8 +172,8 @@ const loadInitialDataHotel = async () => {
   const { status, data } = await commonFetch(
     `${location.origin}/api/hoteles/this`,
   );
+  const hotel = data[0];
   if (status === 'SUCCESS') {
-    const hotel = data[0];
     document.getElementById('update-estado').value = hotel.activo;
     document.getElementById('update-descripcion-home').value =
       hotel.descripcion_home;
@@ -193,6 +193,7 @@ const loadInitialDataHotel = async () => {
     document.getElementById('update-horario-contacto').value =
       hotel.horario_contacto;
   }
+  return hotel;
 };
 
 const loadInitialDataServicios = async () => {
@@ -260,9 +261,60 @@ const loadInitialDataServicios = async () => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadInitialDataHotel();
+const loadUbicacionEvents = (nombreHotel, lat_lng) => {
+  const marker = L.icon({
+    iconUrl: '/icons/marker-icon-red.png',
+    shadowUrl: '/icons/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
+
+  const evCenterMap = (e) => {
+    var px = mapa.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
+    px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+    mapa.panTo(mapa.unproject(px), { animate: true }); // pan to new center
+  };
+
+  const addMarker = (lat, lng) => {
+    layerMarkers.clearLayers();
+    L.marker([lat, lng], {
+      icon: marker,
+      draggable: true,
+    })
+      .bindPopup(`<b>${nombreHotel}</b>`)
+      .on('dragend', newPosition)
+      .addTo(layerMarkers);
+  };
+
+  const newPosition = (e) => {
+    var { lat, lng } = e.latlng || e.target.getLatLng();
+    document.getElementById('update-latitud').value = lat;
+    document.getElementById('update-longitud').value = lng;
+    addMarker(lat, lng);
+  };
+
+  //CARGAR MAPA
+  const mapa = L.map('mapa')
+    .setView([lat_lng[0], lat_lng[1]], 15)
+    .on('popupopen', evCenterMap)
+    .on('click', newPosition);
+  L.tileLayer(
+    'https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=2mVjYjN9xq8jxt729yv7',
+    {
+      attribution:
+        '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+    },
+  ).addTo(mapa);
+  let layerMarkers = L.layerGroup().addTo(mapa);
+  addMarker(lat_lng[0], lat_lng[1]);
+};
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const { nombre: nombreHotel, lat_lng } = await loadInitialDataHotel();
   loadInitialDataServicios();
   loadFormEvents();
   loadModalEvents();
+  loadUbicacionEvents(nombreHotel, lat_lng);
 });

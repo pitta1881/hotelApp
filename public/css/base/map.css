@@ -1,0 +1,11 @@
+section.mapa {
+  min-height: 200px;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 768px) {
+  section.mapa {
+    margin-right: 20px;
+  }
+}

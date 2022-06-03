@@ -1,5 +1,17 @@
 {{#> layouts/baseBackend title="PayPerTop" }}
   {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/base/map.css" />
+     <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
     <script src="/js/paypertop.js" type="module" defer></script>
   {{/inline}}
 
@@ -8,6 +20,7 @@
       <div class="button-container">
         <button
           type="button"
+          id="open-modal-create"
           class="open-modal green"
           data-target="modal-create"
         >
@@ -74,27 +87,30 @@
             </div>
           </div>
           <div class="container-doble">
-            <div class="control-input input-validator-container">
-              <label for="new-latitud" class="required">Latitud:</label>
-              <input
-                type="text"
-                name="latitude"
-                id="new-latitud"
-                value="0"
-                required
-              />
-              <ul></ul>
-            </div>
-            <div class="control-input input-validator-container">
-              <label for="new-longitud" class="required">Longitud:</label>
-              <input
-                type="text"
-                name="longitude"
-                id="new-longitud"
-                value="0"
-                required
-              />
-              <ul></ul>
+            <section class="mapa" id="mapa-new"></section>
+            <div>
+              <div class="control-input input-validator-container">
+                <label for="new-latitud" class="required">Latitud:</label>
+                <input
+                  type="text"
+                  name="latitude"
+                  id="new-latitud"
+                  readonly
+                  required
+                />
+                <ul></ul>
+              </div>
+              <div class="control-input input-validator-container">
+                <label for="new-longitud" class="required">Longitud:</label>
+                <input
+                  type="text"
+                  name="longitude"
+                  id="new-longitud"
+                  readonly
+                  required
+                />
+                <ul></ul>
+              </div>
             </div>
           </div>
           <div class="container-doble">
@@ -229,27 +245,30 @@
             </div>
           </div>
           <div class="container-doble">
-            <div class="control-input input-validator-container">
-              <label for="update-latitud" class="required">Latitud:</label>
-              <input
-                type="text"
-                name="latitude"
-                id="update-latitud"
-                value="0"
-                required
-              />
-              <ul></ul>
-            </div>
-            <div class="control-input input-validator-container">
-              <label for="update-longitud" class="required">Longitud:</label>
-              <input
-                type="text"
-                name="longitude"
-                id="update-longitud"
-                value="0"
-                required
-              />
-              <ul></ul>
+            <section class="mapa" id="mapa-upd"></section>
+            <div>
+              <div class="control-input input-validator-container">
+                <label for="update-latitud" class="required">Latitud:</label>
+                <input
+                  type="text"
+                  name="latitude"
+                  id="update-latitud"
+                  readonly
+                  required
+                />
+                <ul></ul>
+              </div>
+              <div class="control-input input-validator-container">
+                <label for="update-longitud" class="required">Longitud:</label>
+                <input
+                  type="text"
+                  name="longitude"
+                  id="update-longitud"
+                  readonly
+                  required
+                />
+                <ul></ul>
+              </div>
             </div>
           </div>
           <div class="container-doble">

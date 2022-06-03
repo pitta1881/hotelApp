@@ -1,6 +1,18 @@
 {{#> layouts/baseBackend title="Config. General" }}
   {{#*inline "head-block"}}
+    <link rel="stylesheet" href="/css/base/map.css" />
     <link rel="stylesheet" href="/css/general.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
     <script src="/js/general.js" type="module" defer></script>
   {{/inline}}
 
@@ -117,27 +129,32 @@
               </div>
             </div>
             <div class="container-doble">
-              <div class="control-input input-validator-container">
-                <label for="update-latitud" class="required">Latitud:</label>
-                <input
-                  type="text"
-                  name="latitude"
-                  id="update-latitud"
-                  required
-                />
-                <ul></ul>
-              </div>
-              <div class="control-input input-validator-container">
-                <label for="update-longitud" class="required"
-                  >Longitud:</label
-                >
-                <input
-                  type="text"
-                  name="longitude"
-                  id="update-longitud"
-                  required
-                />
-                <ul></ul>
+              <section class="mapa" id="mapa"></section>
+              <div>
+                <div class="control-input input-validator-container">
+                  <label for="update-latitud" class="required">Latitud:</label>
+                  <input
+                    type="text"
+                    name="latitude"
+                    id="update-latitud"
+                    required
+                    readonly
+                  />
+                  <ul></ul>
+                </div>
+                <div class="control-input input-validator-container">
+                  <label for="update-longitud" class="required"
+                    >Longitud:</label
+                  >
+                  <input
+                    type="text"
+                    name="longitude"
+                    id="update-longitud"
+                    required
+                    readonly
+                  />
+                  <ul></ul>
+                </div>
               </div>
             </div>
             <div class="container-cuatriple">

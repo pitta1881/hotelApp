@@ -79,6 +79,9 @@ $ npm run start
 
 ## Abrir backend en el Navegador
 
+<small>
+nick: admin-hotelpato | pass: admin123
+</small>
 <pre>
 <a href="http://localhost:3000/backend/login">http://localhost:3000/backend/login</a>
 </pre>
