@@ -5,6 +5,7 @@ import {
   IsDefined,
   IsEmail,
   IsInt,
+  IsNotEmpty,
   IsOptional,
   IsString,
   ValidateIf,
@@ -14,10 +15,12 @@ import { Huesped } from './../../../db/entities/husped.entity';
 
 export class CreateHuespedDto {
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   nombre: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   apellido: string;
 

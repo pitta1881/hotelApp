@@ -5,6 +5,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { StatusTypes, IGenResp } from './../../helpers/generic.response';
 import { Servicio } from './../../db/entities/servicio.entity';
@@ -72,6 +74,7 @@ export class ServicioService {
   async createServiceHotel(
     hotelId: number,
     newData: CreateServicioDto,
+    path: string,
   ): Promise<IGenResp> {
     const hotelResp: IGenResp = await this.hotelesService.findOne(hotelId);
     const hotel: Hotel = hotelResp.data[0];
@@ -80,6 +83,7 @@ export class ServicioService {
       const newServicio = await this.servicioModel.save({
         ...newData,
         id: nextId,
+        icon_path: join('/', 'uploads', 'iconos-servicio', path),
         hotel: hotel,
       });
       return {
@@ -111,10 +115,41 @@ export class ServicioService {
     };
   }
 
+  async updateIcon(
+    hotelId: number,
+    id: number,
+    path: string,
+  ): Promise<IGenResp> {
+    const servicioResp: IGenResp = await this.findOne(hotelId, id);
+    let servicio: Servicio = servicioResp.data[0];
+    const oldPath = servicio.icon_path;
+    servicio = await this.servicioModel.save({
+      ...servicio,
+      icon_path: join('/', 'uploads', 'iconos-servicio', path),
+    });
+    fs.unlink(join(__dirname, '..', '..', '..', 'public', oldPath), (err) => {
+      if (err) {
+        console.log(err);
+        return {
+          status: StatusTypes.error,
+          error: err,
+        };
+      }
+    });
+    return {
+      status: StatusTypes.success,
+      data: [servicio],
+    };
+  }
+
   async delete(hotelId: number, id: number): Promise<IGenResp> {
-    await this.findOne(hotelId, id); //si falla salta una exception
+    const servicioResp = await this.findOne(hotelId, id); //si falla salta una exception
+    const oldPath: string = servicioResp.data[0].icon_path;
     try {
       await this.servicioModel.delete({ id, hotel: { id: hotelId } });
+      fs.unlink(join(__dirname, '..', '..', '..', 'public', oldPath), (err) => {
+        if (err) console.log(err);
+      });
       return {
         status: StatusTypes.success,
       };

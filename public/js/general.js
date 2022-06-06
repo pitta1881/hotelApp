@@ -1,4 +1,8 @@
-import { callbackModal, commonFetch } from './helpers/common-helpers.js';
+import {
+  callbackModal,
+  commonFetch,
+  loadFileUploadEvent,
+} from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
   loadFormSubmitListeners,
@@ -11,6 +15,7 @@ import {
   REGEX_TELEFONO,
   REGEX_URL,
 } from './helpers/regex-helpers.js';
+import { redirectPage } from './nav-backend.js';
 
 const loadFormEvents = () => {
   const formsObj = [
@@ -46,10 +51,6 @@ const loadFormEvents = () => {
         },
         'update-direccion': {
           required: true,
-        },
-        'update-logo-path': {
-          required: true,
-          regexUrl: REGEX_URL,
         },
         'update-latitud': {
           required: true,
@@ -87,15 +88,15 @@ const loadFormEvents = () => {
           required: true,
           regexString: REGEX_STRING,
         },
-        'new-servicio-icon-path': {
+        'upload-icon': {
           required: true,
-          regexUrl: REGEX_URL,
         },
         'new-servicio-tipo': {
           required: true,
         },
       },
       callback: [loadInitialDataServicios, callbackModal],
+      withFile: true,
     },
     {
       form: document.getElementById('form-update-servicio'),
@@ -125,6 +126,32 @@ const loadFormEvents = () => {
       validations: {},
       callback: [loadInitialDataServicios, callbackModal],
     },
+    {
+      form: document.getElementById('form-update-logo-hotel'),
+      method: 'post',
+      apiUrl: `${location.origin}/api/hoteles/upload-logo`,
+      params: [],
+      validations: {
+        'update-logo': {
+          required: true,
+        },
+      },
+      callback: [redirectPage],
+      withFile: true,
+    },
+    {
+      form: document.getElementById('form-update-servicio-icon'),
+      method: 'post',
+      apiUrl: `${location.origin}/api/servicios/:id/update-icon`,
+      params: ['id'],
+      validations: {
+        'update-icon': {
+          required: true,
+        },
+      },
+      callback: [loadInitialDataServicios, callbackModal],
+      withFile: true,
+    },
   ];
 
   formsObj.forEach((formObj) => {
@@ -152,14 +179,17 @@ const loadModalEvents = () => {
               buttonClicked.dataset.value;
             document.getElementById('update-servicio-nombre').value =
               servicio.nombre;
-            document.getElementById('update-servicio-icon-path').value =
-              servicio.icon_path;
             document.getElementById('update-servicio-tipo').value =
               servicio.servInstal;
           } else if (buttonClicked.classList.contains('open-modal-delete')) {
             document.getElementById('delete-id').value =
               buttonClicked.dataset.value;
             document.getElementById('data-quien').innerHTML = servicio.nombre;
+          } else if (
+            buttonClicked.classList.contains('open-modal-update-icon')
+          ) {
+            document.getElementById('update-icon-id').value =
+              buttonClicked.dataset.value;
           }
           document.body.classList.add('noscroll');
           modalTarget.classList.add('active');
@@ -184,7 +214,6 @@ const loadInitialDataHotel = async () => {
     document.getElementById('update-telefono-1').value = hotel.telefono_1;
     document.getElementById('update-telefono-2').value = hotel.telefono_2;
     document.getElementById('update-direccion').value = hotel.direccion;
-    document.getElementById('update-logo-path').value = hotel.logo_path;
     document.getElementById('update-latitud').value = hotel.lat_lng[0];
     document.getElementById('update-longitud').value = hotel.lat_lng[1];
     document.getElementById('update-facebook').value = hotel.facebook;
@@ -236,6 +265,19 @@ const loadInitialDataServicios = async () => {
                   <img
                     class="icon24"
                     src="/icons/pencil-edit-button-svgrepo-com.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  type="button"
+                  title="Actualizar Icono"
+                  class="actions yellow open-modal-update-icon"
+                  data-target="modal-update-icon"
+                  data-value="${servicio.id}"
+                >
+                  <img
+                    class="icon24"
+                    src="/icons/camera-svgrepo-com.svg"
                     alt=""
                   />
                 </button>
@@ -317,4 +359,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadFormEvents();
   loadModalEvents();
   loadUbicacionEvents(nombreHotel, lat_lng);
+  loadFileUploadEvent('update-logo');
+  loadFileUploadEvent('upload-icon');
+  loadFileUploadEvent('update-icon');
 });

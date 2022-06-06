@@ -1,12 +1,20 @@
 import { PartialType } from '@nestjs/swagger';
-import { IsDefined, IsEmail, IsString, Length } from 'class-validator';
+import {
+  IsDefined,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateUsuarioDto {
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   nombre: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   apellido: string;
 
@@ -15,11 +23,13 @@ export class CreateUsuarioDto {
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   nick: string;
 
-  @IsString()
   @Length(8, 50)
+  @IsString()
+  @IsNotEmpty()
   @IsDefined()
   password: string;
 }

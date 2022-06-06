@@ -9,24 +9,31 @@ import {
   IsOptional,
   IsString,
   ValidateIf,
+  IsNotEmpty,
+  IsNotIn,
 } from 'class-validator';
 
 import { Hotel } from './../../../db/entities/hotel.entity';
 
 export class CreateHotelDto {
   @IsString()
+  @IsNotEmpty()
+  @IsNotIn(['css', 'js', 'public', 'uploads', 'fonts', 'icons', 'api'])
   @IsDefined()
   nombre: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   descripcion_home: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   descripcion_ubi: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   telefono_1: string;
 
@@ -44,14 +51,12 @@ export class CreateHotelDto {
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   direccion: string;
 
   @IsString()
-  @IsDefined()
-  logo_path: string;
-
-  @IsString()
+  @IsNotEmpty()
   @IsDefined()
   horario_contacto: string;
 

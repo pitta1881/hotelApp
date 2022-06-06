@@ -1,3 +1,5 @@
+import { multerOptions } from './../multer.config';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   Body,
   Controller,
@@ -7,6 +9,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -63,12 +67,19 @@ export class FotoHabitacionController {
 
   @ApiOperation({ summary: 'Create Foto Habitacion' })
   @Post(':habitacionId/fotos')
+  @UseInterceptors(FileInterceptor('foto_habitacion', multerOptions))
   async create(
     @UserJWT() { hotelId }: IJwtPayload,
     @Param('habitacionId', ParseIntPipe) habitacionId: number,
     @Body() data: CreateFotoHabitacionDto,
+    @UploadedFile() foto_habitacion: Express.Multer.File,
   ) {
-    return await this.fotoHabitacionService.create(hotelId, habitacionId, data);
+    return await this.fotoHabitacionService.create(
+      hotelId,
+      habitacionId,
+      data,
+      foto_habitacion.filename,
+    );
   }
 
   @ApiOperation({ summary: 'Update Foto Habitacion' })

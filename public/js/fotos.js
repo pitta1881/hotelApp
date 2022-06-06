@@ -1,4 +1,8 @@
-import { callbackModal, commonFetch } from './helpers/common-helpers.js';
+import {
+  callbackModal,
+  commonFetch,
+  loadFileUploadEvent,
+} from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
   loadFormSubmitListeners,
@@ -20,7 +24,7 @@ const loadFormEvents = () => {
         'tipo-carousel-id': {
           required: true,
         },
-        'new-path': {
+        'upload-foto': {
           required: true,
         },
         'new-descripcion-foto': {
@@ -28,6 +32,7 @@ const loadFormEvents = () => {
         },
       },
       callback: [callbackModal],
+      withFile: true,
     },
   ];
 
@@ -95,6 +100,7 @@ const loadButtonsEvents = () => {
                 <img
                   src="${foto.path}"
                   alt="${foto.descripcion}"
+                  class="contain"
                 />
               </li>
             `),
@@ -165,4 +171,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadFormEvents();
   loadButtonsEvents();
   loadFotosEvents();
+  loadFileUploadEvent('upload-foto');
 });

@@ -6,6 +6,7 @@ import {
   IsInt,
   IsLatitude,
   IsLongitude,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -27,6 +28,7 @@ export class CreatePaypertopDto {
   titular?: string | null;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   razon_social: string;
 
@@ -40,6 +42,7 @@ export class CreatePaypertopDto {
   email?: string | null;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   descripcion: string;
 

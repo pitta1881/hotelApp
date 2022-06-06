@@ -102,31 +102,17 @@
                 </div>
               </div>
             </div>
-            <div class="container-doble-xxl">
-              <div class="control-input input-validator-container">
-                <label for="update-direccion" class="required"
-                  >Dirección:</label
-                >
-                <input
-                  type="text"
-                  name="direccion"
-                  id="update-direccion"
-                  required
-                />
-                <ul></ul>
-              </div>
-              <div class="control-input input-validator-container">
-                <label for="update-logo-path" class="required"
-                  >Logo Path:</label
-                >
-                <input
-                  type="text"
-                  name="logo_path"
-                  id="update-logo-path"
-                  required
-                />
-                <ul></ul>
-              </div>
+            <div class="control-input input-validator-container">
+              <label for="update-direccion" class="required"
+                >Dirección:</label
+              >
+              <input
+                type="text"
+                name="direccion"
+                id="update-direccion"
+                required
+              />
+              <ul></ul>
             </div>
             <div class="container-doble">
               <section class="mapa" id="mapa"></section>
@@ -206,6 +192,27 @@
               <button type="submit" class="btn-submit green">Enviar</button>
             </div>
           </div>
+      </fieldset>
+    </form>
+    <form id="form-update-logo-hotel" enctype="multipart/form-data">
+      <fieldset>
+        <legend>Modificar Logo Hotel:</legend>
+        <div class="form-content">
+          <div class="form-content-fixed">
+            <div class="control-input-upload input-validator-container">
+              <label for="update-logo" class="required">Seleccione una imagen para Subir</label>
+              <input type="file" id="update-logo" name="logo"
+                    accept="image/*" required hidden>
+              <div class="preview">
+                <img>
+                <small></small>
+              </div>
+              <ul></ul>
+            </div>
+            <div class="button-container">
+              <button type="submit" class="btn-submit green" disabled>Enviar</button>
+            </div>
+          </div>
         </div>
       </fieldset>
     </form>
@@ -269,16 +276,14 @@
               <ul></ul>
             </div>
           </div>
-          <div class="control-input input-validator-container">
-            <label for="new-servicio-icon-path" class="required"
-              >Icon Path:</label
-            >
-            <input
-              type="text"
-              name="icon_path"
-              id="new-servicio-icon-path"
-              required
-            />
+          <div class="control-input-upload input-validator-container">
+            <label for="upload-icon" class="required">Seleccione una imagen para Subir</label>
+            <input type="file" id="upload-icon" name="icon_service"
+                  accept="image/*" required hidden>
+            <div class="preview">
+              <img>
+              <small></small>
+            </div>
             <ul></ul>
           </div>
           <div class="button-container">
@@ -317,16 +322,26 @@
               <ul></ul>
             </div>
           </div>
-          <div class="control-input input-validator-container">
-            <label for="update-servicio-icon-path" class="required"
-              >Icon Path:</label
-            >
-            <input
-              type="text"
-              name="icon_path"
-              id="update-servicio-icon-path"
-              required
-            />
+          <div class="button-container">
+            <button type="submit" class="btn-submit green">Actualizar</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+    <section id="modal-update-icon" class="modal">
+      <form id="form-update-servicio-icon">
+        <fieldset>
+          <legend>Actualizar Icono Servicio/Instalación:</legend>
+          <button type="button" class="close-modal close-times">&times;</button>
+          <input type="number" name="id" id="update-icon-id" hidden />
+          <div class="control-input-upload input-validator-container">
+            <label for="update-icon" class="required">Seleccione una imagen para Subir</label>
+            <input type="file" id="update-icon" name="icon_service"
+                  accept="image/*" required hidden>
+            <div class="preview">
+              <img>
+              <small></small>
+            </div>
             <ul></ul>
           </div>
           <div class="button-container">

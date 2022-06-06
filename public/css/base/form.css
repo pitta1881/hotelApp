@@ -119,6 +119,36 @@ legend {
   margin-right: 2px;
 }
 
+.control-input-upload label {
+  text-align: center;
+  background: none;
+  display: block;
+  color: white;
+  font-size: 20px;
+  padding: 5px 20px;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid blue;
+  background-color: rgba(0, 0, 128, 0.9);
+  box-shadow: 0px 0px 3px 0px blue;
+  width: fit-content;
+  margin: auto;
+}
+
+.control-input-upload .preview {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.control-input-upload .preview img {
+  max-width: 300px;
+  max-height: 300px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+.control-input-upload .preview small {
+  display: block;
+}
+
 @media screen and (min-width: 768px) {
   .control-input.control-half-center {
     width: 50%;

@@ -4,8 +4,8 @@ import {
   IsDefined,
   IsEmail,
   IsInt,
+  IsNotEmpty,
   IsOptional,
-  IsPositive,
   IsString,
   IsUppercase,
   Length,
@@ -16,14 +16,17 @@ import { IsDateGreaterThan } from '../../../decorators/IsGreaterThan.decorator';
 
 export class CreateMensajeDto {
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   nombre: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   apellido: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   hotel_nombre_uri: string;
 
@@ -45,9 +48,9 @@ export class CreateMensajeDto {
   @IsDefined()
   checkout: string;
 
-  @IsString()
   @Length(2, 2)
   @IsUppercase()
+  @IsString()
   @IsDefined()
   pais: string;
 
@@ -62,6 +65,7 @@ export class CreateMensajeDto {
   menores?: number;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   mensaje: string;
 }

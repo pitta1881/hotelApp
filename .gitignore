@@ -43,3 +43,9 @@ lerna-debug.log*
 
 postgres_data
 mysql_data
+
+# pato customs
+public/uploads/*
+!public/uploads/logos
+public/uploads/logos/*
+!public/uploads/logos/logo-hotel.png

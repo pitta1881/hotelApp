@@ -56,15 +56,21 @@ const loadNavEvents = () => {
       if (!token) {
         location.href = `/backend/login`;
       } else {
-        window.history.replaceState(
-          null,
-          null,
-          `${window.location.pathname}?token=${token}`,
-        );
-        location.href = `${aClicked.getAttribute('href')}?token=${token}`;
+        redirectPage(aClicked.getAttribute('href'));
       }
     }
   });
+};
+
+export const redirectPage = (page = location.href) => {
+  if (typeof page !== 'string') page = location.href;
+  const token = sessionStorage.getItem('token');
+  window.history.replaceState(
+    null,
+    null,
+    `${window.location.pathname}?token=${token}`,
+  );
+  location.href = `${page}?token=${token}`;
 };
 
 document.addEventListener('DOMContentLoaded', () => {

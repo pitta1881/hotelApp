@@ -256,8 +256,8 @@ const htmlAndClasses = (input, validacion) => {
 
 export const loadFormInputListeners = ({ form, validations }) => {
   joinInputs(form).forEach((input) => {
-    let listeners = ['focus'];
-    listeners.push(input.tagName === 'SELECT' ? 'change' : 'keyup');
+    let listeners = ['focus', 'change', 'keyup'];
+    //listeners.push(input.tagName === 'SELECT' ? 'change' : );
     listeners.forEach((listener) => {
       input.addEventListener(listener, () => {
         //valido input y muestro errores o validaciones
@@ -277,6 +277,7 @@ export const loadFormSubmitListeners = ({
   apiUrl,
   validations,
   callback,
+  withFile,
 }) => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -287,22 +288,28 @@ export const loadFormSubmitListeners = ({
       toggleToast('error', `<p>El formulario contiene errores</p>`);
       form.getElementsByClassName('btn-submit')[0].disabled = !validForm;
     } else {
+      let options = {
+        method: method.toUpperCase(),
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      };
       const dataForm = new FormData(e.target);
       let jsonToSend = Object.fromEntries(dataForm.entries());
       if (params.length > 0) {
         params.forEach((param) => {
           finalApi = finalApi.replace(`:${param}`, jsonToSend[param]);
           delete jsonToSend[param];
+          dataForm.delete(param);
         });
       }
-      await fetch(finalApi, {
-        method: method.toUpperCase(),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(jsonToSend),
-      })
+      if (!withFile) {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(jsonToSend);
+      } else {
+        options.body = dataForm;
+      }
+      await fetch(finalApi, options)
         .then((response) => response.json())
         .then((dataJson) => {
           if (dataJson.status === 'SUCCESS') {

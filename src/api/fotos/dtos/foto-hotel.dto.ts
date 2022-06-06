@@ -1,15 +1,18 @@
 import { Transform } from 'class-transformer';
 import { PartialType } from '@nestjs/swagger';
-import { IsDefined, IsInt, IsPositive, IsString } from 'class-validator';
+import {
+  IsDefined,
+  IsInt,
+  IsNotEmpty,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class CreateFotoHotelDto {
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   descripcion: string;
-
-  @IsString()
-  @IsDefined()
-  path: string;
 
   @IsInt()
   @IsPositive()

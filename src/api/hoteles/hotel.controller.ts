@@ -6,14 +6,18 @@ import {
   Body,
   ParseIntPipe,
   Patch,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { UserJWT } from 'src/decorators/userJWT.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { Public } from '../../decorators/public.decorator';
 import { CreateHotelDto, UpdateHotelDto } from './dtos/hotel.dto';
 import { HotelService } from './hotel.service';
+import { multerOptions } from './../multer.config';
 
 @ApiTags('Hoteles')
 @ApiBearerAuth()
@@ -54,5 +58,14 @@ export class HotelController {
     @Body() data: UpdateHotelDto,
   ) {
     return await this.hotelService.update(hotelId, data);
+  }
+
+  @Post('upload-logo')
+  @UseInterceptors(FileInterceptor('logo', multerOptions))
+  async uploadFile(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @UploadedFile() logo: Express.Multer.File,
+  ) {
+    return await this.hotelService.updateLogo(hotelId, logo.filename);
   }
 }
