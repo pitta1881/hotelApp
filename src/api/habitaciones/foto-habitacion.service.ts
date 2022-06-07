@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { IGenResp, StatusTypes } from '../../helpers/generic.response';
 import { HabitacionService } from './habitacion.service';
@@ -71,6 +73,7 @@ export class FotoHabitacionService {
     hotelId: number,
     habitacionId: number,
     newData: CreateFotoHabitacionDto,
+    path: string,
   ): Promise<IGenResp> {
     let newFotoHabitacion: FotoHabitacion;
     const habitacionResp: IGenResp = await this.habitacionService.findOne(
@@ -83,6 +86,7 @@ export class FotoHabitacionService {
       newFotoHabitacion = await this.fotoHabitacionModel.save({
         habitacion,
         ...newData,
+        path: join('/', 'uploads', 'fotos-habitacion', path),
         id: nextId,
       });
       return {
@@ -124,7 +128,8 @@ export class FotoHabitacionService {
     habitacionId: number,
     id: number,
   ): Promise<IGenResp> {
-    await this.findOne(hotelId, habitacionId, id); //si no lo encuentra salta una exception
+    const fotoResp = await this.findOne(hotelId, habitacionId, id); //si no lo encuentra salta una exception
+    const oldPath: string = fotoResp.data[0].path;
     try {
       await this.fotoHabitacionModel.delete({
         id,
@@ -134,6 +139,9 @@ export class FotoHabitacionService {
             id: hotelId,
           },
         },
+      });
+      fs.unlink(join(__dirname, '..', '..', '..', 'public', oldPath), (err) => {
+        if (err) console.log(err);
       });
       return {
         status: StatusTypes.success,

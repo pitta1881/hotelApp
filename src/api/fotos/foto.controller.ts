@@ -1,3 +1,4 @@
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   Body,
   Controller,
@@ -7,13 +8,22 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
 
 import { UserJWT } from '../../decorators/userJWT.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { FotoService } from './foto.service';
 import { CreateFotoHotelDto, UpdateFotoHotelDto } from './dtos/foto-hotel.dto';
+import { multerOptions } from './../multer.config';
 
 @ApiTags('Fotos Hotel')
 @ApiBearerAuth()
@@ -52,12 +62,28 @@ export class FotoController {
   }
 
   @ApiOperation({ summary: 'Create Foto Hotel' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        descripcion: { type: 'string' },
+        tipoCarouselId: { type: 'integer' },
+        foto_hotel: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post()
+  @UseInterceptors(FileInterceptor('foto_hotel', multerOptions))
   async create(
     @UserJWT() { hotelId }: IJwtPayload,
     @Body() data: CreateFotoHotelDto,
+    @UploadedFile() foto_hotel: Express.Multer.File,
   ) {
-    return await this.fotoService.create(hotelId, data);
+    return await this.fotoService.create(hotelId, data, foto_hotel.filename);
   }
 
   @ApiOperation({ summary: 'Update Foto Hotel' })

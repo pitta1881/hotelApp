@@ -7,13 +7,16 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  AfterRemove,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { Hotel } from './hotel.entity';
 import { Servicio } from './servicio.entity';
 import { TipoHabitacion } from './tipoHabitacion.entity';
 import { FotoHabitacion } from './fotoHabitacion.entity';
-import { Exclude } from 'class-transformer';
 
 @Entity({ orderBy: { id: 'ASC' } })
 export class Habitacion {
@@ -77,4 +80,16 @@ export class Habitacion {
     (fotoHabitacion: FotoHabitacion) => fotoHabitacion.habitacion,
   )
   fotos: FotoHabitacion[];
+
+  @AfterRemove()
+  unlinkFotos() {
+    this.fotos.forEach((foto) => {
+      fs.unlink(
+        join(__dirname, '..', '..', '..', 'public', foto.path),
+        (err) => {
+          if (err) console.log(err);
+        },
+      );
+    });
+  }
 }

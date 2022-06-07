@@ -1,17 +1,26 @@
 import { Transform } from 'class-transformer';
 import { PartialType } from '@nestjs/swagger';
-import { IsDefined, IsInt, IsPositive, IsString } from 'class-validator';
+import {
+  IsDefined,
+  IsInt,
+  IsPositive,
+  IsString,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class CreateHabitacionDto {
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   nombre: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   descripcion_hab: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   descripcion_camas: string;
 

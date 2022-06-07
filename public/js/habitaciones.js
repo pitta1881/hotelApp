@@ -2,6 +2,7 @@ import {
   callbackModal,
   commonFetch,
   dateFormat,
+  loadFileUploadEvent,
 } from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
@@ -104,13 +105,13 @@ const loadFormEvents = () => {
       validations: {
         'new-path': {
           required: true,
-          regexUrl: REGEX_URL,
         },
         'new-descripcion-foto': {
           required: true,
         },
       },
       callback: [loadInitialData, callbackModal],
+      withFile: true,
     },
     {
       form: document.getElementById('form-manage-delete-services'),
@@ -437,6 +438,7 @@ const loadModalEvents = () => {
                     <img
                       src="${foto.path}"
                       alt="${foto.descripcion}"
+                      class="contain"
                     />
                   </li>
                 `),
@@ -514,4 +516,5 @@ document.addEventListener('DOMContentLoaded', () => {
   loadFormEvents();
   loadModalEvents();
   loadFotosEvents();
+  loadFileUploadEvent('upload-foto');
 });

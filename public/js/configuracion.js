@@ -8,6 +8,7 @@ import {
   REGEX_NICK,
   REGEX_STRING,
 } from './helpers/regex-helpers.js';
+import { redirectPage } from './nav-backend.js';
 
 const loadFormEvents = () => {
   const formsObj = [
@@ -34,6 +35,7 @@ const loadFormEvents = () => {
           regexEmail: REGEX_EMAIL,
         },
       },
+      callback: [redirectPage],
     },
     {
       form: document.getElementById('form-change-password'),

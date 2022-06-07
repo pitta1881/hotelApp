@@ -27,9 +27,14 @@
                       id="tipo-carousel-id"
                       hidden
                     />
-                    <div class="control-input input-validator-container">
-                      <label for="new-path" class="required">URL:</label>
-                      <input type="text" name="path" id="new-path" required />
+                    <div class="control-input-upload input-validator-container">
+                      <label for="upload-foto" class="required">Seleccione una foto para Subir</label>
+                      <input type="file" id="upload-foto" name="foto_hotel"
+                            accept="image/*" required hidden>
+                      <div class="preview">
+                        <img class="contain">
+                        <small></small>
+                      </div>
                       <ul></ul>
                     </div>
                     <div class="control-input input-validator-container">
@@ -39,7 +44,7 @@
                       <textarea
                         name="descripcion"
                         id="new-descripcion-foto"
-                        rows="5"
+                        rows="2"
                         required
                       ></textarea>
                       <ul></ul>

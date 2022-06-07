@@ -1,13 +1,15 @@
-import { IsDefined, IsString, Length } from 'class-validator';
+import { IsDefined, IsNotEmpty, IsString, Length } from 'class-validator';
 import { Match } from '../../../decorators/match.decorator';
 
 export class ChangePasswordDto {
   @IsString()
+  @IsNotEmpty()
   @IsDefined()
   oldPassword: string;
 
-  @IsString()
   @Length(8, 50)
+  @IsString()
+  @IsNotEmpty()
   @IsDefined()
   newPassword: string;
 

@@ -34,6 +34,13 @@ export const removeFormValidations = (form) => {
   elemsLi.forEach((elem) => {
     elem.remove();
   });
+  const preview = form.querySelector('.preview');
+  if (preview) {
+    const img = form.querySelector('.preview img');
+    img.outerHTML = `<img class="contain">`;
+    const small = form.querySelector('.preview small');
+    small.innerHTML = '';
+  }
 };
 
 export const dateFormat = (date) => {
@@ -69,4 +76,21 @@ export const commonFetch = async (url, method = 'get', body) => {
   }
   toggleLoader(false);
   return response;
+};
+
+export const loadFileUploadEvent = (elemId) => {
+  const updateLogo = document.getElementById(elemId);
+  updateLogo.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      const imageToUpload = e.target.files[0];
+      const previewContainer = updateLogo.parentNode;
+      const uploadPreview = previewContainer.querySelector('.preview img');
+      const uploadName = previewContainer.querySelector('.preview small');
+      uploadPreview.src = URL.createObjectURL(imageToUpload);
+      uploadPreview.addEventListener('load', () => {
+        URL.revokeObjectURL(uploadPreview.src); // free memory
+      });
+      uploadName.innerText = imageToUpload.name;
+    }
+  });
 };

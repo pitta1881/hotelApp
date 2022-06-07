@@ -5,6 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { Hotel } from '../../db/entities/hotel.entity';
 import { IGenResp, StatusTypes } from '../../helpers/generic.response';
@@ -91,6 +93,29 @@ export class HotelService {
         newData.latitude && newData.longitude
           ? [newData.latitude, newData.longitude]
           : [hotel.lat_lng[0], hotel.lat_lng[1]],
+    });
+    return {
+      status: StatusTypes.success,
+      data: [hotel],
+    };
+  }
+
+  async updateLogo(id: number, path: string): Promise<IGenResp> {
+    const hotelResp: IGenResp = await this.findOne(id);
+    let hotel: Hotel = hotelResp.data[0];
+    const oldPath = hotel.logo_path;
+    hotel = await this.hotelModel.save({
+      ...hotel,
+      logo_path: join('/', 'uploads', 'logos', path),
+    });
+    fs.unlink(join(__dirname, '..', '..', '..', 'public', oldPath), (err) => {
+      if (err) {
+        console.log(err);
+        return {
+          status: StatusTypes.error,
+          error: err,
+        };
+      }
     });
     return {
       status: StatusTypes.success,

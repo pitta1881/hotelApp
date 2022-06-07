@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { IGenResp, StatusTypes } from '../../helpers/generic.response';
 import { HotelService } from '../hoteles/hotel.service';
@@ -94,6 +96,7 @@ export class FotoService {
   async create(
     hotelId: number,
     newData: CreateFotoHotelDto,
+    path: string,
   ): Promise<IGenResp> {
     let newFotoHotel: FotoHotel;
     const hotelResp: IGenResp = await this.hotelService.findOne(hotelId);
@@ -113,6 +116,7 @@ export class FotoService {
           hotel,
           tipoCarousel,
           ...newData,
+          path: join('/', 'uploads', 'fotos-hotel', path),
           id: nextId,
         });
         return {
@@ -158,11 +162,15 @@ export class FotoService {
   }
 
   async delete(hotelId: number, id: number): Promise<IGenResp> {
-    await this.findOne(hotelId, id); //si no lo encuentra salta una exception
+    const fotoResp = await this.findOne(hotelId, id); //si no lo encuentra salta una exception
+    const oldPath: string = fotoResp.data[0].path;
     try {
       await this.fotosHotelModel.delete({
         hotel: { id: hotelId },
         id,
+      });
+      fs.unlink(join(__dirname, '..', '..', '..', 'public', oldPath), (err) => {
+        if (err) console.log(err);
       });
       return {
         status: StatusTypes.success,

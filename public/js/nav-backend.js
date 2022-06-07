@@ -19,6 +19,7 @@ const loadHotelData = async () => {
   if (status === 'SUCCESS') {
     const hotel = data[0];
     document.getElementById('img-logo-nav').src = hotel.logo_path;
+    document.getElementById('img-logo-header').src = hotel.logo_path;
   }
 };
 
@@ -56,15 +57,28 @@ const loadNavEvents = () => {
       if (!token) {
         location.href = `/backend/login`;
       } else {
-        window.history.replaceState(
-          null,
-          null,
-          `${window.location.pathname}?token=${token}`,
-        );
-        location.href = `${aClicked.getAttribute('href')}?token=${token}`;
+        redirectPage(aClicked.getAttribute('href'));
       }
     }
   });
+  document
+    .getElementsByTagName('header')[0]
+    .addEventListener('click', async (e) => {
+      e.preventDefault();
+      const aClicked = e.target.closest('a');
+      redirectPage(aClicked.getAttribute('href'));
+    });
+};
+
+export const redirectPage = (page = location.href) => {
+  if (typeof page !== 'string') page = location.href;
+  const token = sessionStorage.getItem('token');
+  window.history.replaceState(
+    null,
+    null,
+    `${window.location.pathname}?token=${token}`,
+  );
+  location.href = `${page}?token=${token}`;
 };
 
 document.addEventListener('DOMContentLoaded', () => {
