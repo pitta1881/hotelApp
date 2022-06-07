@@ -19,6 +19,7 @@ const loadHotelData = async () => {
   if (status === 'SUCCESS') {
     const hotel = data[0];
     document.getElementById('img-logo-nav').src = hotel.logo_path;
+    document.getElementById('img-logo-header').src = hotel.logo_path;
   }
 };
 
@@ -60,6 +61,13 @@ const loadNavEvents = () => {
       }
     }
   });
+  document
+    .getElementsByTagName('header')[0]
+    .addEventListener('click', async (e) => {
+      e.preventDefault();
+      const aClicked = e.target.closest('a');
+      redirectPage(aClicked.getAttribute('href'));
+    });
 };
 
 export const redirectPage = (page = location.href) => {
