@@ -11,7 +11,13 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
 
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from '../../decorators/userJWT.decorator';
@@ -41,6 +47,20 @@ export class ServicioController {
   }
 
   @ApiOperation({ summary: 'Create Servicio para Hotel' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        nombre: { type: 'string' },
+        servInstal: { type: 'boolean' },
+        icon_service: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post('hotel')
   @UseInterceptors(FileInterceptor('icon_service', multerOptions))
   async createServiceHotel(
@@ -65,6 +85,19 @@ export class ServicioController {
     return await this.servicioService.update(hotelId, id, updateServicioDto);
   }
 
+  @ApiOperation({ summary: 'Actualizar Icono Servicio' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        icon_service: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post(':id/update-icon')
   @UseInterceptors(FileInterceptor('icon_service', multerOptions))
   async uploadFile(
