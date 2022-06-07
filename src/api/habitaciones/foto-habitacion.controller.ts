@@ -12,7 +12,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
 
 import { FotoHabitacionService } from './foto-habitacion.service';
 import {
@@ -66,6 +72,19 @@ export class FotoHabitacionController {
   }
 
   @ApiOperation({ summary: 'Create Foto Habitacion' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        descripcion: { type: 'string' },
+        foto_habitacion: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post(':habitacionId/fotos')
   @UseInterceptors(FileInterceptor('foto_habitacion', multerOptions))
   async create(

@@ -144,12 +144,9 @@ export class ServicioService {
 
   async delete(hotelId: number, id: number): Promise<IGenResp> {
     const servicioResp = await this.findOne(hotelId, id); //si falla salta una exception
-    const oldPath: string = servicioResp.data[0].icon_path;
+    const servicio: Servicio = servicioResp.data[0];
     try {
-      await this.servicioModel.delete({ id, hotel: { id: hotelId } });
-      fs.unlink(join(__dirname, '..', '..', '..', 'public', oldPath), (err) => {
-        if (err) console.log(err);
-      });
+      await this.servicioModel.remove(servicio);
       return {
         status: StatusTypes.success,
       };

@@ -259,16 +259,15 @@ export class HabitacionService {
   }
 
   async delete(hotelId: number, id: number): Promise<IGenResp> {
-    await this.findOne(hotelId, id, ['hotel']); //si falla salta una exception
+    const habitacionResp: IGenResp = await this.findOne(hotelId, id, ['fotos']); //si falla salta una exception
+    const habitacion: Habitacion = habitacionResp.data[0];
     try {
-      await this.habitacionModel.delete({
-        hotel: { id: hotelId },
-        id,
-      });
+      await this.habitacionModel.remove(habitacion);
       return {
         status: StatusTypes.success,
       };
     } catch (error) {
+      console.log(error);
       throw new ConflictException({
         status: StatusTypes.error,
         error: error.detail,

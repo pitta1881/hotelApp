@@ -11,7 +11,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
 
 import { UserJWT } from '../../decorators/userJWT.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
@@ -56,6 +62,20 @@ export class FotoController {
   }
 
   @ApiOperation({ summary: 'Create Foto Hotel' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        descripcion: { type: 'string' },
+        tipoCarouselId: { type: 'integer' },
+        foto_hotel: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post()
   @UseInterceptors(FileInterceptor('foto_hotel', multerOptions))
   async create(

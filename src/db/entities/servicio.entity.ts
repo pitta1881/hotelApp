@@ -5,7 +5,10 @@ import {
   ManyToMany,
   JoinTable,
   PrimaryColumn,
+  AfterRemove,
 } from 'typeorm';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { Hotel } from './hotel.entity';
 import { Habitacion } from './habitacion.entity';
@@ -39,4 +42,14 @@ export class Servicio {
   )
   @JoinTable({ name: 'servicio_x_habitacion' })
   habitaciones: Habitacion[];
+
+  @AfterRemove()
+  unlinkIcono() {
+    fs.unlink(
+      join(__dirname, '..', '..', '..', 'public', this.icon_path),
+      (err) => {
+        if (err) console.log(err);
+      },
+    );
+  }
 }

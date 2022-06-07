@@ -9,10 +9,16 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { UserJWT } from 'src/decorators/userJWT.decorator';
+import { UserJWT } from './../../decorators/userJWT.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { Public } from '../../decorators/public.decorator';
 import { CreateHotelDto, UpdateHotelDto } from './dtos/hotel.dto';
@@ -60,6 +66,19 @@ export class HotelController {
     return await this.hotelService.update(hotelId, data);
   }
 
+  @ApiOperation({ summary: 'Upload Logo Hotel ' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        logo: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post('upload-logo')
   @UseInterceptors(FileInterceptor('logo', multerOptions))
   async uploadFile(
