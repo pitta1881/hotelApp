@@ -28,15 +28,23 @@ export class ReservaService {
     private reservaModel: Repository<Reserva>,
   ) {}
 
-  async findAll(hotelId: number): Promise<IGenResp> {
-    const reservas: Reserva[] = await this.reservaModel.find({
-      relations: ['habitacion', 'huespedes'],
-      where: {
-        hotel: hotelId,
-      },
-    });
+  async findAll(
+    hotelId: number,
+    skip?: number,
+    limit?: number,
+  ): Promise<IGenResp> {
+    const [reservas, total]: [reservas: Reserva[], total: number] =
+      await this.reservaModel.findAndCount({
+        relations: ['habitacion', 'huespedes'],
+        where: {
+          hotel: hotelId,
+        },
+        skip,
+        take: limit,
+      });
     return {
       status: StatusTypes.success,
+      total,
       data: reservas,
     };
   }

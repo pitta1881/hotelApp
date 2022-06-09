@@ -5,6 +5,7 @@ export enum StatusTypes {
 
 export interface IGenResp {
   status: StatusTypes;
+  total?: number;
   data?: any[];
   error?: string;
 }

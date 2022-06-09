@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -19,6 +20,7 @@ import {
 } from './dtos/habitacion.dto';
 import { UpdateEstadoHabitacionDto } from './dtos/update-estado-habitacion.dto';
 import { AssociateServicioDto } from './dtos/associate-servicio.dto';
+import { QueryTableDto } from './../tables.dto';
 
 @ApiTags('Habitaciones')
 @ApiBearerAuth()
@@ -28,8 +30,11 @@ export class HabitacionController {
 
   @ApiOperation({ summary: 'FindAll Habitaciones' })
   @Get()
-  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
-    return await this.habitacionService.findAll(hotelId);
+  async findAll(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Query() { skip, limit }: QueryTableDto,
+  ) {
+    return await this.habitacionService.findAll(hotelId, skip, limit);
   }
 
   @ApiOperation({ summary: 'FindAll Tipo Habitaciones' })

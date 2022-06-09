@@ -1,8 +1,20 @@
-import { commonFetch, dateFormat } from './helpers/common-helpers.js';
+import {
+  commonFetch,
+  dateFormat,
+  loadPaginationEvent,
+  loadPaginationRepaint,
+} from './helpers/common-helpers.js';
 
-const loadInitialData = async () => {
-  const { status, data } = await commonFetch(`${location.origin}/api/mensajes`);
+const loadInitialData = async (skip = 0, limit = 5) => {
+  if (typeof skip !== 'number' || typeof limit !== 'number') {
+    skip = 0;
+    limit = 5;
+  }
+  const { status, data, total } = await commonFetch(
+    `${location.origin}/api/mensajes?skip=${skip}&limit=${limit}`,
+  );
   if (status === 'SUCCESS') {
+    loadPaginationRepaint('tbody-mensajes', total, skip, limit);
     document.getElementById('tbody-mensajes').innerHTML =
       data.length === 0
         ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
@@ -86,4 +98,5 @@ const loadModalEvents = () => {
 document.addEventListener('DOMContentLoaded', () => {
   loadInitialData();
   loadModalEvents();
+  loadPaginationEvent('tbody-mensajes', loadInitialData);
 });

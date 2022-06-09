@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -15,6 +16,7 @@ import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { UserJWT } from '../../decorators/userJWT.decorator';
 import { CreateMensajeDto } from './dtos/mensaje.dto';
 import { UpdateEstadoMensajeDto } from './dtos/update-estado-mensaje.dto';
+import { QueryTableDto } from './../tables.dto';
 
 @ApiTags('Mensajes')
 @ApiBearerAuth()
@@ -24,8 +26,11 @@ export class MensajeController {
 
   @ApiOperation({ summary: 'FindAll Mensajes' })
   @Get()
-  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
-    return await this.mensajeService.findAll(hotelId);
+  async findAll(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Query() { skip, limit }: QueryTableDto,
+  ) {
+    return await this.mensajeService.findAll(hotelId, skip, limit);
   }
 
   @ApiOperation({ summary: 'FindOne Mensaje' })

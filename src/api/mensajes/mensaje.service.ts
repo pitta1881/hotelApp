@@ -23,14 +23,22 @@ export class MensajeService {
     private mailService: MailService,
   ) {}
 
-  async findAll(hotelId: number): Promise<IGenResp> {
-    const mensajes: Mensaje[] = await this.mensajeModel.find({
-      where: {
-        hotel: hotelId,
-      },
-    });
+  async findAll(
+    hotelId: number,
+    skip?: number,
+    limit?: number,
+  ): Promise<IGenResp> {
+    const [mensajes, total]: [mensajes: Mensaje[], total: number] =
+      await this.mensajeModel.findAndCount({
+        where: {
+          hotel: hotelId,
+        },
+        skip,
+        take: limit,
+      });
     return {
       status: StatusTypes.success,
+      total,
       data: mensajes,
     };
   }

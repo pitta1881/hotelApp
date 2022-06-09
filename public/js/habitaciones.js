@@ -3,6 +3,8 @@ import {
   commonFetch,
   dateFormat,
   loadFileUploadEvent,
+  loadPaginationEvent,
+  loadPaginationRepaint,
 } from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
@@ -157,11 +159,16 @@ const loadFormEvents = () => {
   });
 };
 
-const loadInitialData = async () => {
-  const { status, data } = await commonFetch(
-    `${location.origin}/api/habitaciones`,
+const loadInitialData = async (skip = 0, limit = 5) => {
+  if (typeof skip !== 'number' || typeof limit !== 'number') {
+    skip = 0;
+    limit = 5;
+  }
+  const { status, data, total } = await commonFetch(
+    `${location.origin}/api/habitaciones?skip=${skip}&limit=${limit}`,
   );
   if (status === 'SUCCESS') {
+    loadPaginationRepaint('tbody-habitaciones', total, skip, limit);
     document.getElementById('tbody-habitaciones').innerHTML =
       data.length === 0
         ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
@@ -517,4 +524,5 @@ document.addEventListener('DOMContentLoaded', () => {
   loadModalEvents();
   loadFotosEvents();
   loadFileUploadEvent('upload-foto');
+  loadPaginationEvent('tbody-habitaciones', loadInitialData);
 });

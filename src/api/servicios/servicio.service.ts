@@ -25,15 +25,21 @@ export class ServicioService {
   async findAllHotel(
     hotelId: number,
     relations: string[] = [],
+    skip?: number,
+    limit?: number,
   ): Promise<IGenResp> {
-    const servicios: Servicio[] = await this.servicioModel.find({
-      relations,
-      where: {
-        hotel: hotelId,
-      },
-    });
+    const [servicios, total]: [servicios: Servicio[], total: number] =
+      await this.servicioModel.findAndCount({
+        relations,
+        where: {
+          hotel: hotelId,
+        },
+        skip,
+        take: limit,
+      });
     return {
       status: StatusTypes.success,
+      total,
       data: servicios,
     };
   }

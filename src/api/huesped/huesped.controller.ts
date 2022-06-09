@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateHuespedDto, UpdateHuespedDto } from './dtos/huesped.dto';
 import { HuespedService } from './huesped.service';
+import { QueryTableDto } from './../tables.dto';
 
 @ApiTags('Huespedes')
 @ApiBearerAuth()
@@ -20,8 +22,8 @@ export class HuespedController {
 
   @ApiOperation({ summary: 'FindAll Huespedes' })
   @Get()
-  async findAll() {
-    return await this.huespedService.findAll();
+  async findAll(@Query() { skip, limit }: QueryTableDto) {
+    return await this.huespedService.findAll([], skip, limit);
   }
 
   @ApiOperation({ summary: 'FindOne Huesped' })

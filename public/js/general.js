@@ -2,6 +2,8 @@ import {
   callbackModal,
   commonFetch,
   loadFileUploadEvent,
+  loadPaginationEvent,
+  loadPaginationRepaint,
 } from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
@@ -225,11 +227,16 @@ const loadInitialDataHotel = async () => {
   return hotel;
 };
 
-const loadInitialDataServicios = async () => {
-  const { status, data } = await commonFetch(
-    `${location.origin}/api/servicios/hotel`,
+const loadInitialDataServicios = async (skip = 0, limit = 5) => {
+  if (typeof skip !== 'number' || typeof limit !== 'number') {
+    skip = 0;
+    limit = 5;
+  }
+  const { status, data, total } = await commonFetch(
+    `${location.origin}/api/servicios/hotel?skip=${skip}&limit=${limit}`,
   );
   if (status === 'SUCCESS') {
+    loadPaginationRepaint('tbody-servicios', total, skip, limit);
     document.getElementById('tbody-servicios').innerHTML =
       data.length === 0
         ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
@@ -362,4 +369,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadFileUploadEvent('update-logo');
   loadFileUploadEvent('upload-icon');
   loadFileUploadEvent('update-icon');
+  loadPaginationEvent('tbody-servicios', loadInitialDataServicios);
 });
