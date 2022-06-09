@@ -1,5 +1,4 @@
 table {
-  border: 2px solid black;
   margin: 20px auto 0;
   width: 100%;
 }
@@ -11,11 +10,15 @@ tr:nth-of-type(even) > td {
   border-bottom: 1px solid black;
 }
 
+thead,
+tbody {
+  border: 2px solid black;
+}
+
 thead {
   background-color: rgba(0, 128, 0, 0.2);
   font-size: 18px;
   height: 60px;
-  border: 2px solid black;
 }
 th {
   font-weight: 700;
@@ -92,6 +95,48 @@ td.text-center {
 }
 .action-flex div:first-child {
   margin-bottom: 5px;
+}
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination .user-actions {
+  display: flex;
+}
+.pagination .user-actions select {
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  background-color: white;
+  user-select: none;
+}
+.pagination .user-actions .pagination-controls {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-left: 10px;
+}
+.pagination .user-actions .pagination-controls button {
+  cursor: pointer;
+  background: none;
+  margin: 0 1px;
+  padding: 5px;
+  border: solid 1px #d7d7d7;
+  border-radius: 2px;
+  color: #7d7d7d;
+  text-align: center;
+  font-size: 1rem;
+}
+.pagination .user-actions .pagination-controls button.active,
+.pagination .user-actions .pagination-controls button:hover {
+  background-color: black;
+  color: white;
+}
+.pagination .user-actions .pagination-controls .pagination-numbers {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 @media screen and (max-width: 768px) {

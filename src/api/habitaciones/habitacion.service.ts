@@ -30,13 +30,21 @@ export class HabitacionService {
     private tipoHabitacionModel: Repository<TipoHabitacion>,
   ) {}
 
-  async findAll(hotelId: number): Promise<IGenResp> {
-    const habitaciones: Habitacion[] = await this.habitacionModel.find({
-      relations: ['tipoHabitacion', 'servicios'],
-      where: { hotel: hotelId },
-    });
+  async findAll(
+    hotelId: number,
+    skip?: number,
+    limit?: number,
+  ): Promise<IGenResp> {
+    const [habitaciones, total]: [habitaciones: Habitacion[], total: number] =
+      await this.habitacionModel.findAndCount({
+        relations: ['tipoHabitacion', 'servicios'],
+        where: { hotel: hotelId },
+        skip,
+        take: limit,
+      });
     return {
       status: StatusTypes.success,
+      total,
       data: habitaciones,
     };
   }

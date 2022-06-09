@@ -7,6 +7,7 @@ import {
   Body,
   Delete,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PaypertopService } from './paypertop.service';
@@ -17,6 +18,7 @@ import { UpdateEstadoPaypertopDto } from './dtos/update-estado-paypertop.dto';
 import { Public } from './../../decorators/public.decorator';
 import { HotelService } from '../hoteles/hotel.service';
 import { Hotel } from './../../db/entities/hotel.entity';
+import { QueryTableDto } from './../tables.dto';
 
 @ApiTags('PayPerTop')
 @ApiBearerAuth()
@@ -30,16 +32,22 @@ export class PaypertopController {
   @Public()
   @ApiOperation({ summary: 'FindAll PayPerTops por HotelUri - PÚBLICO' })
   @Get('hotel/:hotel_uri')
-  async findAllByHotelUri(@Param('hotel_uri') hotel_uri: string) {
-    const resp = await this.hotelService.findOneByNombreUri(hotel_uri);
+  async findAllByHotelUri(
+    @Param('hotel_uri') hotel_uri: string,
+    @Query() { skip, limit }: QueryTableDto,
+  ) {
+    const resp = await this.hotelService.findOneByNombreUri(hotel_uri, []);
     const hotel: Hotel = resp.data[0];
-    return await this.paypertopService.findAll(hotel.id);
+    return await this.paypertopService.findAll(hotel.id, skip, limit);
   }
 
   @ApiOperation({ summary: 'FindAll PayPerTops' })
   @Get()
-  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
-    return await this.paypertopService.findAll(hotelId);
+  async findAll(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Query() { skip, limit }: QueryTableDto,
+  ) {
+    return await this.paypertopService.findAll(hotelId, skip, limit);
   }
 
   @ApiOperation({ summary: 'FindAll Tipo Paypertop' })

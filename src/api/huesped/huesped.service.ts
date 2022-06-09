@@ -17,12 +17,20 @@ export class HuespedService {
     private huespedModel: Repository<Huesped>,
   ) {}
 
-  async findAll(relations: string[] = []): Promise<IGenResp> {
-    const huespedes: Huesped[] = await this.huespedModel.find({
-      relations,
-    });
+  async findAll(
+    relations: string[] = [],
+    skip?: number,
+    limit?: number,
+  ): Promise<IGenResp> {
+    const [huespedes, total]: [huespedes: Huesped[], total: number] =
+      await this.huespedModel.findAndCount({
+        relations,
+        skip,
+        take: limit,
+      });
     return {
       status: StatusTypes.success,
+      total,
       data: huespedes,
     };
   }

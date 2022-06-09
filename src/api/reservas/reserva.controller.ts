@@ -8,12 +8,14 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserJWT } from '../../decorators/userJWT.decorator';
 import { IJwtPayload } from '../auth/jwtPayload.interface';
 import { CreateReservaDto, UpdateReservaDto } from './dtos/reserva.dto';
 import { ReservaService } from './reserva.service';
+import { QueryTableDto } from './../tables.dto';
 
 @ApiTags('Reservas')
 @ApiBearerAuth()
@@ -23,8 +25,11 @@ export class ReservaController {
 
   @ApiOperation({ summary: 'FindAll Reservas' })
   @Get()
-  async findAll(@UserJWT() { hotelId }: IJwtPayload) {
-    return await this.reservaService.findAll(hotelId);
+  async findAll(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Query() { skip, limit }: QueryTableDto,
+  ) {
+    return await this.reservaService.findAll(hotelId, skip, limit);
   }
 
   @ApiOperation({ summary: 'Asociar Huesped a Reserva' })

@@ -22,15 +22,23 @@ export class PaypertopService {
     private tipoPPTModel: Repository<TipoPPT>,
   ) {}
 
-  async findAll(hotelId: number): Promise<IGenResp> {
-    const paypertops: Paypertop[] = await this.paypertopModel.find({
-      relations: ['tipoPPT'],
-      where: {
-        hotel: hotelId,
-      },
-    });
+  async findAll(
+    hotelId: number,
+    skip?: number,
+    limit?: number,
+  ): Promise<IGenResp> {
+    const [paypertops, total]: [paypertops: Paypertop[], total: number] =
+      await this.paypertopModel.findAndCount({
+        relations: ['tipoPPT'],
+        where: {
+          hotel: hotelId,
+        },
+        skip,
+        take: limit,
+      });
     return {
       status: StatusTypes.success,
+      total,
       data: paypertops,
     };
   }

@@ -94,3 +94,55 @@ export const loadFileUploadEvent = (elemId) => {
     }
   });
 };
+
+export const loadPaginationRepaint = (tbodyId, total, skip, limit) => {
+  const tbody = document.getElementById(tbodyId);
+  const tablePagination = tbody.parentNode.nextElementSibling;
+  const totalPages = Math.ceil(total / limit);
+  const paginationLimit =
+    tablePagination.querySelector('.pagination-limit').value;
+  const actualPage = Math.floor((skip + 1) / paginationLimit) + 1;
+  const subTotal = skip + limit < total ? skip + limit : total;
+  if (total === 0) {
+    tablePagination.classList.add('hide');
+  } else {
+    tablePagination.classList.remove('hide');
+    tablePagination.querySelector('.table-text-pagination').innerHTML = `
+    <p>Mostrando ${skip + 1} a ${subTotal} de ${total} registros.</p>`;
+    tablePagination.querySelector('.last').value = totalPages;
+    tablePagination.querySelector('.pagination-numbers').innerHTML = `
+    ${(() => {
+      let retorno = ``;
+      for (let index = 0; index < totalPages; index++) {
+        retorno += `<button value="${index + 1}" class="${
+          actualPage === index + 1 ? 'active' : ''
+        }">${index + 1}</button>`;
+      }
+      return retorno;
+    })()}
+  `;
+  }
+};
+
+export const loadPaginationEvent = (tbodyId, callback) => {
+  const tbody = document.getElementById(tbodyId);
+  const tablePagination = tbody.parentNode.nextElementSibling;
+  const paginationControlsContainer = tablePagination.querySelector(
+    '.pagination-controls',
+  );
+  const paginationLimit = tablePagination.querySelector('.pagination-limit');
+  paginationLimit.addEventListener('change', (e) => {
+    e.preventDefault();
+    callback(0, Number(paginationLimit.value));
+  });
+  paginationControlsContainer.addEventListener('click', (e) => {
+    e.preventDefault();
+    const buttonClicked = e.target.closest('button');
+    if (buttonClicked) {
+      callback(
+        (buttonClicked.value - 1) * paginationLimit.value,
+        Number(paginationLimit.value),
+      );
+    }
+  });
+};

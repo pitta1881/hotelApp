@@ -2,6 +2,8 @@ import {
   callbackModal,
   commonFetch,
   dateFormat,
+  loadPaginationEvent,
+  loadPaginationRepaint,
 } from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
@@ -9,7 +11,11 @@ import {
 } from './helpers/form-helpers.js';
 import { REGEX_NUMBER } from './helpers/regex-helpers.js';
 
-const loadFormEvents = (minDate) => {
+const loadFormEvents = () => {
+  const today = new Date();
+  let tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split('T')[0];
   const formsObj = [
     {
       form: document.getElementById('form-create'),
@@ -132,13 +138,24 @@ const loadFormEvents = (minDate) => {
   });
 };
 
-const loadInitialData = async (minDate) => {
+const loadInitialData = async (skip = 0, limit = 5) => {
+  if (typeof skip !== 'number' || typeof limit !== 'number') {
+    skip = 0;
+    limit = 5;
+  }
+  const today = new Date();
+  let tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split('T')[0];
   document.getElementById('new-checkin').min = minDate;
   document.getElementById('new-checkin').value = minDate;
   document.getElementById('update-checkin').min = minDate;
   document.getElementById('update-checkin').value = minDate;
-  const { status, data } = await commonFetch(`${location.origin}/api/reservas`);
+  const { status, data, total } = await commonFetch(
+    `${location.origin}/api/reservas?skip=${skip}&limit=${limit}`,
+  );
   if (status === 'SUCCESS') {
+    loadPaginationRepaint('tbody-reservas', total, skip, limit);
     document.getElementById('tbody-reservas').innerHTML =
       data.length === 0
         ? `<tr><td class="no-data" colspan="10">Sin Datos</td></tr>`
@@ -442,13 +459,10 @@ const loadModalEventsClickHuesped = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  let tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow = tomorrow.toISOString().split('T')[0];
-  loadInitialData(tomorrow);
+  loadInitialData();
   loadInitialDataHabitaciones();
-  loadFormEvents(tomorrow);
+  loadFormEvents();
   loadModalEvents();
   loadModalEventsClickHuesped();
+  loadPaginationEvent('tbody-reservas', loadInitialData);
 });

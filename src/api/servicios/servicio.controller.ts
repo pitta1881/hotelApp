@@ -10,6 +10,7 @@ import {
   ParseIntPipe,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -24,6 +25,7 @@ import { UserJWT } from '../../decorators/userJWT.decorator';
 import { ServicioService } from './servicio.service';
 import { CreateServicioDto, UpdateServicioDto } from './dtos/servicio.dto';
 import { multerOptions } from '../multer.config';
+import { QueryTableDto } from './../tables.dto';
 
 @ApiTags('Servicios')
 @ApiBearerAuth()
@@ -33,8 +35,11 @@ export class ServicioController {
 
   @ApiOperation({ summary: 'FindAll Servicios' })
   @Get('hotel')
-  async findAllHotel(@UserJWT() { hotelId }: IJwtPayload) {
-    return await this.servicioService.findAllHotel(hotelId);
+  async findAllHotel(
+    @UserJWT() { hotelId }: IJwtPayload,
+    @Query() { skip, limit }: QueryTableDto,
+  ) {
+    return await this.servicioService.findAllHotel(hotelId, [], skip, limit);
   }
 
   @ApiOperation({ summary: 'FindOne Servicio' })
