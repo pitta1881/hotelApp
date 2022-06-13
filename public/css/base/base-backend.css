@@ -136,6 +136,10 @@ input[type='date'] {
   overflow: unset;
 }
 
+strong {
+  font-weight: 700;
+}
+
 @keyframes fadein {
   from {
     bottom: 0;
