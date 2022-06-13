@@ -1,5 +1,4 @@
 table {
-  margin: 20px auto 0;
   width: 100%;
 }
 
@@ -138,7 +137,53 @@ td.text-center {
   display: flex;
   flex-wrap: nowrap;
 }
+.leyenda-container {
+  text-align: right;
+  position: relative;
+}
+.leyenda-container .icon-info {
+  width: 36px;
+  cursor: pointer;
+  user-select: none;
+}
 
+.leyenda-container .leyenda {
+  display: none;
+  position: relative;
+  text-align: left;
+}
+
+.leyenda-container .icon-info:hover + .leyenda {
+  display: block;
+  position: absolute;
+  right: 43px;
+  top: -19.5px;
+  background-color: #2196f3;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgb(0 0 0 / 50%);
+}
+
+.leyenda:after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: rotate(-45deg);
+  background: #2196f3;
+  position: absolute;
+  box-shadow: 4px 4px 6px -3px rgb(0 0 0 / 50%);
+  top: 32px;
+  right: -5px;
+}
+
+.leyenda-container .leyenda img {
+  width: 16px;
+  filter: invert(1);
+}
+.leyenda-container .leyenda span {
+  font-size: 14px;
+}
 @media screen and (max-width: 768px) {
   /* Force table to not be like tables anymore */
   table,

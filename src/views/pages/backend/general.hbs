@@ -235,38 +235,50 @@
                 Crear Servicio
               </button>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Icono</th>
-                  <th>Icono Path</th>
-                  <th>Tipo</th>
-                  <th class="action-column">Acción</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-servicios">
-                
-              </tbody>
-            </table>
-            <div class="pagination">
-              <div class="table-text-pagination">
-              </div>
-              <div class="user-actions">
-                <select class="pagination-limit">
-                  <option value="5" selected>5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                </select>
-                <div class="pagination-controls">
-                  <button class="first" value="1">&#171;</button>
-                  <div class="pagination-numbers">
-                  </div>
-                  <button class="last">&#187;</button>
+            <section class="table-container">
+              <div class="leyenda-container">
+                <img class="icon-info" src="/icons/info-svgrepo-com.svg" alt="">
+                <div class="leyenda">
+                  <ul>
+                    <li><img src="/icons/pencil-edit-button-svgrepo-com.svg" alt="icono-editar" class="icon24"><span>Actualizar Datos</span></li>
+                    <li><img src="/icons/camera-svgrepo-com.svg" alt="icono-camara-actualizar" class="icon24"><span>Actualizar Icono</span></li>
+                    <li><img src="/icons/trash-svgrepo-com.svg" alt="icono-basura-eliminar" class="icon24"><span>Eliminar</span></li>
+                  </ul>
                 </div>
               </div>
-            </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Icono</th>
+                    <th>Icono Path</th>
+                    <th>Tipo</th>
+                    <th class="action-column">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-servicios">
+                  
+                </tbody>
+              </table>
+              <div class="pagination">
+                <div class="table-text-pagination">
+                </div>
+                <div class="user-actions">
+                  <select class="pagination-limit">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </select>
+                  <div class="pagination-controls">
+                    <button class="first" value="1">&#171;</button>
+                    <div class="pagination-numbers">
+                    </div>
+                    <button class="last">&#187;</button>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </fieldset>
