@@ -1,8 +1,4 @@
-import {
-  callbackModal,
-  commonFetch,
-  loadFileUploadEvent,
-} from './helpers/common-helpers.js';
+import { commonFetch, loadFileUploadEvent } from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
   loadFormSubmitListeners,

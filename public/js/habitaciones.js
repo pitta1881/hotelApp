@@ -15,7 +15,7 @@ import {
   eventMiniaturas,
   fotoNextPrev,
 } from './helpers/fotos-helper.js';
-import { REGEX_STRING, REGEX_URL } from './helpers/regex-helpers.js';
+import { REGEX_STRING } from './helpers/regex-helpers.js';
 
 const loadFormEvents = () => {
   const formsObj = [
@@ -112,7 +112,7 @@ const loadFormEvents = () => {
           required: true,
         },
       },
-      callback: [loadInitialData, callbackModal],
+      callback: [loadInitialData, loadFotos],
       withFile: true,
     },
     {
@@ -421,66 +421,85 @@ const loadModalEvents = () => {
                 ``,
               );
           } else if (buttonClicked.classList.contains('open-modal-carousel')) {
-            const fotosHabitacion = await commonFetch(
-              `${location.origin}/api/habitaciones/${habitacion.id}/fotos`,
-            );
-            document.getElementById('form-create-foto').reset();
-            document.getElementById('habitacion-id-create-foto').value =
-              buttonClicked.dataset.value;
-            const firstLiForm = document.getElementById('galeria-add-foto');
-            firstLiForm.classList.add('active');
-            const btnDeleteFoto = document.getElementById('btn-delete-foto');
-            btnDeleteFoto.classList.add('hide');
-            if (fotosHabitacion.data.length > 0) {
-              firstLiForm.classList.remove('active');
-              btnDeleteFoto.classList.remove('hide');
-            }
-            document.getElementById('oneSlide').firstElementChild.innerHTML =
-              fotosHabitacion.data.reduce(
-                (sumHTML, foto, index) =>
-                  (sumHTML += `
-                  <li class="slide ${
-                    index === 0 ? 'active' : ''
-                  }" data-img-id="${foto.id}">
-                    <img
-                      src="${foto.path}"
-                      alt="${foto.descripcion}"
-                      class="contain"
-                    />
-                  </li>
-                `),
-                ``,
-              );
-            document
-              .getElementById('oneSlide')
-              .firstElementChild.prepend(firstLiForm);
-            const firstLiMiniatura = document.getElementById(
-              'galeria-add-foto-miniatura',
-            );
-            firstLiMiniatura.classList.remove('active');
-            document.getElementById('galeria').firstElementChild.innerHTML =
-              fotosHabitacion.data.reduce(
-                (sumHTML, foto) =>
-                  (sumHTML += `
-                  <li class="slide-miniatura" data-img-id="${foto.id}">
-                    <img
-                      src="${foto.path}"
-                      alt="${foto.descripcion}"
-                    />
-                  </li>
-                `),
-                ``,
-              );
-            document
-              .getElementById('galeria')
-              .firstElementChild.prepend(firstLiMiniatura);
-            eventMiniaturas();
+            loadFotos(buttonClicked, habitacion.id);
           }
           document.body.classList.add('noscroll');
           modalTarget.classList.add('active');
         }
       }
     });
+};
+
+const loadFotos = async (btn, habitacionId) => {
+  document.getElementById('form-create-foto').reset();
+  const modalTarget = document.getElementById('modal-carousel');
+  if (modalTarget.classList.contains('active')) {
+    const uploadControl = modalTarget.querySelector('.upload-control');
+    if (uploadControl) {
+      uploadControl.querySelector('.drop-zone').classList.remove('no-border');
+      uploadControl.querySelector('.preview').classList.add('hide');
+      uploadControl.querySelector('.drop-zone div').classList.remove('hide');
+      habitacionId = document.getElementById('habitacion-id-create-foto').value;
+    }
+  } else {
+    document
+      .getElementById('habitacion-id-create-foto')
+      .setAttribute('value', btn.dataset.value);
+  }
+  const fotosHabitacion = await commonFetch(
+    `${location.origin}/api/habitaciones/${habitacionId}/fotos`,
+  );
+  const firstLiForm = document.getElementById('galeria-add-foto');
+  firstLiForm.classList.add('active');
+  const btnDeleteFoto = document.getElementById('btn-delete-foto');
+  btnDeleteFoto.classList.add('hide');
+  if (
+    fotosHabitacion.data.length > 0 &&
+    !modalTarget.classList.contains('active')
+  ) {
+    firstLiForm.classList.remove('active');
+    btnDeleteFoto.classList.remove('hide');
+  }
+  document.getElementById('oneSlide').firstElementChild.innerHTML =
+    fotosHabitacion.data.reduce(
+      (sumHTML, foto, index) =>
+        (sumHTML += `
+        <li class="slide ${
+          index === 0 && !modalTarget.classList.contains('active')
+            ? 'active'
+            : ''
+        }" data-img-id="${foto.id}">
+          <img
+            src="${foto.path}"
+            alt="${foto.descripcion}"
+            class="contain"
+          />
+        </li>
+      `),
+      ``,
+    );
+  document.getElementById('oneSlide').firstElementChild.prepend(firstLiForm);
+  const firstLiMiniatura = document.getElementById(
+    'galeria-add-foto-miniatura',
+  );
+  firstLiMiniatura.classList.remove('active');
+  document.getElementById('galeria').firstElementChild.innerHTML =
+    fotosHabitacion.data.reduce(
+      (sumHTML, foto) =>
+        (sumHTML += `
+        <li class="slide-miniatura" data-img-id="${foto.id}">
+          <img
+            src="${foto.path}"
+            alt="${foto.descripcion}"
+          />
+        </li>
+      `),
+      ``,
+    );
+  document
+    .getElementById('galeria')
+    .firstElementChild.prepend(firstLiMiniatura);
+  eventMiniaturas();
 };
 
 const loadFotosEvents = () => {
