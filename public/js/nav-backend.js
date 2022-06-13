@@ -66,7 +66,9 @@ const loadNavEvents = () => {
     .addEventListener('click', async (e) => {
       e.preventDefault();
       const aClicked = e.target.closest('a');
-      redirectPage(aClicked.getAttribute('href'));
+      if (aClicked) {
+        redirectPage(aClicked.getAttribute('href'));
+      }
     });
 };
 
