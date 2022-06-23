@@ -17,7 +17,7 @@
 
   {{#*inline "main-content-block"}}
     <section id="descripcion">
-        <p>
+        <p itemprop="description">
           {{hotel.descripcion_ubi}}
         </p>
       </section>
@@ -31,7 +31,11 @@
           <label for="btn-super">Supermercados</label>
         </div>
         <section id="inner-mapa-container">
-          <section id="mapa" data-lat-lng="{{hotel.lat_lng}}" data-nombre-hotel="{{hotel.nombre}}"></section>
+          <section id="mapa" data-lat-lng="{{hotel.lat_lng}}" data-nombre-hotel="{{hotel.nombre}}" itemscope itemprop="hasMap" itemtype="https://schema.org/Map" ></section>
+          <div class="hide" itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
+            <meta itemprop="latitude" content="{{hotel.lat_lng.[0]}}" />
+            <meta itemprop="longitude" content="{{hotel.lat_lng.[1]}}" />
+          </div>
           <div id="listppt">
             <button id="btnList">
               <span>-</span>
