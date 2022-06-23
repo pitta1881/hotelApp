@@ -13,7 +13,7 @@
       {{!-- Custom <head> content per page could be added. --}}
     {{/head-block}}
   </head>
-  <body>
+  <body itemscope itemtype="https://schema.org/Hotel">
     <header>
         {{> header/header hotel=hotel}}
     </header>
@@ -32,10 +32,10 @@
     {{#> modal-block}}
     {{/modal-block}}
 
-    <section id="toast"></section>
-    <section id="loader">
+    <div id="toast"></div>
+    <div id="loader">
       <span></span>
-    </section>
+    </div>
 
     {{#> scripts-block}}
       {{!-- Custom scripts per page can be added. --}}

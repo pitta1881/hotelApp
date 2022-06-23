@@ -1,8 +1,4 @@
-import {
-  callbackModal,
-  commonFetch,
-  loadFileUploadEvent,
-} from './helpers/common-helpers.js';
+import { commonFetch, loadFileUploadEvent } from './helpers/common-helpers.js';
 import {
   loadFormInputListeners,
   loadFormSubmitListeners,
@@ -31,7 +27,7 @@ const loadFormEvents = () => {
           required: true,
         },
       },
-      callback: [callbackModal],
+      callback: [loadFotos],
       withFile: true,
     },
   ];
@@ -66,37 +62,50 @@ const loadInitialDataTiposCarousel = async () => {
   }
 };
 
-const loadButtonsEvents = () => {
-  const btnsOpenModalManageFotos = document.getElementsByClassName(
-    'open-modal-carousel',
+const loadFotos = async (btn) => {
+  let idCarousel;
+  let nombreCarousel;
+  document.getElementById('form-create-foto').reset();
+  const modalTarget = document.getElementById('modal-carousel');
+  if (modalTarget.classList.contains('active')) {
+    idCarousel = document.getElementById('tipo-carousel-id').value;
+    nombreCarousel = document.getElementById('carousel-nombre').textContent;
+    const uploadControl = modalTarget.querySelector('.upload-control');
+    if (uploadControl) {
+      uploadControl.querySelector('.drop-zone').classList.remove('no-border');
+      uploadControl.querySelector('.preview').classList.add('hide');
+      uploadControl.querySelector('.drop-zone div').classList.remove('hide');
+    }
+  } else {
+    idCarousel = btn.dataset.value;
+    nombreCarousel = btn.dataset.quien;
+    document
+      .getElementById('tipo-carousel-id')
+      .setAttribute('value', btn.dataset.value);
+    document.getElementById('carousel-nombre').innerHTML = btn.dataset.quien;
+  }
+  const { status, data } = await commonFetch(
+    `${location.origin}/api/fotos/carousel/${idCarousel}`,
   );
-  Array.from(btnsOpenModalManageFotos).forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      document.getElementById('form-create-foto').reset();
-      const modalTarget = document.getElementById(btn.dataset.target);
-      document.getElementById('tipo-carousel-id').value = btn.dataset.value;
-      const { status, data } = await commonFetch(
-        `${location.origin}/api/fotos/carousel/${btn.dataset.value}`,
-      );
-      if (status === 'SUCCESS') {
-        document.getElementById(
-          'legend-foto',
-        ).innerHTML = `Crear Foto - Carousel ${btn.dataset.quien}`;
-        const firstLiForm = document.getElementById('galeria-add-foto');
-        firstLiForm.classList.add('active');
-        const btnDeleteFoto = document.getElementById('btn-delete-foto');
-        btnDeleteFoto.classList.add('hide');
-        if (data.length > 0) {
-          firstLiForm.classList.remove('active');
-          btnDeleteFoto.classList.remove('hide');
-        }
-        document.getElementById('oneSlide').firstElementChild.innerHTML =
-          data.reduce(
-            (sumHTML, foto, index) =>
-              (sumHTML += `
-              <li class="slide ${index === 0 ? 'active' : ''}" data-img-id="${
-                foto.id
-              }">
+  if (status === 'SUCCESS') {
+    document.getElementById('carousel-nombre').innerHTML = nombreCarousel;
+    const firstLiForm = document.getElementById('galeria-add-foto');
+    firstLiForm.classList.add('active');
+    const btnDeleteFoto = document.getElementById('btn-delete-foto');
+    btnDeleteFoto.classList.add('hide');
+    if (data.length > 0 && !modalTarget.classList.contains('active')) {
+      firstLiForm.classList.remove('active');
+      btnDeleteFoto.classList.remove('hide');
+    }
+    document.getElementById('oneSlide').firstElementChild.innerHTML =
+      data.reduce(
+        (sumHTML, foto, index) =>
+          (sumHTML += `
+              <li class="slide ${
+                index === 0 && !modalTarget.classList.contains('active')
+                  ? 'active'
+                  : ''
+              }" data-img-id="${foto.id}">
                 <img
                   src="${foto.path}"
                   alt="${foto.descripcion}"
@@ -104,19 +113,17 @@ const loadButtonsEvents = () => {
                 />
               </li>
             `),
-            ``,
-          );
-        document
-          .getElementById('oneSlide')
-          .firstElementChild.prepend(firstLiForm);
-        const firstLiMiniatura = document.getElementById(
-          'galeria-add-foto-miniatura',
-        );
-        firstLiMiniatura.classList.remove('active');
-        document.getElementById('galeria').firstElementChild.innerHTML =
-          data.reduce(
-            (sumHTML, foto) =>
-              (sumHTML += `
+        ``,
+      );
+    document.getElementById('oneSlide').firstElementChild.prepend(firstLiForm);
+    const firstLiMiniatura = document.getElementById(
+      'galeria-add-foto-miniatura',
+    );
+    firstLiMiniatura.classList.remove('active');
+    document.getElementById('galeria').firstElementChild.innerHTML =
+      data.reduce(
+        (sumHTML, foto) =>
+          (sumHTML += `
               <li class="slide-miniatura" data-img-id="${foto.id}">
                 <img
                   src="${foto.path}"
@@ -124,14 +131,23 @@ const loadButtonsEvents = () => {
                 />
               </li>
             `),
-            ``,
-          );
-        document
-          .getElementById('galeria')
-          .firstElementChild.prepend(firstLiMiniatura);
-        eventMiniaturas();
-        modalTarget.classList.add('active');
-      }
+        ``,
+      );
+    document
+      .getElementById('galeria')
+      .firstElementChild.prepend(firstLiMiniatura);
+    eventMiniaturas();
+    modalTarget.classList.add('active');
+  }
+};
+
+const loadButtonsEvents = () => {
+  const btnsOpenModalManageFotos = document.getElementsByClassName(
+    'open-modal-carousel',
+  );
+  Array.from(btnsOpenModalManageFotos).forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      loadFotos(btn);
     });
   });
 };

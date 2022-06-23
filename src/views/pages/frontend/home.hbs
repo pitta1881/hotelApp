@@ -10,7 +10,7 @@
           <ul>
             {{#each hotel.fotos as |foto|}}
               <li class="slide {{#if @first}}active{{/if}}">
-                <img
+                <img itemprop="photo"
                   src="{{foto.path}}"
                   alt="{{foto.descripcion}}"
                 />
@@ -22,7 +22,7 @@
         </section>
       </section>
       <section id="descripcion">
-        <p>
+        <p itemprop="description">
           {{hotel.descripcion_home}}
         </p>
       </section>

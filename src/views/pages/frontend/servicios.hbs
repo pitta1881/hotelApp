@@ -12,10 +12,10 @@
           <ul>
             {{#each hotel.servicios as |servicio|}}
               {{#unless servicio.servInstal}}
-              <li>
-                <img src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/><span
-                  >{{servicio.nombre}}</span
-                >
+              <li itemprop="amenityFeature" itemscope itemtype="https://schema.org/LocationFeatureSpecification">
+                <img itemprop="image" src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/>
+                <span itemprop="name">{{servicio.nombre}}</span>
+                <meta itemprop="value" content="True">
               </li>
               {{/unless}}
             {{/each}}
@@ -27,10 +27,10 @@
           <ul>
             {{#each hotel.servicios as |servicio|}}
               {{#if servicio.servInstal}}
-              <li>
-                <img src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/><span
-                  >{{servicio.nombre}}</span
-                >
+              <li itemprop="amenityFeature" itemscope itemtype="https://schema.org/LocationFeatureSpecification">
+                <img itemprop="image" src="{{servicio.icon_path}}" alt="icono {{servicio.nombre}}" class="icon24"/>
+                <span itemprop="name">{{servicio.nombre}}</span>
+                <meta itemprop="value" content="True">
               </li>
               {{/if}}
             {{/each}}
@@ -42,7 +42,7 @@
           <ul>
             {{#each hotel.fotos as |foto|}}
               <li class="slide {{#if @first}}active{{/if}}" data-img-id="{{foto.id}}">
-                <img
+                <img itemprop="photo" 
                   src="{{foto.path}}"
                   alt="{{foto.descripcion}}"
                 />

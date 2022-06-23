@@ -17,6 +17,19 @@
         </button>
       </div>
       <section class="table-container">
+        <div class="leyenda-container">
+          <img class="icon-info" src="/icons/info-svgrepo-com.svg" alt="">
+          <div class="leyenda">
+            <ul>
+              <li><img src="/icons/eye-svgrepo-com.svg" alt="icono-ojo-detalles" class="icon24"><span>Más Detalles</span></li>
+              <li><img src="/icons/pencil-edit-button-svgrepo-com.svg" alt="icono-editar" class="icon24"><span>Actualizar Datos</span></li>
+              <li><img src="/icons/change-svgrepo-com.svg" alt="icono-cambiar-estado" class="icon24"><span>Cambiar Estado</span></li>
+              <li><img src="/icons/room-service-svgrepo-com.svg" alt="icono-carrito-servicios" class="icon24"><span>Administrar Servicios</span></li>
+              <li><img src="/icons/camera-svgrepo-com.svg" alt="icono-camara-fotos" class="icon24"><span>Administrar Fotos</span></li>
+              <li><img src="/icons/trash-svgrepo-com.svg" alt="icono-basura-eliminar" class="icon24"><span>Eliminar</span></li>
+            </ul>
+          </div>
+        </div>
         <table>
           <thead>
             <tr>
@@ -349,13 +362,18 @@
                       id="habitacion-id-create-foto"
                       hidden
                     />
-                    <div class="control-input-upload input-validator-container">
-                      <label for="upload-foto" class="required">Seleccione una foto para Subir</label>
+                    <div class="control-input-upload input-validator-container upload-control">
                       <input type="file" id="upload-foto" name="foto_habitacion"
                             accept="image/*" required hidden>
-                      <div class="preview">
-                        <img class="contain">
-                        <small></small>
+                      <div class="drop-zone">
+                        <div>
+                          <img class="upload-icon" src="/icons/upload-sign-svgrepo-com.svg">
+                          <p><strong>Elija</strong> una imagen o <strong>arrastrela</strong> aquí.</p>
+                        </div>
+                        <div class="preview hide">
+                          <img src="" alt="">
+                          <small></small>
+                        </div>
                       </div>
                       <ul></ul>
                     </div>

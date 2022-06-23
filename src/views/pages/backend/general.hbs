@@ -199,13 +199,18 @@
         <legend>Modificar Logo Hotel:</legend>
         <div class="form-content">
           <div class="form-content-fixed">
-            <div class="control-input-upload input-validator-container">
-              <label for="update-logo" class="required">Seleccione una imagen para Subir</label>
+            <div class="control-input-upload input-validator-container upload-control">
               <input type="file" id="update-logo" name="logo"
                     accept="image/*" required hidden>
-              <div class="preview">
-                <img>
-                <small></small>
+              <div class="drop-zone">
+                <div>
+                  <img class="upload-icon" src="/icons/upload-sign-svgrepo-com.svg">
+                  <p><strong>Elija</strong> una imagen o <strong>arrastrela</strong> aquí.</p>
+                </div>
+                <div class="preview hide">
+                  <img src="" alt="">
+                  <small></small>
+                </div>
               </div>
               <ul></ul>
             </div>
@@ -230,38 +235,50 @@
                 Crear Servicio
               </button>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Icono</th>
-                  <th>Icono Path</th>
-                  <th>Tipo</th>
-                  <th class="action-column">Acción</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-servicios">
-                
-              </tbody>
-            </table>
-            <div class="pagination">
-              <div class="table-text-pagination">
-              </div>
-              <div class="user-actions">
-                <select class="pagination-limit">
-                  <option value="5" selected>5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                </select>
-                <div class="pagination-controls">
-                  <button class="first" value="1">&#171;</button>
-                  <div class="pagination-numbers">
-                  </div>
-                  <button class="last">&#187;</button>
+            <section class="table-container">
+              <div class="leyenda-container">
+                <img class="icon-info" src="/icons/info-svgrepo-com.svg" alt="">
+                <div class="leyenda">
+                  <ul>
+                    <li><img src="/icons/pencil-edit-button-svgrepo-com.svg" alt="icono-editar" class="icon24"><span>Actualizar Datos</span></li>
+                    <li><img src="/icons/camera-svgrepo-com.svg" alt="icono-camara-actualizar" class="icon24"><span>Actualizar Icono</span></li>
+                    <li><img src="/icons/trash-svgrepo-com.svg" alt="icono-basura-eliminar" class="icon24"><span>Eliminar</span></li>
+                  </ul>
                 </div>
               </div>
-            </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Icono</th>
+                    <th>Icono Path</th>
+                    <th>Tipo</th>
+                    <th class="action-column">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-servicios">
+                  
+                </tbody>
+              </table>
+              <div class="pagination">
+                <div class="table-text-pagination">
+                </div>
+                <div class="user-actions">
+                  <select class="pagination-limit">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </select>
+                  <div class="pagination-controls">
+                    <button class="first" value="1">&#171;</button>
+                    <div class="pagination-numbers">
+                    </div>
+                    <button class="last">&#187;</button>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </fieldset>
@@ -294,13 +311,18 @@
               <ul></ul>
             </div>
           </div>
-          <div class="control-input-upload input-validator-container">
-            <label for="upload-icon" class="required">Seleccione una imagen para Subir</label>
+          <div class="control-input-upload input-validator-container upload-control">
             <input type="file" id="upload-icon" name="icon_service"
                   accept="image/*" required hidden>
-            <div class="preview">
-              <img>
-              <small></small>
+            <div class="drop-zone">
+              <div>
+                <img class="upload-icon" src="/icons/upload-sign-svgrepo-com.svg">
+                <p><strong>Elija</strong> una imagen o <strong>arrastrela</strong> aquí.</p>
+              </div>
+              <div class="preview hide">
+                <img src="" alt="">
+                <small></small>
+              </div>
             </div>
             <ul></ul>
           </div>
@@ -352,13 +374,18 @@
           <legend>Actualizar Icono Servicio/Instalación:</legend>
           <button type="button" class="close-modal close-times">&times;</button>
           <input type="number" name="id" id="update-icon-id" hidden />
-          <div class="control-input-upload input-validator-container">
-            <label for="update-icon" class="required">Seleccione una imagen para Subir</label>
+          <div class="control-input-upload input-validator-container upload-control">
             <input type="file" id="update-icon" name="icon_service"
                   accept="image/*" required hidden>
-            <div class="preview">
-              <img>
-              <small></small>
+            <div class="drop-zone">
+              <div>
+                <img class="upload-icon" src="/icons/upload-sign-svgrepo-com.svg">
+                <p><strong>Elija</strong> una imagen o <strong>arrastrela</strong> aquí.</p>
+              </div>
+              <div class="preview hide">
+                <img src="" alt="">
+                <small></small>
+              </div>
             </div>
             <ul></ul>
           </div>

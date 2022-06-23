@@ -34,6 +34,10 @@ En **Documentacion/Wireframes.pdf** encontrará los wireframes del proyecto.
 
 - [Handlebars](https://handlebarsjs.com/) - Motor de Plantillas.
 
+### SEO
+
+- [Microdata](https://schema.org/docs/gs.html) - [HotelMarkup](https://schema.org/docs/hotels.html)
+
 ### Desarrollo
 
 - [Git](https://git-scm.com/) - Control de Versiones.
@@ -105,4 +109,4 @@ nick: admin-hotelpato | pass: admin123
   - password: `admin123`
 - Al recibir un Contacto, se envía un email con la copia del mensaje al cliente, y un email a todos los usuarios del hotel en cuestión asi como al email definido para el hotel.
 
-<small><i>Documento en constante actualización.</i></small>
+<small><i>Última actualización: 23/06/2022</i></small>

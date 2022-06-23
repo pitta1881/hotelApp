@@ -23,6 +23,14 @@ export const callbackModal = (e) => {
   e.target.reset();
   e.target.closest('.modal').classList.remove('active');
   document.body.classList.toggle('noscroll');
+  const uploadControl = e.target
+    .closest('.modal')
+    .querySelector('.upload-control');
+  if (uploadControl) {
+    uploadControl.querySelector('.drop-zone').classList.remove('no-border');
+    uploadControl.querySelector('.preview').classList.add('hide');
+    uploadControl.querySelector('.drop-zone div').classList.remove('hide');
+  }
 };
 
 export const removeFormValidations = (form) => {
@@ -78,19 +86,56 @@ export const commonFetch = async (url, method = 'get', body) => {
   return response;
 };
 
+const handleDragOver = (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+};
+
+const handleDragEnter = (e) => {
+  e.target.closest('.drop-zone').classList.add('dragstart');
+};
+const handleDragLeave = (e) => {
+  e.target.closest('.drop-zone').classList.remove('dragstart');
+};
+const handleFileChange = (elemId, imageToUpload) => {
+  const updateIcon = document.getElementById(elemId);
+  const controlContainer = updateIcon.parentNode;
+  const dropZone = controlContainer.querySelector('.drop-zone');
+  const uploadPreview = controlContainer.querySelector('.preview img');
+  const uploadName = controlContainer.querySelector('.preview small');
+  uploadPreview.src = URL.createObjectURL(imageToUpload);
+  uploadPreview.addEventListener('load', () => {
+    URL.revokeObjectURL(uploadPreview.src); // free memory
+  });
+  controlContainer.querySelector('.preview').classList.remove('hide');
+  dropZone.classList.add('no-border');
+  dropZone.querySelector('div').classList.add('hide');
+  uploadName.innerText = imageToUpload.name;
+};
+
 export const loadFileUploadEvent = (elemId) => {
-  const updateLogo = document.getElementById(elemId);
-  updateLogo.addEventListener('change', (e) => {
+  const updateIcon = document.getElementById(elemId);
+  const controlContainer = updateIcon.parentNode;
+  const dropZone = controlContainer.querySelector('.drop-zone');
+  dropZone.addEventListener('click', () => {
+    updateIcon.click();
+  });
+  dropZone.addEventListener('dragover', handleDragOver, false);
+  dropZone.addEventListener('dragenter', handleDragEnter, false);
+  dropZone.addEventListener('dragleave', handleDragLeave, false);
+  dropZone.addEventListener('drop', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    handleDragLeave(e);
+    updateIcon.files = e.dataTransfer.files;
+    updateIcon.dispatchEvent(new Event('change'));
+  });
+
+  updateIcon.addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
       const imageToUpload = e.target.files[0];
-      const previewContainer = updateLogo.parentNode;
-      const uploadPreview = previewContainer.querySelector('.preview img');
-      const uploadName = previewContainer.querySelector('.preview small');
-      uploadPreview.src = URL.createObjectURL(imageToUpload);
-      uploadPreview.addEventListener('load', () => {
-        URL.revokeObjectURL(uploadPreview.src); // free memory
-      });
-      uploadName.innerText = imageToUpload.name;
+      handleFileChange(elemId, imageToUpload);
     }
   });
 };

@@ -82,6 +82,10 @@ legend {
   flex-direction: column;
 }
 
+.input-validator-container.upload-control {
+  align-items: center;
+}
+
 .input-validator-container input.error,
 .input-validator-container select.error,
 .input-validator-container textarea.error {
@@ -119,36 +123,50 @@ legend {
   margin-right: 2px;
 }
 
-.control-input-upload label {
-  text-align: center;
-  background: none;
-  display: block;
-  color: white;
-  font-size: 20px;
-  padding: 5px 20px;
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid blue;
-  background-color: rgba(0, 0, 128, 0.9);
-  box-shadow: 0px 0px 3px 0px blue;
-  width: fit-content;
-  margin: auto;
-}
-
-.control-input-upload .preview {
+.control-input-upload .drop-zone {
   text-align: center;
   margin: 10px 0;
+  width: 300px;
+  height: 200px;
+  border: 1px dashed #03a9f4;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.control-input-upload .drop-zone.no-border {
+  background: none;
+  border: none;
 }
 
-.control-input-upload .preview img {
-  max-width: 300px;
-  max-height: 300px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+.control-input-upload .drop-zone.dragstart .preview img {
+  opacity: 0.2;
 }
+
+.control-input-upload .drop-zone p {
+  font-size: 20px;
+}
+#carousel .upload-control .upload-icon,
+.upload-control .drop-zone .upload-icon {
+  display: block;
+  width: 30px;
+  height: auto;
+  margin: 15px auto;
+  border: none;
+}
+
+#carousel .control-input-upload .preview img,
+.control-input-upload .preview img {
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
+}
+
 .control-input-upload .preview small {
   display: block;
+  text-align: center;
 }
-
 @media screen and (min-width: 768px) {
   .control-input.control-half-center {
     width: 50%;

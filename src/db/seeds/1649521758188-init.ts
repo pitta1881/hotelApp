@@ -39,7 +39,7 @@ export class init1649521758188 implements MigrationInterface {
       `INSERT INTO usuario
               ("id","nombre","apellido","email","nick","password","hotelId") 
             VALUES 
-              (1,'admin-hotelpato','admin-hotelpato','admin-hotelpato@mail.com','admin-hotelpato','${passHashed}', 1)`,
+              (1,'admin','admin','admin-hotelpato@mail.com','admin-hotelpato','${passHashed}', 1)`,
     );
     await queryRunner.query(
       `INSERT INTO habitacion
