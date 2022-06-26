@@ -109,4 +109,12 @@ nick: admin-hotelpato | pass: admin123
   - password: `admin123`
 - Al recibir un Contacto, se envía un email con la copia del mensaje al cliente, y un email a todos los usuarios del hotel en cuestión asi como al email definido para el hotel.
 
-<small><i>Última actualización: 23/06/2022</i></small>
+## Oportunidad de Mejoras
+
+- Las tablas deben tener filtros de busqueda y/o un input de busqueda.
+- Las tablas se deben poder ordenar al hacer click sobre el nombre de la columna.
+- Reemplazar ciertos select por checkbox.
+- Agregar animaciones en slides de fotos.
+- Comprimir y/o limitar el tamaño y peso de una imagen al subirla al server.
+
+<small><i>Última actualización: 26/06/2022</i></small>
